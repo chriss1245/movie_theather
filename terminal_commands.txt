@@ -1,0 +1,6 @@
+ls -> lista los archivos y carpetas dentro de la carpeta que estes
+ls -a -> lista tambien los archivos ocultos
+
+cd Documents -> cambias a la carpeta Documents
+cd .. -> regresas a la carpeta padre de Documents
+
