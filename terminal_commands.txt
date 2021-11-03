@@ -1,6 +1,16 @@
+Todos los comandos en la terminal tienen dos partes:
+COMANDO OPCIONES ARGUMENTOS
+
+En COMANDO especificas cual es el comando que quieres ejecutar.
+	Ejemplos:
+		ls
+		git
+		python
+ARGUMENTOS son todas las opciones que tiene el comando.
 ls -> lista los archivos y carpetas dentro de la carpeta que estes
 ls -a -> lista tambien los archivos ocultos
 
 cd Documents -> cambias a la carpeta Documents
 cd .. -> regresas a la carpeta padre de Documents
 
+python -m venv env -> crea un entorno vitual que se llama env
