@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{url_for('ststic', filename='base.css')}}">
+    <title>
+        {%block title%}
+        {%endblock%}
+    </title>
+</head>
+<body>
+    <!--Navbar-->
+
+    {include "navbar.html"}
+   <!--Content--> 
+    <section>
+        {%block content%}
+        {%endblock%}
+    </section>
+
+    <!--Footer-->
+    {%include 'footer.html'%}
+</body>
+</html>
