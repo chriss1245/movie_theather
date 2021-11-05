@@ -1,0 +1,10 @@
+<link rel="stylesheet" href="{{url_for('static', filename='movies.css')}}">
+<div class='movie-continer'>
+    {%for movie in all_movies%}
+        <div class="movie-container-item">
+            <a  href="http://">
+                <img src="{{url_for('static', filename=movie.image_path)}}" height="380", width="300">
+            </a>
+        </div>
+    {%endfor%}   
+</div>

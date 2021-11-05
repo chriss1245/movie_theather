@@ -1,0 +1,11 @@
+.movie-container
+{
+    display: grid;
+    flex-direction: row;
+    width: 100%;
+}
+
+.movie-container-item
+{
+    d;
+}
