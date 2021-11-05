@@ -4,4 +4,4 @@ movie
     - id
     - name
     - image_path
-    - ranking
+    - trailer_link
