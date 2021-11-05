@@ -3,7 +3,10 @@
     {%for movie in all_movies%}
         <div class="movie-container-item">
             <a  href="http://">
-                <img src="{{url_for('static', filename=movie.image_path)}}" height="380", width="300">
+                <div class="movie-container-item-data">
+                    {{movie.name}}
+                </div>
+                <img src="{{url_for('static', filename=movie.image_path)}}" height="400", width="310">
             </a>
         </div>
     {%endfor%}   
