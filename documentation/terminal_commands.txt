@@ -1,0 +1,39 @@
+
+ls -> lista los archivos y carpetas dentro de la carpeta que estes
+ls -a -> lista tambien los archivos ocultos
+
+cd Documents -> cambias a la carpeta Documents
+cd .. -> regresas a la carpeta padre de Documents
+
+python -m venv venv -> crea un entorno vitual que se llama venv
+source venv/bin/activate -> activa el entorno virtual venv
+python -m pip install -r requirements.txt -> instala los paquetes que esten en el archivo requirements.txt 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------		
+Todos los comandos en la terminal tienen tres partes:
+
+COMANDO OPCIONES ARGUMENTOS
+
+En COMANDO especificas cual es el comando que quieres ejecutar.
+	Ejemplos:
+		ls
+		git
+		python
+
+OPCIONES:
+	Son argumentos especiales que sirven para cambiar el comportamiento del comando
+	Ejemplos:
+		ls -a 
+		ls -l
+		python -m -> le dice a python que va a ejecutar un modulo
+
+ARGUMENTOS son argumentos posicionales que necesita tu comando. Por lo general se colocan de forma posicional
+	Ejemplos:
+		mv /home/usuario/lol.txt /home/documentos -> mv mueve lol.txt ubicado en /home/usuario  a la direccion /home/documentos
+		mv /home/usuario/lol.txt . -> mueve lol.txt a la carpeta en la que te encuentres
+		
+		// tambien se pueden mandar otros comandos como argumentos por ejemplo.
+		python -m venv -> el modulo que python debe ejecutar es venv
+		python -m pip -> el modulo que python debe ejecutar es pip
+		//venv necesita el nombre que va a tener tu entorno virtual: python -m venv entorno
+		// pip necesita el comando que quieres ejecutar y los argumentos que necesite: python -m pip install numpy (install es un comando, numpy es el argumento que necesita)	

@@ -1,0 +1,7 @@
+# Lista de cosas que necesitamos para el modelo de la base de datos
+
+movie
+    - id
+    - name
+    - image_path
+    - ranking
