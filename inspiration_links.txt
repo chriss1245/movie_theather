@@ -1,0 +1,44 @@
+
+Para hacer las views no estamos usando la base de datos, asi que probablemente tengas que crearte
+algunas clases que contengan los datos que necesites para hacer las views. En principio puedes añadir los atributos 
+que desees a las classes que nos piden en el data model. Pero estaria bien que preguntes por el grupo si necesitas crear una nueva clase para el data model.
+
+Aqui te dejo la idea de como serian las diferentes views en principio.
+
+home o main view (christopehr)
+    https://www.w3schools.com/w3css/tryw3css_templates_architect.htm
+
+    - la imagen principal cambia entre las cinco peliculas mas proximas a emitirse (queremos que en ves de las mas proximas, muestre las mejores, basadas en un rating)
+    - el resto de imagenes de abajo serían todas las peliculas proximas a emitirse.
+
+customer view
+    https://www.w3schools.com/w3css/tryw3css_templates_cv.htm
+
+    - del lado izquierdo esta todo lo relacionado con el cliente
+    - del lado derecho esta todas las pasadas y futuras reservas separadas en cajas (Work experience y education)
+
+movie view
+    https://www.w3schools.com/w3css/tryw3css_templates_gourmet_catering.htm
+
+    - La primera imagen es el trailer de la pelicula
+
+reservation view
+    https://www.infofueguina.com/tecno/2019/8/28/nueva-estafa-se-viraliza-por-google-calendar-41133.html#&gid=1&pid=1
+
+    - A la izquierda podrian estar los datos de la pelicula que queremos ver junto con la opcion de reservar, la cual, estará visible una vez hayamos seleccionado
+        un cuadradito
+    - A la derecha estan todas las emisiones programadas de las peliculas durante los proximos 7 dias. 
+    - Si una misma pelicula es emitida a la misma hora en el mismo dia y en dos pantallas diferentes, solo aparecera un cuadradito
+        indicando que la funcion esta disponible a esa hora. Y la pantalla sera aleatoria
+
+        - Tambien podriamos mostrar a la izquierda las diferentes pantallas donde se emitira la pelicula
+
+    
+    - Tambien se puede navegar hacia otras semanas
+
+extra views:
+    - Login (marco)
+    - Signup (marco)
+    - set movie view
+        Tenemos pensado ofrecer al customer con role de manager la capacidad de crear una emision de una pelicula en una pantalla.
+        Podria ser similar a la de reservation view, pero tenemos que pensarlo
