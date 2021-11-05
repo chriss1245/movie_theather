@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="{{url_for('static', filename='slider.css')}}">
+<div class='slider'>
+    <figure>
+        <!--Images-->
+        {%for movie in movies%}
+            {%include 'src/slider_item.html'%}
+        {%endfor%}
+        <!-- Repeating the first image so that the animatioon is complete-->
+        {%with movie=movies[0]%}
+            {%include 'src/slider_item.html'%}
+        {%endwith%}
+    </figure>
+</div>

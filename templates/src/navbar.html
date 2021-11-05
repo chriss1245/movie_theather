@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="testing.css">
+<link rel="stylesheet" href="{{url_for('static', filename='navbar.css')}}">
 <nav class="navbar">
     <!--Title-->
     <div class='navbar-title'>
@@ -8,13 +8,16 @@
     <!--Links-->
     <div class='navbar-items'>
         <div class="navbar-item">
-            <a href="{{url_for(link)}}">URL1</a>
+            <a href="{url_for(link)}}">URL1</a>
         </div>
         <div class="navbar-item">
-            <a href="{{url_for(link)}}">URL1</a>
+            <a href="{url_for(link)}}">URL1</a>
         </div>
         <div class="navbar-item">
-            <a href="{{url_for(link)}}">URL1</a>
+            <a href="{url_for(link)}}">URL1</a>
+        </div>
+        <div class="navbar-item">
+            <a href="{url_for(link)}}">URL1</a>
         </div>
     </div>
 </nav>
