@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{url_for('static', filename='base.css')}}">
     <title>
         {%block title%}
         {%endblock%}
@@ -12,12 +11,14 @@
     {%include "src/navbar.html"%}
 
    <!--Content--> 
-    <section>
+    <section class="content">
         {%block content%}
         {%endblock%}
     </section>
 
     <!--Footer-->
     {%include 'src/footer.html'%}
+    
 </body>
+
 </html>
