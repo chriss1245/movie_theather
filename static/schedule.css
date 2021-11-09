@@ -1,0 +1,39 @@
+table
+{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr
+{
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+td
+{
+    border-right: 1px solid black;
+    padding-left: 5px;
+    
+}
+
+.time
+{
+    border-right: 3px solid black;
+}
+
+thead
+{
+    border-bottom: 3px solid black;
+}
+
+.title
+{
+    border-bottom: 3px solid black;
+}
+.title td
+{
+    border-bottom: 3px solid black;
+}
+
