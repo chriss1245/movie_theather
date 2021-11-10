@@ -15,3 +15,9 @@ class MoviePorjection():
         self.screen_id = screen_id
         self.movie_id = movie_id
         self.date = date
+
+class User():
+    def __init__(self, name, email, location):
+        self.name = name
+        self.email = email
+        self.location = location

@@ -20,4 +20,5 @@ def movie(movie_id = 1):
 
 @bp.route("/customer")
 def user_teemplate():
-    return render_template("main/user_template.html")
+    user = model.User("lolito", 'lolito@lolito.com', "legoland")
+    return render_template("main/user_template.html",user = user)
