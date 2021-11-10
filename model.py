@@ -2,9 +2,10 @@ from . import db
 
 class Movie(db.Model):
 	name = db.Column(db.String(64), nullable=False)
-	synopsyis = db.Column(db.String(64), nullable = False)
+	synopsyis = db.Column(db.String(10000), nullable = False)
 	duration = db.Column(db.Integer, primary_key=True)
 	director = db.Column(db.String(64), nullable=False)
+    image_path = db.Column(db.String(20), nullable=False)
 	"""
         self.id = id
         self.name = name
@@ -33,7 +34,7 @@ class Screen(db.Model):
 
 class Projection(db.Model):
 
-	movie=Movie(db.Model).name
+    movie = db.Column(db.String(64), db.ForeignKey('movie.name'), nullable=False)
 	screen=Screen(db.Model).name
 	day=db.Column(db.Integer, primary_key=True)
 	hour=db.Column(db.Integer, primary_key=True)
