@@ -1,0 +1,37 @@
+.cotent
+{
+    display: inline-flex;
+}
+
+#zone1{
+    display: inline-flex;
+    width: 15%;
+}
+
+#zone2{
+    display: inline-flex;
+    border-width: 5px;
+    border-color: lightcyan;
+    
+    width: 84%;
+}
+
+#time
+{
+    width: 5.5%;
+    flex-direction: column;
+}
+
+
+#time div{
+    height: 43px;
+}
+
+.schedule-title
+{
+    height: 43px;
+    border-bottom: 3px solid black;
+    
+}
+
+

@@ -9,3 +9,5 @@ git add archivo.html -> "Añade el archivo llamado archivo.html"
 git commit -m "cambios que has hecho" -> crea una nueva version del proyecto con los cambios que has añadido. Necesitas explicar lo que has hecho. por eso es obligatorio incluir -m "he hecho esthe hecho eso"
 
 git push -> sube la nueva version a github
+
+git status -> shows the status of the files

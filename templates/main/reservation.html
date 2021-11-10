@@ -1,0 +1,15 @@
+{%extends 'src/base.html'%}
+
+{%block title%} Reserve {%endblock%}
+
+{%block content%}
+    <link rel="stylesheet" href="{{url_for('static', filename='reservation.css')}}">
+    <div id="zone1">
+
+        <div>lol</div>
+        <div>lol</div>
+    </div>
+    <div id="zone2">
+        {%include 'src/schedule.html'%}
+    </div>
+{%endblock%}

@@ -1,11 +1,26 @@
 .movie-container
 {
-    display: grid;
+    display: flex;
     flex-direction: row;
     width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .movie-container-item
 {
-    d;
+    display: inline-flex;
+    margin-inline: 5px;
+    margin-bottom: 5px;
+}
+
+.movie-container-item-data
+{
+    width:100%;
+    margin-top: 118%;
+    margin-bottom:-125%;
+    position: relative;
+    font-size: 20px;
+    color:floralwhite;
+    background-color: rgba(5, 5, 5, 0.5);
 }

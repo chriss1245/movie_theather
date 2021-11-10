@@ -1,0 +1,20 @@
+movie_theather
+    documentation
+        - all the manuals and stuff to take into account
+    static
+        - css files
+        img
+            - all the images we will need
+    templates
+        main
+            - all the views we are going to show
+        src
+            - html files that can be included or inherited for our main views
+
+    - __init__.py
+    - mian.py: controller
+    - auth.py: will be a controller specialized in authentication stuff
+    - model.py: will contain the database classes we need
+    - flask_init.sh : (source flask_init.sh) activates the virtual environment and exports the needed environment variables for running flask, we still need to execute flask run
+    - .gitignore: list with files we do not want to be at the repository
+    - requirements.txt: list of all the dependencies of the web server (python -m pip install -r requirements.txt: automates the install of these dependencies)
