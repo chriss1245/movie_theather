@@ -1,0 +1,27 @@
+
+*** These modified files were found in JOE when it aborted on Fri Nov  5 16:57:49 2021
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+
+
+*** File '(Unnamed)'
+/var/home/lab/alum0/04/28/692/Escritorio/movie_theather/.git/COMMIT_EDITMSG
+
+*** File '/var/home/lab/alum0/04/28/692/Escritorio/movie_theather/.git/COMMIT_EDITMSG'
+Prueba con el git
+# Por favor ingrese el mensaje del commit para sus cambios. Las líneas que comiencen
+# con '#' serán ignoradas, y un mensaje vacío aborta el commit.
+#
+# En la rama master
+# Tu rama está actualizada con 'origin/master'.
+#
+# Cambios a ser confirmados:
+#	modificado:     flaskk_init.sh
+#
+
+*** File '* Startup Log *'
+Processing '/etc/joe/editorrc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc
