@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, url_for, \
     redirect, abort
 
-from .model import Movie, MoviePorjection, Screen
+from . import model
 
 bp = Blueprint("main", __name__)
 
@@ -17,3 +17,7 @@ def reservation(movie_id = 1):
 @bp.route("/movie") # will take the movie id
 def movie(movie_id = 1):
     return render_template("main/movie.html")
+
+@bp.route("/customer")
+def user_teemplate():
+    return render_template("main/user_template.html")

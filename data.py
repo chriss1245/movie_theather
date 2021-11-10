@@ -21,4 +21,3 @@ def data_reservation():
     movie_projections  = [{'screen':1, 'date':date_to_dict(date)},
     {'screen':2, 'date':date_to_dict(date2)}] #ignored movie, since it is already gotten from movie view
     return make_response(jsonify(movie_projections))
-
