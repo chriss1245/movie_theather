@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, url_for, \
     redirect, abort
 
-from . import model
+from .model import Movie, MoviePorjection, Screen
 
 bp = Blueprint("main", __name__)
 

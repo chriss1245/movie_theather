@@ -8,14 +8,14 @@ tr
 {
     height: 40px;
     width: 100%;
-    border-bottom: 1px solid black;
 }
 
 td
 {
     border-right: 1px solid black;
-    padding-left: 5px;
-    
+
+    height: 100%;
+    border-bottom: 0.5px solid black;
 }
 
 .time
