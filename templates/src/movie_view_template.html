@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title> {{movie.title}}</title>
+    <style>
+        body {font-family: "Times New Roman", Georgia, Serif;}
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "Playfair Display";
+            letter-spacing: 5px;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation bar that sits on top -->
+<div class = "top">
+    <div class = "padding card" style = "letter-spacing:2px">
+
+        <!-- Right sided navbar links. Hide them on small screens -->
+        <div class = "right hide small">
+            <a href = "#home" class = "button">Home</a>
+        </div>
+    </div>
+</div>
+<!--Header-->
+<header class = "display-container content wide" style = "max-width:1600px;min-width:500px">
+    <embed src = "https://www.youtube.com/embed/EXNKXybldSY">
+</header>
+
+</body>
+    {%extends 'src/footer.html'%}
+</html>
