@@ -1,9 +1,10 @@
 class Movie():
-    def __init__(self, id, name, image_path, duration, cast, description = " ", trailer_link = '0'):
+    def __init__(self, id, name, image_path, duration, director, cast, description = " ", trailer_link = '0'):
         self.id = id
         self.name = name
         self.image_path = image_path
         self.duration = duration
+        self.director
         self.cast = cast
         self.description = description
         self.trailer_link = trailer_link
