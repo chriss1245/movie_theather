@@ -1,15 +1,17 @@
 class Movie():
-    def __init__(self, id, name, image_path, description = " ", trailer_link = '0'):
+    def __init__(self, id, name, image_path, duration, cast, description = " ", trailer_link = '0'):
         self.id = id
         self.name = name
         self.image_path = image_path
+        self.duration = duration
+        self.cast = cast
         self.description = description
         self.trailer_link = trailer_link
 class Screen():
     def __init__(self, id):
         self.id = id
 
-class MoviePorjection():
+class MovieProjection():
     def  __init__(self, id, screen_id, movie_id, date):
         self.id = id
         self.screen_id = screen_id
