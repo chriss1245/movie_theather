@@ -6,8 +6,10 @@
 
 .hour-col{
     width: 9%;
+    flex-direction: column;
 }
 
 .day-col{
     width: 13%;
+    flex-direction: column;
 }

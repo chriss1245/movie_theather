@@ -27,13 +27,13 @@ let set_projections = function (projections)
 
         idx = 'r' + row + 'c' + col;
         
-        column = document.getElementById('0')
-        cell = document.createElement('input');
+        column = document.getElementById('1')
+        cell = document.createElement('div');
         cell.style.borderBottom = "0px solid black"
         cell.style.backgroundColor = "red";
-        cell.style.width = "98%"
         cell.style.height = "40px"
         cell.style.backgroundClip= "content-box"
+        cell.innerHTML = "testing";
 
          // the row is 40 px, 60 min -> 40px, then row_ min -> x px
 
@@ -51,6 +51,7 @@ let set_projections = function (projections)
         cell.appendChild(item)
         console.log(cell, item)*/
         column.appendChild(cell);
+        console.log(column)
         
     }
 }
