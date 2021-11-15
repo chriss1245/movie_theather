@@ -30,12 +30,14 @@ let set_projections = function (projections)
         cell = document.getElementById(idx);
         cell.style.borderBottom = "0px solid black"
         cell.style.backgroundColor = "red";
-        cell.style.paddingLeft = "10px"
-        cell.style.paddingRight = "10px"
+        cell.style.width = "98%"
+        cell.style.height = "40px"
         cell.style.backgroundClip= "content-box"
 
-        cell.style.paddingTop = Math.round(40 * row_ / 60) + "px"; // the row is 40 px, 60 min -> 40px, then row_ min -> x px
+         // the row is 40 px, 60 min -> 40px, then row_ min -> x px
         cell.onclick=function () {alert('lol')}
+
+
         /*item = document.createElement('input')
         item.setAttribute("type", "button")
         item.style.marginTop = '0px';

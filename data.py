@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, \
     url_for, flash, jsonify, make_response
 
-from .model import MoviePorjection, Movie, Screen
+from .model import MovieProjection, Movie, Screen
 from .utils import date_to_dict
 import datetime
 
