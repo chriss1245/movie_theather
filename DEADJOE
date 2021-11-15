@@ -1,0 +1,24 @@
+
+*** These modified files were found in JOE when it aborted on Mon Nov 15 18:04:14 2021
+*** JOE was aborted by UNIX signal 1
+
+*** File '/var/home/lab/alum0/04/28/692/Escritorio/movie_theather/.git/MERGE_MSG'
+Merge branch 'master' of github.com:chriss1245/movie_theather
+lol
+# Por favor ingrese un mensaje de commit que explique por qué es necesaria esta fusión,
+# especialmente si esto fusiona un upstream actualizado en una rama de tópico.
+#
+# Líneas comenzando con '#' serán ignoradas, y un mensaje vacío aborta
+# el commit.
+
+*** File '(Unnamed)'
+/var/home/lab/alum0/04/28/692/Escritorio/movie_theather/.git/COMMIT_EDITMSG
+/var/home/lab/alum0/04/28/692/Escritorio/movie_theather/.git/COMMIT_EDITMSG
+/var/home/lab/alum0/04/28/692/Escritorio/movie_theather/.git/COMMIT_EDITMSG
+/var/home/lab/alum0/04/28/692/Escritorio/movie_theather/.git/MERGE_MSG
+
+*** File '* Startup Log *'
+Processing '/etc/joe/editorrc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc
