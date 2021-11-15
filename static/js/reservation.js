@@ -27,7 +27,8 @@ let set_projections = function (projections)
 
         idx = 'r' + row + 'c' + col;
         
-        cell = document.getElementById(idx);
+        column = document.getElementById('0')
+        cell = document.createElement('input');
         cell.style.borderBottom = "0px solid black"
         cell.style.backgroundColor = "red";
         cell.style.width = "98%"
@@ -35,6 +36,7 @@ let set_projections = function (projections)
         cell.style.backgroundClip= "content-box"
 
          // the row is 40 px, 60 min -> 40px, then row_ min -> x px
+
         cell.onclick=function () {alert('lol')}
 
 
@@ -48,7 +50,7 @@ let set_projections = function (projections)
         
         cell.appendChild(item)
         console.log(cell, item)*/
-        
+        column.appendChild(cell);
         
     }
 }
