@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, \
     url_for, flash, jsonify, make_response
 
-from .model import MoviePorjection, Movie, Screen
+from .model import MovieProjection, Movie, Screen
 from .utils import date_to_dict
 import datetime
 
@@ -21,4 +21,3 @@ def data_reservation():
     movie_projections  = [{'screen':1, 'date':date_to_dict(date)},
     {'screen':2, 'date':date_to_dict(date2)}] #ignored movie, since it is already gotten from movie view
     return make_response(jsonify(movie_projections))
-

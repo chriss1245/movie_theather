@@ -1,0 +1,13 @@
+.schedule
+{
+    display: inline-flex;
+    width: 100%
+}
+
+.hour-col{
+    width: 9%;
+}
+
+.day-col{
+    width: 13%;
+}

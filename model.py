@@ -11,6 +11,7 @@ class Movie():
 class Screen():
     def __init__(self, id):
         self.id = id
+<<<<<<< HEAD
 
 class MovieProjection():
     def  __init__(self, id, screen_id, movie_id, date):
@@ -43,19 +44,18 @@ class User():
 	"""
 
 class Reservation(db.Model ):
+=======
+>>>>>>> e256d5611565f9e6094bfcea39b7c7d73f4fdb28
 
-	user=User(db.Model).email
-	projection=Projection(db.Model).movie
-	no_seats=db.Column(db.Integer, primary_key=True)
-	day_res=db.Column(db.Integer, primary_key=True)
-	hour_res=db.Column(db.Integer, primary_key=True)
-	minute_res=db.Column(db.Integer, primary_key=True)
-	"""
-	def __init__(self, user, projection, no_seats, day_res, time_res):
-		self.user=user
-		self.projection=projection
-		self.no_seats=no_seats
-		self.day_res=day_res
-		self.time_res=time_res
+class MovieProjection():
+    def  __init__(self, id, screen_id, movie_id, date):
+        self.id = id
+        self.screen_id = screen_id
+        self.movie_id = movie_id
+        self.date = date
 
-	"""
+class User():
+    def __init__(self, name, email, location):
+        self.name = name
+        self.email = email
+        self.location = location
