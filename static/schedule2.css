@@ -1,6 +1,7 @@
 .schedule
 {
     display: inline-flex;
+    border-color:black;
     width: 100%
 }
 
@@ -8,8 +9,26 @@
     width: 9%;
     flex-direction: column;
 }
+.hour{
+    border-bottom: 1px solid black;
+    height: 40px;
+    text-align: center;
+
+}
 
 .day-col{
     width: 13%;
     flex-direction: column;
+    border-left: 2px solid black;
+}
+
+.col-title{
+    border-bottom: 2px solid black;
+    text-align: center;
+}
+
+.projection{
+    border-bottom: 1px solid black;
+    height: 40px;
+    text-align: center;
 }
