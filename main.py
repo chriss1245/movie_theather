@@ -29,5 +29,5 @@ def user_teemplate():
 
 
 @bp.route("/register")
-def login():
+def register():
     return render_template("main/register.html")
