@@ -1,37 +1,30 @@
-from . import db
-
-class Movie(db.Model):
-	name = db.Column(db.String(64), nullable=False)
-	synopsyis = db.Column(db.String(64), nullable = False)
-	duration = db.Column(db.Integer, primary_key=True)
-	director = db.Column(db.String(64), nullable=False)
-	"""
+class Movie():
+    def __init__(self, id, name, image_path, duration, director, cast, description = " ", trailer_link = '0'):
         self.id = id
         self.name = name
         self.image_path = image_path
-		self.trailer_path=trailer_path
-		self.sypnosis=sypsnosis
-		self.duration=duration
-		self.director=director
-		self.main_cast=main_cast
-	"""
+        self.duration = duration
+        self.director
+        self.cast = cast
+        self.description = description
+        self.trailer_link = trailer_link
+class Screen():
+    def __init__(self, id):
+        self.id = id
 
-class User(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(128), unique=True, nullable=False)
-    name = db.Column(db.String(64), nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+class MovieProjection():
+    def  __init__(self, id, screen_id, movie_id, date):
+        self.id = id
+        self.screen_id = screen_id
+        self.movie_id = movie_id
+        self.date = date
 
-class Screen(db.Model):
-	name = db.Column(db.String(64), nullable=False)
-	seats = db.Column(db.Integer, primary_key=True)
-	"""
-	def __init__(self, name, seats):
-		self.name = name
-		self.seats = seats
-	"""
+class User():
+    def __init__(self, name, email, location):
+        self.name = name
+        self.email = email
+        self.location = location
 
-class Projection(db.Model):
 
 	movie=Movie(db.Model).name
 	screen=Screen(db.Model).name
