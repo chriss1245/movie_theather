@@ -18,6 +18,10 @@ def reservation(movie_id = 1):
 def movie(movie_id = 1):
     return render_template("main/movie.html")
 
+@bp.route("/login")
+def login():
+    return render_template("main/login.html")
+
 @bp.route("/customer")
 def user_teemplate():
     user = model.User("lolito", 'lolito@lolito.com', "legoland")
