@@ -18,6 +18,73 @@ xmlhttp.send();
 // Projections manager
 let set_projections = function (days)
 {
+    
+    days={  0:[{hour:11, min:23, duration:2, title:"joker", id:1}, {hour:18, min:23, duration:2, title:"joker", id:1}],
+            1:[{hour:12, min:23, duration:2, title:"joker", id:1}],
+            2:[{hour:12, min:23, duration:2, title:"joker", id:1}],
+            3:[{hour:16, min:23, duration:2, title:"joker", id:1}],
+            4:[{hour:12, min:23, duration:2, title:"joker", id:1}],
+            5:[{hour:18, min:23, duration:2, title:"joker", id:1}],
+            6:[{hour:12, min:23, duration:2, title:"joker", id:1}]
+        }
+    
+    for (d in days)
+    {
+        var day = days[d];
+        var offset_row = 0
+
+        for (p in day)
+        {
+            projection = day[p]
+
+            var row = (projection.hour - OPEN_HOUR) % 24;
+
+            column = document.getElementById(d+'');
+            for (var r=offset_row; r<row; r++)
+            {
+                cell = document.createElement('div');
+                cell.className = "projection"
+                cell.style.height = "40px"
+                cell.innerHTML = ""
+                column.appendChild(cell)
+            }
+
+            // fix minutes
+            cell = document.createElement('div');
+            cell.className = "projection"
+            cell.style.height = Math.round(projection.min*40/60,0) + "px"
+            cell.innerHTML = ""
+            column.appendChild(cell)
+            
+
+            cell = document.createElement('div');
+            cell.className = "projection"
+            cell.style.backgroundColor = "red";
+            cell.style.height = "81px"
+            cell.style.backgroundClip= "content-box"
+            cell.innerHTML = "testing";
+            column.appendChild(cell)
+
+            cell = document.createElement('div');
+            cell.className = "projection"
+            cell.style.height = 40 - Math.round(projection.duration_min, 0) - Math.round(projection.min*40/60,0) + "px" 
+            column.appendChild(cell)
+            // the row is 40 px, 60 min -> 40px, then row_ min -> x px
+
+            cell.onclick=function () {alert('lol')}
+
+            column.appendChild(cell);
+            offset_row = row + 2;
+        }
+        for (var r=offset_row; r<16; r++)
+        {
+            cell = document.createElement('div');
+            cell.className = "projection"
+            cell.style.height = "40px"
+            cell.innerHTML = ""
+            column.appendChild(cell)
+        }
+    }
     /*
     var projection;
     var cell;
