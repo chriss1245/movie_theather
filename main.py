@@ -26,3 +26,8 @@ def login():
 def user_teemplate():
     user = model.User("lolito", 'lolito@lolito.com', "legoland")
     return render_template("main/user_template.html",user = user)
+
+
+@bp.route("/register")
+def register():
+    return render_template("main/register.html")

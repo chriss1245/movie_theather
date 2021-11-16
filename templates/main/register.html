@@ -1,0 +1,27 @@
+{% extends 'src/base.html' %}
+{%block title%} Register {%endblock%}  
+{%block content%} 
+
+
+ 
+<link rel="stylesheet" href="{{url_for('static', filename='Register.css')}} ">
+    <center> <h1> Student Register Form </h1> </center>   
+    <form>  
+        <div class="container">   
+            <label>Name : </label>   
+            <input type="text" placeholder="Enter Name" name="name" required>  
+            <label>Email : </label>   
+            <input type="text" placeholder="Enter Email" name="Email" required>  
+            <label>Password : </label>   
+            <input type="password" placeholder="Enter Password" name="password" required>  
+            <label>Location : </label>   
+            <input type="text" placeholder="Enter Location" name="location" required>  
+            <button type="submit">Register</button>   
+             
+            <!--<button type="button" class="loginbtn"> Login</button> -->
+            You have an account? <a href="{{url_for('main.login')}}"> Login </a>
+            
+        </div>   
+    </form>     
+{%endblock%}
+
