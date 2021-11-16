@@ -19,13 +19,13 @@ xmlhttp.send();
 let set_projections = function (days)
 {
     
-    days={  0:[{hour:11, min:23, duration:2, title:"joker", id:1}, {hour:18, min:23, duration:2, title:"joker", id:1}],
-            1:[{hour:12, min:23, duration:2, title:"joker", id:1}],
-            2:[{hour:12, min:23, duration:2, title:"joker", id:1}],
-            3:[{hour:16, min:23, duration:2, title:"joker", id:1}],
-            4:[{hour:12, min:23, duration:2, title:"joker", id:1}],
-            5:[{hour:18, min:23, duration:2, title:"joker", id:1}],
-            6:[{hour:12, min:23, duration:2, title:"joker", id:1}]
+    days={  0:[{hour:11, min:3, duration:2, duration_min:23, title:"joker", id:1}, {hour:18, min:23, duration:2, duration_min:0,title:"joker", id:1}],
+            1:[{hour:12, min:23, duration:2, duration_min:12 ,title:"joker", id:1}],
+            2:[{hour:12, min:25, duration:2, duration_min:10,title:"joker", id:1}],
+            3:[{hour:16, min:50, duration:2, duration_min:5,title:"joker", id:1}],
+            4:[{hour:12, min:23, duration:2, duration_min:50,title:"joker", id:1}],
+            5:[{hour:18, min:23, duration:2, duration_min:50,title:"joker", id:1}],
+            6:[{hour:12, min:0, duration:2, duration_min:12,title:"joker", id:1}]
         }
     
     for (d in days)
@@ -56,25 +56,24 @@ let set_projections = function (days)
             cell.innerHTML = ""
             column.appendChild(cell)
             
-
+            var rows_used = projection.duration + Math.ceil((projection.duration_min+projection.min)/60, 0)
             cell = document.createElement('div');
             cell.className = "projection"
             cell.style.backgroundColor = "red";
-            cell.style.height = "81px"
+            cell.style.height =  projection.duration*40 + Math.round(projection.duration_min*40/60, 0) + "px";
             cell.style.backgroundClip= "content-box"
             cell.innerHTML = "testing";
+            cell.onclick=function () {alert('lol')}
             column.appendChild(cell)
 
             cell = document.createElement('div');
             cell.className = "projection"
-            cell.style.height = 40 - Math.round(projection.duration_min, 0) - Math.round(projection.min*40/60,0) + "px" 
+            cell.style.height = 40 - (Math.round(projection.duration_min*40/60, 0) + Math.round(projection.min*40/60,0)) % 41 + "px" 
             column.appendChild(cell)
-            // the row is 40 px, 60 min -> 40px, then row_ min -> x px
-
-            cell.onclick=function () {alert('lol')}
-
-            column.appendChild(cell);
-            offset_row = row + 2;
+            
+            
+            console.log(rows_used)
+            offset_row = row + rows_used;
         }
         for (var r=offset_row; r<16; r++)
         {
