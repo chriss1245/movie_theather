@@ -1,7 +1,7 @@
 .slider{
     overflow: hidden;
     margin-bottom: 1%;
-    margin-top: 2%;
+    margin-top: 1%;
     height: 500px;
 }
 
@@ -19,26 +19,25 @@
     float: left;
     height: inherit;
     object-fit: cover;
-    overflow: hidden;
+    overflow: visible;
 }
-.slider figure .slider-item img{
+.slider figure .slider-item a img{
     width: 100%;
-    float: left;
     height: 100%;
     object-fit: cover;
+    overflow:visible;
+    text-decoration: none;
 }
 
-.slider figure .slider-item .slider-item-data
+.slider figure .slider-item a .slider-item-data
 {
     width:100%;
-    margin-top: 2%;
-    margin-bottom:-180%;
-    position: relative;
+    position: sticky;
+    margin-top: -95px;
     font-size: 40px;
     color:floralwhite;
     background-color: rgba(5, 5, 5, 0.5);
 }
-
 
 
 

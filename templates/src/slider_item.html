@@ -1,8 +1,8 @@
 <div class='slider-item'>
     <a href="image view">
+        <img src="{{url_for('static', filename=movie.image_path)}}">
         <div class='slider-item-data'>
             <p>{{movie.name}}</p>
         </div>
-        <img src="{{url_for('static', filename=movie.image_path)}}">
     </a>
 </div>
