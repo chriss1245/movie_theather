@@ -4,10 +4,16 @@
 
 {%block content%}
     <link rel="stylesheet" href="{{url_for('static', filename='reservation.css')}}">
+    <h2>{{movie.name}}</h2>
     <div id="zone1">
-
-        <div>lol</div>
-        <div>lol</div>
+        <h3>Projection</h3>
+        <ul>
+            <p id = "projection-data">
+                Select a movie projection
+            <p>
+            
+            <input id="reserve-buton" onclick="reserve_now()" type="button" value="Reserve Now">
+        </ul>
     </div>
     <div id="zone2">
         {%include 'src/schedule2.html'%}

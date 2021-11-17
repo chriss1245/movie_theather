@@ -15,11 +15,20 @@ xmlhttp.setRequestHeader("Content-type", src);
 xmlhttp.send();
 
 
+
+let reserve_now = function()
+{
+    if (confirm("Reserve?"))
+    {
+        xmlhttp.open("POST", "reservation");
+        // still needs to implement the post
+    }
+}
 // Projections manager
 let set_projections = function (days)
 {
     
-    days={  0:[{hour:11, min:3, duration:2, duration_min:23, title:"joker", id:1}, {hour:18, min:23, duration:2, duration_min:0,title:"joker", id:1}],
+    days={  0:[{hour:11, min:3, duration:2, duration_min:23, title:"joker", id:1}, {hour:12, min:30, duration:2, duration_min:0,title:"joker", id:1}],
             1:[{hour:12, min:23, duration:2, duration_min:12 ,title:"joker", id:1}],
             2:[{hour:12, min:25, duration:2, duration_min:10,title:"joker", id:1}],
             3:[{hour:16, min:50, duration:2, duration_min:5,title:"joker", id:1}],
@@ -48,32 +57,65 @@ let set_projections = function (days)
                 cell.innerHTML = ""
                 column.appendChild(cell)
             }
+            if (row >= offset_row)
+            {
+                // fix minutes
+                cell = document.createElement('div');
+                cell.className = "projection"
+                cell.style.height = Math.round(projection.min*40/60,0) + "px"
+                cell.innerHTML = ""
+                column.appendChild(cell)
+                
+                var rows_used = projection.duration + Math.ceil((projection.duration_min+projection.min)/60, 0)
+                cell = document.createElement('div');
+                cell.className = "projection"
+                cell.style.backgroundColor = "red";
+                cell.style.height =  projection.duration*40 + Math.round(projection.duration_min*40/60, 0) + "px";
+                cell.style.backgroundClip= "content-box"
+                cell.innerHTML = "testing";
+                cell.onclick=function () {alert('lol')}
+                column.appendChild(cell)
 
-            // fix minutes
-            cell = document.createElement('div');
-            cell.className = "projection"
-            cell.style.height = Math.round(projection.min*40/60,0) + "px"
-            cell.innerHTML = ""
-            column.appendChild(cell)
-            
-            var rows_used = projection.duration + Math.ceil((projection.duration_min+projection.min)/60, 0)
-            cell = document.createElement('div');
-            cell.className = "projection"
-            cell.style.backgroundColor = "red";
-            cell.style.height =  projection.duration*40 + Math.round(projection.duration_min*40/60, 0) + "px";
-            cell.style.backgroundClip= "content-box"
-            cell.innerHTML = "testing";
-            cell.onclick=function () {alert('lol')}
-            column.appendChild(cell)
+                cell = document.createElement('div');
+                cell.className = "projection"
+                cell.style.height = 40 - (Math.round(projection.duration_min*40/60, 0) + Math.round(projection.min*40/60,0)) % 41 + "px" 
+                column.appendChild(cell)
+                
+                
+                console.log(rows_used)
+                offset_row = row + rows_used;
+            }
+            else
+            {
+                var rows_used = projection.duration + Math.ceil((projection.duration_min+projection.min)/60, 0)
+                last_cell = column.lastChild;
+                var last_height = parseInt(last_cell.style.height.replace("px", ""));
+                var new_height  = (last_height - Math.round(projection.min*40/60,0) )+ 'px';
+                var extra = 0;
+                if (new_height > 0)
+                {
+                    last_cell.style.height = new_height;
+                }
+                else
+                {
+                    last_cell.remove()
+                    extra = rows_used
+                }
+                cell = document.createElement("div")
+                cell.className = "projection"
+                cell.style.backgroundColor = "blue";
+                cell.style.height =  (row - offset_row  + rows_used)*40 + Math.round((projection.duration_min)*40/60, 0) + "px";
+                cell.style.backgroundClip= "content-box"
+                cell.innerHTML = "testing";
+                cell.onclick=function () {alert('lol')}
+                column.appendChild(cell)
 
-            cell = document.createElement('div');
-            cell.className = "projection"
-            cell.style.height = 40 - (Math.round(projection.duration_min*40/60, 0) + Math.round(projection.min*40/60,0)) % 41 + "px" 
-            column.appendChild(cell)
-            
-            
-            console.log(rows_used)
-            offset_row = row + rows_used;
+                cell = document.createElement('div');
+                cell.className = "projection"
+                cell.style.height = 40 - (Math.round(projection.duration_min*40/60, 0) + Math.round(projection.min*40/60,0)) % 41 + rows_used + "px" 
+                column.appendChild(cell)
+                offset_row = row + rows_used;
+            }
         }
         for (var r=offset_row; r<16; r++)
         {
@@ -84,105 +126,4 @@ let set_projections = function (days)
             column.appendChild(cell)
         }
     }
-    /*
-    var projection;
-    var cell;
-    var offset = 0;
-    var last_col = 0;
-    var last_row = -1;
-    for (p in projections)
-    {
-        projection = projections[p];
-        col = projection.date.weekday
-        row = ((projection.date.hour - OPEN_HOUR) % 24)// Format 24 hours and added 1 at all the hours so they concide with the table indexes
-        row_ = projection.date.minute/40
-        
-        if (!begin_filled)
-        {
-            for (var c=0; c<col; c++)
-            {
-                column = document.getElementById(c+'');
-                for (var r=0; r<16; r++)
-                {
-                    cell = document.createElement('div');
-                    cell.className = "projection"
-                    cell.style.height = "40px"
-                    cell.innerHTML = ""
-                    column.appendChild(cell) 
-                }
-            }
-            begin_filled = true;
-        }
-        else if (last_col < col)
-        {
-            column = document.getElementById(last_col+'');
-            alert(last_col)
-            for (var r=last_row; r<16; r++)
-            {
-                cell = document.createElement('div');
-                cell.className = "projection"
-                cell.style.height = "40px"
-                cell.innerHTML = ""
-                column.appendChild(cell) 
-            }
-        }
-
-        
-
-        idx = 'r' + row + 'c' + col;
-        console.log(projection)
-        last_col = projection.date.weekday;
-        last_row = row+1;
-        column = document.getElementById(projection.date.weekday+'')
-        for(var r=0; r < row; r++)
-        {
-            cell = document.createElement('div');
-            cell.className = "projection"
-            cell.style.height = "40px"
-            cell.innerHTML = ""
-            column.appendChild(cell)
-        }
-
-
-        
-        cell = document.createElement('div');
-        cell.className = "projection"
-        cell.style.backgroundColor = "red";
-        cell.style.height = "80px"
-        cell.style.backgroundClip= "content-box"
-        cell.innerHTML = "testing";
-
-         // the row is 40 px, 60 min -> 40px, then row_ min -> x px
-
-        cell.onclick=function () {alert('lol')}
-
-
-        item = document.createElement('input')
-        item.setAttribute("type", "button")
-        item.style.marginTop = '0px';
-        item.style.background = 'red';
-        item.style.width = '100%';
-        item.style.height = '220%'
-        item.style.border = '0px solid black'
-        
-        cell.appendChild(item)
-        console.log(cell, item)
-
-        column.appendChild(cell);
-    }
-
-
-    for (var c=last_col+1; c<7; c++)
-    {
-        column = document.getElementById(c+'');
-        for (var r=0; r<16; r++)
-        {
-            cell = document.createElement('div');
-            cell.className = "projection"
-            cell.style.height = "40px"
-            cell.innerHTML = ""
-            column.appendChild(cell) 
-        }
-    }
-    */
 }

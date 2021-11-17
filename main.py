@@ -12,7 +12,8 @@ def home():
 
 @bp.route("/reservation") # Requires the movie id
 def reservation(movie_id = 1):
-    return render_template("main/reservation.html")
+    movie = model.Movie(1, "Harry potter and the Deadly shallows", 'img/1.jpg')
+    return render_template("main/reservation.html", movie=movie)
 
 @bp.route("/movie") # will take the movie id
 def movie(movie_id = 1):
