@@ -1,4 +1,9 @@
 <link rel="stylesheet" href="{{url_for('static', filename='schedule2.css')}}">
+<h2 class="header-schedule">
+    <button id='previous_week' disabled>Previous Week</button>
+    {{movie.name}}
+    <button id='next_week'>Next Week</button>
+</h2>
 <div class="schedule">
     <div class = "hour-col">
         <div class="col-title">Time</div>

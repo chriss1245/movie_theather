@@ -1,32 +1,92 @@
-src = "data/reservation"
+const OPEN_HOUR = 9; // hour at which the movie theather opens
+const HOUR_SIZE = 40; // size in pixeles of each hour
 
-const OPEN_HOUR = 9;
-const HOUR_SIZE = 41;
-var xmlhttp = new XMLHttpRequest();
-var begin_filled = false
+let g_extra_weeks = 0; // how many weeks on the future the customer wants to see projections
+let g_src_url = window.location.href + '/projections'; // data url for requesting the data
 
-xmlhttp.onload = function ()
-{
-    days = JSON.parse(this.responseText);
-    set_projections(days);
+// html elements
+let next_week_btn = document.getElementById("next_week");
+let prev_week_btn = document.getElementById("previous_week");
+let projection_details = document.getElementById("reservation_details")
+let reservation_form = {
+    projection_id: document.getElementById("movie_projection_id"),
+    button: document.getElementById("reserve_button")
 }
-xmlhttp.open("GET", src)
-xmlhttp.setRequestHeader("Content-type", src);
-xmlhttp.send();
 
-
-
-let reserve_now = function()
+reservation_form.button.disabled = true;
+next_week_btn.onclick = function ()
 {
-    if (confirm("Reserve?"))
+    g_extra_weeks += 1;
+    request_movie_projections();
+    if (g_extra_weeks > 0)
+        prev_week_btn.disabled = false;
+}
+prev_week_btn.onclick = function ()
+{
+    g_extra_weeks -= 1;
+    request_movie_projections();
+    if (g_extra_weeks < 1)
+        prev_week_btn.disabled = true;
+}
+
+let request_movie_projections = function()
+{
+    /*
+        Makes a request to the server for movie projections for the current week
+        plus the number of extra weeks specified.
+    */
+    let initial_date = new Date();
+    let params = "?";
+    let xmlhttp = new XMLHttpRequest()
+
+    if (g_extra_weeks > 0)
     {
-        xmlhttp.open("POST", "reservation");
-        // still needs to implement the post
+        day = initial_date.getDay();
+        extra_days =  7 - day + g_extra_weeks - 1; // 
+        initial_date.setDate(initial_date.getDate());
+        initial_date.setHours(OPEN_HOUR);
+        initial_date.setMinutes(0);
     }
+    params += "date=" + initial_date.getDate();
+    params += "&month=" + initial_date.getMonth();
+    params += "&year=" + initial_date.getFullYear();
+    params += "&hour" + initial_date.getHours();
+    params += "&minute" + initial_date.getMinutes();
+    
+    // Http request
+    xmlhttp.onload = function ()
+    {
+        days = JSON.parse(this.responseText);
+        set_projections(days);
+    }
+    xmlhttp.open("GET", g_src_url + params , true)
+    xmlhttp.send(params);
 }
-// Projections manager
+request_movie_projections(); // fetch the data from the server
+
+
+// Called when click in a movie projection cell. Displays information about the movie projection
+let show_reservation = function (cell)
+{   
+    reservation_form.button.disabled = false;
+    reservation_form.projection_id = cell.projection.id;
+
+    while(projection_details.lastChild)
+        projection_details.removeChild(projection_details.lastChild);
+    var p = document.createElement("p");
+    p.innerHTML = '<b>Date:</b> <br> october 23, 2021'//cell.projection.day + ', ' + cell.projection.month;
+    projection_details.append(p);
+    p = document.createElement("p");
+    p.innerHTML = "<b>Screen:</b> " + "23" //cell.projection.screen;
+    projection_details.append(p)
+
+}
+
 let set_projections = function (days)
 {
+    /*
+        Allocates the movie projections on the schedule
+    */
     
     days={  0:[{hour:11, min:3, duration:2, duration_min:23, title:"joker", id:1}, {hour:12, min:30, duration:2, duration_min:0,title:"joker", id:1}],
             1:[{hour:12, min:23, duration:2, duration_min:12 ,title:"joker", id:1}],
@@ -37,18 +97,22 @@ let set_projections = function (days)
             6:[{hour:12, min:0, duration:2, duration_min:12,title:"joker", id:1}]
         }
     
+    
     for (d in days)
     {
         var day = days[d];
         var offset_row = 0
+        var column = document.getElementById(d + '');
 
-        for (p in day)
+        // removes all the elements that were before at the column of the day
+        while(column.childElementCount > 1)
+                column.removeChild(column.lastChild);
+        for (p in day) // for each projection
         {
             projection = day[p]
+            var row = (projection.hour - OPEN_HOUR) % 24; // defines a row for the hour, the hour of each projection is greater than OPEN_HOUR
 
-            var row = (projection.hour - OPEN_HOUR) % 24;
-
-            column = document.getElementById(d+'');
+            // Fills all the not needed rows before of the projection row
             for (var r=offset_row; r<row; r++)
             {
                 cell = document.createElement('div');
@@ -57,66 +121,81 @@ let set_projections = function (days)
                 cell.innerHTML = ""
                 column.appendChild(cell)
             }
+            // if row is greater than offset_row the movie projections do not overlap
             if (row >= offset_row)
             {
-                // fix minutes
+                // Creates a new cell with a height proportional to the minute of beggining of the movie
                 cell = document.createElement('div');
                 cell.className = "projection"
                 cell.style.height = Math.round(projection.min*40/60,0) + "px"
                 cell.innerHTML = ""
                 column.appendChild(cell)
                 
+                // Computes how many 40px rows is going to use the movie projection
                 var rows_used = projection.duration + Math.ceil((projection.duration_min+projection.min)/60, 0)
+                // Adds the movie projection
                 cell = document.createElement('div');
                 cell.className = "projection"
                 cell.style.backgroundColor = "red";
-                cell.style.height =  projection.duration*40 + Math.round(projection.duration_min*40/60, 0) + "px";
+                cell.style.height =  projection.duration * 40 + Math.round(projection.duration_min * 40 / 60, 0) + "px";
                 cell.style.backgroundClip= "content-box"
                 cell.innerHTML = "testing";
-                cell.onclick=function () {alert('lol')}
+                cell.id="d" + d + "p" + p;
+                cell.day = column.firstChild.innerHTML;
+                cell.projection = projection;
+                cell.setAttribute( "onClick", "javascript: show_reservation(this);" );
+
                 column.appendChild(cell)
 
+                // Creates a cell with height proportional to the minutes left for completing an hour at the last used cell
                 cell = document.createElement('div');
                 cell.className = "projection"
                 cell.style.height = 40 - (Math.round(projection.duration_min*40/60, 0) + Math.round(projection.min*40/60,0)) % 41 + "px" 
                 column.appendChild(cell)
                 
-                
-                console.log(rows_used)
+                // New offset 
                 offset_row = row + rows_used;
             }
-            else
+            else // the projections overlap
             {
+                // rows used for the movie projection (diferent hours)
                 var rows_used = projection.duration + Math.ceil((projection.duration_min+projection.min)/60, 0)
+
+                // data regarding with last cell (the one that fills the reamining minutes for completing an hour)
                 last_cell = column.lastChild;
                 var last_height = parseInt(last_cell.style.height.replace("px", ""));
-                var new_height  = (last_height - Math.round(projection.min*40/60,0) )+ 'px';
+                // recalculates the height of the last cell
+                var new_height  = (last_height - Math.round(projection.min*40/60,0) )+ 'px'; 
                 var extra = 0;
+                // removes the cell if the new height is smaller than 1
                 if (new_height > 0)
-                {
                     last_cell.style.height = new_height;
-                }
                 else
-                {
                     last_cell.remove()
-                    extra = rows_used
-                }
+
+                //projection cell
                 cell = document.createElement("div")
                 cell.className = "projection"
                 cell.style.backgroundColor = "blue";
                 cell.style.height =  (row - offset_row  + rows_used)*40 + Math.round((projection.duration_min)*40/60, 0) + "px";
                 cell.style.backgroundClip= "content-box"
                 cell.innerHTML = "testing";
-                cell.onclick=function () {alert('lol')}
+                cell.day = column.firstChild.innerHTML;
+                cell.projection = projection;
+                cell.setAttribute( "onClick", "javascript: show_reservation(this);" );
                 column.appendChild(cell)
 
+                // cell for completing the row
                 cell = document.createElement('div');
                 cell.className = "projection"
                 cell.style.height = 40 - (Math.round(projection.duration_min*40/60, 0) + Math.round(projection.min*40/60,0)) % 41 + rows_used + "px" 
                 column.appendChild(cell)
+
                 offset_row = row + rows_used;
             }
         }
+
+        // After setting all the movie projections, fill the rest of the hours with cells
         for (var r=offset_row; r<16; r++)
         {
             cell = document.createElement('div');

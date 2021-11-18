@@ -8,8 +8,9 @@ import datetime
 bp = Blueprint('data', __name__)
 
 #-----------------------------Reservation schedule-----------------------------
-@bp.route('/data/reservation')
-def data_reservation():
+@bp.route('/reservation/<int:movie_id>/projections')
+def get_projections(movie_id=0):
+    
     date = datetime.datetime(2019, 4, 18, 14, 0) # year, month, day, hour, min
     date2 = datetime.datetime(2019, 4, 18, 16, 29)
     date3 = datetime.datetime(2019, 4, 20, 16, 29)
@@ -18,8 +19,7 @@ def data_reservation():
     dates = [date, date2, date3]
     mp1 = MovieProjection(1, 1, 1, date)
     mp1 = MovieProjection(1, 1, 1, date2)
+    movie_projections = []
+    print(movie_id)
 
-    movie_projections  = [{'screen':1, 'date':date_to_dict(date)},
-    {'screen':2, 'date':date_to_dict(date2)},
-    {'screen':1, 'date':date_to_dict(date3)}] #ignored movie, since it is already gotten from movie view
     return make_response(jsonify(movie_projections))
