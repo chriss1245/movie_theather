@@ -18,6 +18,7 @@ def reservation(movie_id = 1):
 @bp.route("/reservation/<int:projection_id>", methods=['POST'])
 def post_reservation(projection_id = 0):
     print(projection_id)
+    return redirect(url_for('main.user_template'))
 
 @bp.route("/movie/<int:movie_id>") # will take the movie id
 def movie(movie_id=1):
@@ -28,7 +29,7 @@ def login():
     return render_template("main/login.html")
 
 @bp.route("/customer")
-def user_teemplate():
+def user_template():
     user = model.User("lolito", 'lolito@lolito.com', "legoland")
     return render_template("main/user_template.html",user = user)
 

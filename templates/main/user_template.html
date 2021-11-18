@@ -1,8 +1,9 @@
 {% extends 'src/base.html' %}
-{%block title%} User view {%endblock%}  
-{%block content%} 
 
-<link rel="stylesheet" href="{{url_for('static', filename='user_template.css')}}">
+{%block title%} User view {%endblock%}  
+
+{%block content%} 
+    <link rel="stylesheet" href="{{url_for('static', filename='user_template.css')}}">
     
     <!-- PAGE CONTAINER-->
         <div class = "user-view-body" style = "max-widht:1400px;">
@@ -43,10 +44,4 @@
             </div>
 
         </div>
-    
-    <footer>
-        <p> Directed by professor <a href = "https://www.it.uc3m.es/jaf/" target="_blank"> Jesús Arias Fisteus</a></p>
-    </footer>
-
-
 {%endblock%}
