@@ -13,6 +13,7 @@ let reservation_form = {
     button: document.getElementById("reserve_button")
 }
 
+// Main buttons behavior
 reservation_form.button.disabled = true;
 next_week_btn.onclick = function ()
 {
@@ -28,6 +29,7 @@ prev_week_btn.onclick = function ()
     if (g_extra_weeks < 1)
         prev_week_btn.disabled = true;
 }
+
 
 let request_movie_projections = function()
 {
@@ -50,8 +52,8 @@ let request_movie_projections = function()
     params += "date=" + initial_date.getDate();
     params += "&month=" + initial_date.getMonth();
     params += "&year=" + initial_date.getFullYear();
-    params += "&hour" + initial_date.getHours();
-    params += "&minute" + initial_date.getMinutes();
+    params += "&hour=" + initial_date.getHours();
+    params += "&minute=" + initial_date.getMinutes();
     
     // Http request
     xmlhttp.onload = function ()
@@ -69,16 +71,22 @@ request_movie_projections(); // fetch the data from the server
 let show_reservation = function (cell)
 {   
     reservation_form.button.disabled = false;
-    reservation_form.projection_id = cell.projection.id;
+    reservation_form.projection_id.value = cell.projection.id;
 
     while(projection_details.lastChild)
         projection_details.removeChild(projection_details.lastChild);
     var p = document.createElement("p");
-    p.innerHTML = '<b>Date:</b> <br> october 23, 2021'//cell.projection.day + ', ' + cell.projection.month;
+    p.innerHTML = '<b>Date:</b> <br>' + cell.projection.month + " " +  cell.projection.day + ', ' + cell.projection.year;
     projection_details.append(p);
     p = document.createElement("p");
-    p.innerHTML = "<b>Screen:</b> " + "23" //cell.projection.screen;
-    projection_details.append(p)
+    if (cell.projection.min == 0)
+    p.innerHTML = "<b>Hour:</b> " + cell.projection.hour + ":00"
+    else
+        p.innerHTML = "<b>Hour:</b> " + cell.projection.hour + ":" + cell.projection.min;
+    projection_details.append(p);
+    p = document.createElement("p");
+    p.innerHTML = "<b>Screen:</b> " + "23"; //cell.projection.screen;
+    projection_details.append(p);
 
 }
 
@@ -87,20 +95,21 @@ let set_projections = function (days)
     /*
         Allocates the movie projections on the schedule
     */
-    
-    days={  0:[{hour:11, min:3, duration:2, duration_min:23, title:"joker", id:1}, {hour:12, min:30, duration:2, duration_min:0,title:"joker", id:1}],
-            1:[{hour:12, min:23, duration:2, duration_min:12 ,title:"joker", id:1}],
+    /*
+    days={  0:[{hour:11, min:3, duration:2, duration_min:23, title:"joker", id:2, day:23, month:"October", year:2021}, {hour:12, min:30, duration:2, duration_min:0,title:"joker", id:1}],
+            1:[{hour:12, min:23, duration:2, duration_min:12 ,title:"joker", id:2}],
             2:[{hour:12, min:25, duration:2, duration_min:10,title:"joker", id:1}],
             3:[{hour:16, min:50, duration:2, duration_min:5,title:"joker", id:1}],
             4:[{hour:12, min:23, duration:2, duration_min:50,title:"joker", id:1}],
             5:[{hour:18, min:23, duration:2, duration_min:50,title:"joker", id:1}],
             6:[{hour:12, min:0, duration:2, duration_min:12,title:"joker", id:1}]
         }
-    
-    
+    */
+
     for (d in days)
     {
         var day = days[d];
+        console.log(day)
         var offset_row = 0
         var column = document.getElementById(d + '');
 
@@ -133,13 +142,14 @@ let set_projections = function (days)
                 
                 // Computes how many 40px rows is going to use the movie projection
                 var rows_used = projection.duration + Math.ceil((projection.duration_min+projection.min)/60, 0)
+                console.log(projection.duration_min)
                 // Adds the movie projection
                 cell = document.createElement('div');
                 cell.className = "projection"
                 cell.style.backgroundColor = "red";
                 cell.style.height =  projection.duration * 40 + Math.round(projection.duration_min * 40 / 60, 0) + "px";
                 cell.style.backgroundClip= "content-box"
-                cell.innerHTML = "testing";
+                cell.innerHTML = "Screen: " + projection.id + "<br>At: " + projection.hour + ":" + projection.min;
                 cell.id="d" + d + "p" + p;
                 cell.day = column.firstChild.innerHTML;
                 cell.projection = projection;
@@ -152,14 +162,13 @@ let set_projections = function (days)
                 cell.className = "projection"
                 cell.style.height = 40 - (Math.round(projection.duration_min*40/60, 0) + Math.round(projection.min*40/60,0)) % 41 + "px" 
                 column.appendChild(cell)
-                
-                // New offset 
+
                 offset_row = row + rows_used;
             }
             else // the projections overlap
             {
                 // rows used for the movie projection (diferent hours)
-                var rows_used = projection.duration + Math.ceil((projection.duration_min+projection.min)/60, 0)
+                var rows_used = projection.duration + Math.round((projection.duration_min+projection.min)/60, 0)
 
                 // data regarding with last cell (the one that fills the reamining minutes for completing an hour)
                 last_cell = column.lastChild;
@@ -179,7 +188,7 @@ let set_projections = function (days)
                 cell.style.backgroundColor = "blue";
                 cell.style.height =  (row - offset_row  + rows_used)*40 + Math.round((projection.duration_min)*40/60, 0) + "px";
                 cell.style.backgroundClip= "content-box"
-                cell.innerHTML = "testing";
+                cell.innerHTML = "Screen: " + projection.id + "<br>At: " + projection.hour + ":" + projection.min;
                 cell.day = column.firstChild.innerHTML;
                 cell.projection = projection;
                 cell.setAttribute( "onClick", "javascript: show_reservation(this);" );
