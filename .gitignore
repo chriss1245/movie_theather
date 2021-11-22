@@ -3,3 +3,4 @@ venv
 __pycache
 .vscode
 DEADJOE
+.~lock*
