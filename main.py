@@ -22,6 +22,7 @@ def post_reservation(movie_id= 0):
 
 @bp.route("/movie/<int:movie_id>") # will take the movie id
 def movie(movie_id=1):
+
     return render_template("main/movie.html")
 
 @bp.route("/login")
