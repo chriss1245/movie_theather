@@ -7,7 +7,24 @@
     
 }
 
-p{
+.director
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+} 
+
+.description
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+} 
+
+.rank
+{
     display: block;
     margin-left: auto;
     margin-right: auto;
