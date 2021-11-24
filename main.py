@@ -12,7 +12,7 @@ def home():
 
 @bp.route("/reservation/<int:movie_id>") # Requires the movie id
 def reservation(movie_id = 1):
-    movie = model.Movie(1, "Harry potter and the Deadly shallows", 'img/1.jpg')
+    movie = model.Movie(1, "Harry potter and the Chamber of Secrets", 'img/1.jpg')
     return render_template("main/reservation.html", movie=movie)
 
 @bp.route("/reservation/<int:movie_id>", methods=['POST'])
@@ -32,7 +32,7 @@ def login():
 @bp.route("/customer")
 def user_template():
     user = model.User("lolito", 'lolito@lolito.com', "legoland")
-    return render_template("main/user_template.html",user = user)
+    return render_template("main/user_template.html",user = user, movies_after = [], movies_before = [])
 
 
 @bp.route("/register")

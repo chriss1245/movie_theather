@@ -22,8 +22,9 @@ class MovieProjection():
         self.date = date
 
 class User():
-    def __init__(self, name, email,password="" ,location=""):
+    def __init__(self, name, email,password="" ,location="", isAdmin=False):
         self.name = name
         self.email = email
         self.password = password
         self.location = location
+        self.is_admin = isAdmin

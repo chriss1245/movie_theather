@@ -1,10 +1,14 @@
 from . import db
 
 class Movie(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), nullable=False)
-	synopsyis = db.Column(db.String(10000), nullable = False)
-	duration = db.Column(db.Integer, primary_key=True)
+	synopsyis = db.Column(db.String(2000), nullable = False)
+	duration_hours = db.Column(db.Integer, nullable = False)
+	duration_min = db.Column(db.Integer, nullable = False)
 	director = db.Column(db.String(64), nullable=False)
+	main_cast = db.Column(db.String(200))
+	
 
 	"""
         self.id = id
@@ -24,8 +28,9 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable=False)
 
 class Screen(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), nullable=False)
-	seats = db.Column(db.Integer, primary_key=True)
+	seats = db.Column(db.Integer)
 	"""
 	def __init__(self, name, seats):
 		self.name = name
@@ -35,7 +40,8 @@ class Screen(db.Model):
 class Projection(db.Model):
 
     movie = db.Column(db.String(64), db.ForeignKey('movie.name'), nullable=False)
-    screen=Screen(db.Model).name
+    screen=db.Column(db.String(64), db.ForeignKey('movie.name'), nullable=False) # Screen(db.Model).name
+	
     day=db.Column(db.Integer, primary_key=True)
     hour=db.Column(db.Integer, primary_key=True)
     minute=db.Column(db.Integer, primary_key=True)
