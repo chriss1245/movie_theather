@@ -32,7 +32,7 @@ def login():
 @bp.route("/customer")
 def user_template():
     user = model.User("lolito", 'lolito@lolito.com', "legoland")
-    return render_template("main/user_template.html",user = user)
+    return render_template("main/user_template.html",user = user, movies_after = [], movies_before = [])
 
 
 @bp.route("/register")
