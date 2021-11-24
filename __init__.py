@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy  import SQLAlchemy
 
+from textblob import TextBlob
 
 def create_app(test_config=None):
     app = Flask(__name__)
