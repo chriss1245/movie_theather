@@ -12,11 +12,12 @@
             <p>
             
         </ul>
+        
         <ul>
             <form action="{{url_for('main.reservation', movie_id=movie.id)}}" method="post" id="reservation_form">
                 <input type="hidden" name="movie_projection_id" id="movie_projection_id">
-                <label for="number_seats">Seats: </label>
-                <input type="number" name="number_seats" id="number_seats" min="1" max="40" value="1">
+                <b>Seats:</b> <input type="number" name="number_seats" id="number_seats" min="1" max="40" value="1" size="3">
+                <br><br>
                 <input id="reserve_button" type="submit" value="Reserve Now" disabled>
             </form>
         </ul>
