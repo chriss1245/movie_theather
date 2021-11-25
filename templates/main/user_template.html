@@ -23,53 +23,55 @@
                             </div>
                         </div>
                         <div class = "user-container">
-                            
-                            <p>
-                                <i class = "fa fa-home fa-fw margin-right user-large user-text-teal">
-                                    
-                                </i>
-                                {{user.email}}
-                            </p>
-                            <p class = "user-large">
-                                <b>
-                                    <i class = "fa fa-asterisk fa -fw user-margin-right user-text-teal">
-                                        
-                                    </i>
-                                </b>
-                                {{user.location}}
-                            </p>
-                        </div>
-                        <h2> To be seen: </h2>
-            {% if movies_after|length < 1 %}
-                <!-- If there are no movies we show a message saying that -->
-                <p style = "align = center"> You currently have no movies reserved</p>
-            {%else%}
-                {%for movie in movies_after%}
-                <!-- We display the information of the reserved movies -->
 
-                {% endfor %}
-            {%endif%}
+                                    <p>
+                                        <i class = "fa fa-home fa-fw margin-right user-large user-text-teal">
 
-            <h2> Already seen: </h2>
-            {% if movies_before|length < 1 %}
-                <p style = "align = center"> You have not seen any movies !</p>
-            {% else %}
-                {% for movie in movies_before %}
-                <!-- We display the information of the already seen movies -->
-                {%endfor%}
-            {%endif%}
+                                        </i>
+                                        {{user.email}}
+                                    </p>
+                                    <p class = "user-large">
+                                        <b>
+                                            <i class = "fa fa-asterisk fa -fw user-margin-right user-text-teal">
+
+                                            </i>
+                                        </b>
+                                        {{user.location}}
+                                    </p>
+                                </div>
+                                <h2> To be seen: </h2>
+                    {% if movies_after|length < 1 %}
+                        <!-- If there are no movies we show a message saying that -->
+                        <p style = "align = center"> You currently have no movies reserved</p>
+                    {%else%}
+                        {%for movie in movies_after%}
+                        <!-- We display the information of the reserved movies -->
+
+                        {% endfor %}
+                    {%endif%}
+
+                    <h2> Already seen: </h2>
+                    {% if movies_before|length < 1 %}
+                        <p style = "align = center"> You have not seen any movies !</p>
+                    {% else %}
+                        {% for movie in movies_before %}
+                        <!-- We display the information of the already seen movies -->
+                        {%endfor%}
+                    {%endif%}
 
 
-            <p> Are you satisfied with the service? </p>
-            <input type="radio" id="yes" value="yes">
-            <label for="yes">Yes</label>
-            <input type="radio" id="no" value="yes">
-            <label for="no">No</label>
-            <br>
-            <p> Give us your opinion on the service: </p>
-            <textarea id="suggestions" name="w3review" rows="20" cols="50">
-            Any suggestion is welcomed!
-            </textarea>
+                    <p> Are you satisfied with the service? </p>
+                    <input type="radio" id="yes" value="yes">
+                    <label for="yes">Yes</label>
+                    <input type="radio" id="no" value="yes">
+                    <label for="no">No</label>
+                    <br>
+                    <p> Give us your opinion on the service: </p>
+                        <form>
+                            <textarea id = "feedback" name = "feedback" rows = 10 cols = "50"></textarea>
+                            <br>
+                            <input type = "submit" value = "Submit">
+                        </form>
                     </div>
                 </div>
             </div>
