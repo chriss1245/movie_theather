@@ -3,6 +3,7 @@ from . import db
 class Movie(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), nullable=False)
+	image_path = db.Column(db.String(64), )
 	synopsyis = db.Column(db.String(2000), nullable = False)
 	duration_hours = db.Column(db.Integer, nullable = False)
 	duration_min = db.Column(db.Integer, nullable = False)
@@ -59,7 +60,7 @@ class Projection(db.Model):
 class Reservation(db.Model ):
 
 	user=User(db.Model).email
-	projection=Projection(db.Model).movie
+	movie_projection_id = db.Column(db.Integer, foreign)
 	no_seats=db.Column(db.Integer, primary_key=True)
 	day_res=db.Column(db.Integer, primary_key=True)
 	hour_res=db.Column(db.Integer, primary_key=True)
