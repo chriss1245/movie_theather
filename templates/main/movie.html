@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="{{url_for('static', filename='movie.css')}}">
     
     <iframe width="1400" height="800" class="trailer"
-        name=""
-        src="https://www.youtube.com/embed/zAGVQLHvwOY" 
+        name="{{movie.name}}"
+        src="{{movie.trailer}}" 
         title="YouTube video player" 
         frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 

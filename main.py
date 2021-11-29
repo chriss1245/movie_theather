@@ -22,8 +22,8 @@ def post_reservation(movie_id= 0):
 
 @bp.route("/movie/<int:movie_id>") # will take the movie id
 def movie(movie_id=1):
-
-    return render_template("main/movie.html")
+    movie = model.Movie(1, "Harry potter and the Chamber of Secrets", 'img/9.jpg',2, 30, "director", "cast", "description", 'https://www.youtube.com/embed/jBltxS8HfQ4')
+    return render_template("main/movie.html", movie=movie)
 
 @bp.route("/login")
 def login():
