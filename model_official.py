@@ -1,26 +1,5 @@
 from . import db
 
-class Movie(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(64), nullable=False)
-	image_path = db.Column(db.String(64), )
-	synopsyis = db.Column(db.String(2000), nullable = False)
-	duration_hours = db.Column(db.Integer, nullable = False)
-	duration_min = db.Column(db.Integer, nullable = False)
-	director = db.Column(db.String(64), nullable=False)
-	main_cast = db.Column(db.String(200))
-	
-
-	"""
-        self.id = id
-        self.name = name
-        self.image_path = image_path
-		self.trailer_path=trailer_path
-		self.sypnosis=sypsnosis
-		self.duration=duration
-		self.director=director
-		self.main_cast=main_cast
-	"""
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,49 +7,52 @@ class User(db.Model):
     name = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
+"""
+    A user has many reseravtions
+	reservations = db.relationship("Reservation", backref="user", lazy=True)
+"""
+
+class Movie(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), nullable=False)
+    image_path = db.Column(db.String(64), nullable = False)
+    trailer_link = db.Column(sb.String(200), nullable = False)
+    description = db.Column(db.String(2000), nullable = True) # instead of synopsis
+    duration_hours = db.Column(db.Integer, nullable = False)
+    duration_min = db.Column(db.Integer, nullable = False)
+    director = db.Column(db.String(64), nullable=False)
+    cast = db.Column(db.String(200), nullable = True)
+    """
+    A movie has many movie projections
+    projections = db.relationship('Projection', backref='movie', lazy = True)
+    """
+	
+
+
 class Screen(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(64), nullable=False)
-	seats = db.Column(db.Integer)
-	"""
-	def __init__(self, name, seats):
-		self.name = name
-		self.seats = seats
-	"""
+    id = db.Column(db.Integer, primary_key=True)
+    seats = db.Column(db.Integer)
+    """
+    A screen has many movie projections
+    projections = db.relationship('Projection', backref='screen', lazy = True)
+    """
 
 class Projection(db.Model):
-
-    movie = db.Column(db.String(64), db.ForeignKey('movie.name'), nullable=False)
-    screen=db.Column(db.String(64), db.ForeignKey('movie.name'), nullable=False) # Screen(db.Model).name
-	
-    day=db.Column(db.Integer, primary_key=True)
-    hour=db.Column(db.Integer, primary_key=True)
-    minute=db.Column(db.Integer, primary_key=True)
-
-
-
+    id = db.Column(db.Integer, primary_key = True)
+    screen_id = db.Column(db.Integer, db.ForeignKey("screen.id"), nullable = False)
+    movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable = False)
+    date = db.column(db.DateTime(), nullable = False)
     """
-    def __init__(self, movie, screen, day, time):
-		self.movie=movie
-		self.screen=screen
-		self.day=day
-		self.time=time
-	"""
+    A movie projection has only one movie, one screen, and many reservations
+    reservations = db.relationship('Reservation', backref='projection', lazy=True)
+    """
 
 class Reservation(db.Model ):
-
-	user=User(db.Model).email
-	movie_projection_id = db.Column(db.Integer, foreign)
-	no_seats=db.Column(db.Integer, primary_key=True)
-	day_res=db.Column(db.Integer, primary_key=True)
-	hour_res=db.Column(db.Integer, primary_key=True)
-	minute_res=db.Column(db.Integer, primary_key=True)
-	"""
-	def __init__(self, user, projection, no_seats, day_res, time_res):
-		self.user=user
-		self.projection=projection
-		self.no_seats=no_seats
-		self.day_res=day_res
-		self.time_res=time_res
-
-	"""
+    id = db.Column(db.Integer, primary_key=True)
+    projection_id = db.column(db.Integer, db.ForeignKey("projection.id"), nullable=False)
+    user_id = db.column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    seats=db.Column(db.Integer, nullable=False)
+    date = db.Column(db.DateTime(), nullable=False)
+    """
+    A reservation has one user and one mobie projection
+    """
