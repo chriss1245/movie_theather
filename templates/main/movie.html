@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="{{url_for('static', filename='movie.css')}}">
     
     <iframe width="1400" height="800" class="trailer"
-        name=""
-        src="https://www.youtube.com/embed/zAGVQLHvwOY" 
+        name="{{movie.name}}"
+        src="{{movie.trailer_link}}" 
         title="YouTube video player" 
         frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -18,12 +18,11 @@
 
     <p class="director">
         
-        Director: Todd Phillips
+        {{movie.director}}   
     </p>
 
     <p class="description">
-        Joker is a 2019 American psychological thriller film directed and produced by Todd Phillips, 
-        who co-wrote the screenplay with Scott Silver. The film
+       {{movie.description}} 
     </p>
 
     <p class="rank"> 
@@ -40,7 +39,7 @@
         <label for="5">5</label>
     </p>
 
-    
+
 
 
     
