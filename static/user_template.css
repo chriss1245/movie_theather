@@ -14,3 +14,18 @@ input[type=text], input[type=password] {
     border: 2px solid green;   
     box-sizing: border-box;   
 }  
+
+
+#zone1{
+  display: inline-flex;
+  flex-direction: column;
+  width: 15%;
+}
+
+#zone2{
+  display: inline-flex;
+  flex-direction: column;
+  border-width: 5px;
+  border-color: lightcyan;
+  width: 84%;
+}
