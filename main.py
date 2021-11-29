@@ -7,7 +7,7 @@ bp = Blueprint("main", __name__)
 
 @bp.route("/")
 def home():
-    movies = [ model.Movie(i, name, 'img/'+str(i)+'.jpg') for i, name, in zip(range(1,12), ['Black panther', 'After', 'Star Wars ', 'Justice league', 'Jaws', 'Joker', 'It', 'Titanic', 'Harry Potter', "Avatar", "Butterfly Effect"])]
+    movies = model.Movie.query.all()
     return render_template("main/home.html", movies=movies[:5], all_movies=movies)
 
 @bp.route("/reservation/<int:movie_id>") # Requires the movie id
@@ -31,8 +31,7 @@ def login():
 
 @bp.route("/customer")
 def user_template():
-    user = model.User("lolito", 'lolito@lolito.com', "legoland")
-    return render_template("main/user_template.html",user = user, movies_after = [], movies_before = [])
+    return render_template("main/user_template.html",user = None, movies_after = [], movies_before = [])
 
 
 @bp.route("/register")
