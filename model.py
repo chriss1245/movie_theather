@@ -7,10 +7,10 @@ class User(db.Model):
     name = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(100), nullable=False)
     admin = db.Column(db.Boolean, nullable=False)
-
+    reservations = db.relationship("Reservation", backref="user", lazy=True)
 """
     A user has many reseravtions
-	reservations = db.relationship("Reservation", backref="user", lazy=True)
+	
 """
 
 class Movie(db.Model):
@@ -23,9 +23,10 @@ class Movie(db.Model):
     duration_min = db.Column(db.Integer, nullable = False)
     director = db.Column(db.String(64), nullable=False)
     cast = db.Column(db.String(200), nullable = True)
+    projections = db.relationship('Projection', backref='movie', lazy = True)
     """
     A movie has many movie projections
-    projections = db.relationship('Projection', backref='movie', lazy = True)
+    
     """
 	
 
@@ -33,9 +34,10 @@ class Movie(db.Model):
 class Screen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     seats = db.Column(db.Integer)
+    projections = db.relationship('Projection', backref='screen', lazy = True)
     """
     A screen has many movie projections
-    projections = db.relationship('Projection', backref='screen', lazy = True)
+    
     """
 
 class Projection(db.Model):
@@ -43,9 +45,10 @@ class Projection(db.Model):
     screen_id = db.Column(db.Integer, db.ForeignKey("screen.id"), nullable = False)
     movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable = False)
     date = db.Column(db.DateTime(), nullable=False)
+    reservations = db.relationship('Reservation', backref='projection', lazy=True)
     """
     A movie projection has only one movie, one screen, and many reservations
-    reservations = db.relationship('Reservation', backref='projection', lazy=True)
+    
     """
 
 class Reservation(db.Model ):

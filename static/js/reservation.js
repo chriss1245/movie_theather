@@ -50,7 +50,7 @@ let request_movie_projections = function()
         initial_date.setMinutes(0);
     }
     params += "date=" + initial_date.getDate();
-    params += "&month=" + initial_date.getMonth();
+    params += "&month=" + (initial_date.getMonth() + 1);
     params += "&year=" + initial_date.getFullYear();
     params += "&hour=" + initial_date.getHours();
     params += "&minute=" + initial_date.getMinutes();
@@ -105,11 +105,11 @@ let set_projections = function (days)
             6:[{hour:12, min:0, duration:2, duration_min:12,title:"joker", id:1}]
         }
     */
-
     for (d in days)
     {
         var day = days[d];
         console.log(day)
+
         var offset_row = 0
         var column = document.getElementById(d + '');
 
@@ -149,7 +149,7 @@ let set_projections = function (days)
                 cell.style.backgroundColor = "red";
                 cell.style.height =  projection.duration * 40 + Math.round(projection.duration_min * 40 / 60, 0) + "px";
                 cell.style.backgroundClip= "content-box"
-                cell.innerHTML = "Screen: " + projection.id + "<br>At: " + projection.hour + ":" + projection.min;
+                cell.innerHTML = "Screen: " + projection.screen + "<br>At: " + projection.hour + ":" + projection.min;
                 cell.id="d" + d + "p" + p;
                 cell.day = column.firstChild.innerHTML;
                 cell.projection = projection;
@@ -188,7 +188,7 @@ let set_projections = function (days)
                 cell.style.backgroundColor = "blue";
                 cell.style.height =  (row - offset_row  + rows_used)*40 + Math.round((projection.duration_min)*40/60, 0) + "px";
                 cell.style.backgroundClip= "content-box"
-                cell.innerHTML = "Screen: " + projection.id + "<br>At: " + projection.hour + ":" + projection.min;
+                cell.innerHTML = "Screen: " + projection.screen + "<br>At: " + projection.hour + ":" + projection.min;
                 cell.day = column.firstChild.innerHTML;
                 cell.projection = projection;
                 cell.setAttribute( "onClick", "javascript: show_reservation(this);" );

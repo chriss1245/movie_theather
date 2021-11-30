@@ -17,12 +17,17 @@
     </iframe>
 
     <p class="director">
-        
+        <h3>Director</h3>
         {{movie.director}}   
     </p>
 
     <p class="description">
+        <h4>Description</h4>
        {{movie.description}} 
+    </p>
+
+    <p class="reservation">
+        <a href="{{url_for('main.reservation', movie_id=movie.id)}}"> Reservation </a>
     </p>
 
     <p class="rank"> 

@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, \
     url_for, flash, jsonify, make_response
 
-from .model import Projection, Movie, Screen
+from . import model
 from .utils import projection_to_dict
 import datetime
+from calendar import monthrange
 
 bp = Blueprint('data', __name__)
 
@@ -15,21 +16,38 @@ def get_projections(movie_id=0):
     year = int(request.args.get("year"))
     hour = int(request.args.get("hour"))
     min = int(request.args.get("minute"))
-
-    initial_date = datetime.datetime(year, month, day, hour, min)
-    print(initial_date)
-    date = datetime.datetime(2019, 4, 18, 14, 0) # year, month, day, hour, min
-    date2 = datetime.datetime(2019, 4, 18, 16, 29)
-    date3 = datetime.datetime(2019, 4, 20, 16, 29)
-    movie = Movie(1, "Joker", "img/1.jpg")
-    screens = [Screen(1), Screen(12)]
-    dates = [date, date2, date3]
-    mp1 = MovieProjection(1, 1, 1, date)
-    mp2 = MovieProjection(1, 1, 1, date2)
-    movie_projections = {0:[projection_to_dict(mp1, screens[0], movie), projection_to_dict(mp2, screens[1], movie)],
-                        1:[],
-                        2: [projection_to_dict(mp1, screens[0], movie), projection_to_dict(mp2, screens[1], movie)],
-                        3:[], 4:[], 5:[], 6:[]
-                        }
     
+    
+    # Get the available movie projection for the days of the week
+    movie_projections = {i:[] for i in range(7)}
+    days_in_month = monthrange(year, month)[-1]
+    
+    for extra_days, i in enumerate(range(datetime.datetime(year, month, day).weekday(), 7)):
+        
+        # Gives a valid date
+        if day + extra_days > days_in_month:
+            day_ = ((day + extra_days) % (days_in_month + 1)) + 1
+
+            if month + 1 > 12:
+                year_ = year + 1
+                month_ = 1
+            else:
+                month_ = month + 1
+        else:
+            month_ = month
+            day_ = day + extra_days
+            year_ = year
+
+        current_date = datetime.datetime(year_, month_, day_, hour, min)
+        """Check the filter by"""
+        next_date =  current_date + datetime.timedelta(days=1)
+        
+        movie_projections[i] = projection_to_dict(model.Projection.query
+                                .filter(movie_id==movie_id)
+                                .filter(model.Projection.date >= current_date)
+                                .filter(model.Projection.date <= next_date)
+                                .order_by(model.Projection.date)
+                                .all())
+    
+    print(movie_projections)    
     return make_response(jsonify(movie_projections))
