@@ -4,71 +4,47 @@
 
 {%block content%} 
     <link rel="stylesheet" href="{{url_for('static', filename='user_template.css')}}">
-    
-    <!-- PAGE CONTAINER-->
-        <div class = "user-view-body" style = "max-widht:1400px;">
-            <div class = "user-view-margin-top" style = "max-width">
-                <!--THE GRID-->
-                <div class = "user-view-row-padding">
-                    
-                    <!-- LEFT COLUMN-->
-                    <div class = "user-view-third">
-                        <div class = "display-container">
-                            <!-- USER PROFILE PICTURE-->
-                            <img src ="" style = "width:100%" alt = "ProfilePic">
-                            <div class = "user-display-bottomleft container">
-                                
-                                <h2>{{user.name}}</h2>
-                                
-                            </div>
-                        </div>
-                        <div class = "user-container">
+    <!-- LEFT COLUMN-->
+    <div class = "user-data">
+        <!-- Default picture-->
+        <img src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" style = "width:100%" alt = "ProfilePic">
+        <h2>{{user.name}}</h2>
 
-                                    <p>
-                                        <i class = "fa fa-home fa-fw margin-right user-large user-text-teal">
+        <ul>
+            <li>Email: {{user.email}}</li>
+            <li>Location: {{user.location}}</li>
+        </ul>
+    </div>
 
-                                        </i>
-                                        {{user.email}}
-                                    </p>
-                                    <p class = "user-large">
-                                        <b>
-                                            <i class = "fa fa-asterisk fa -fw user-margin-right user-text-teal">
+    <!-- RIGHT COLUMN-->
+    <div class="reservations-data">
+        <!-- Movies to see-->
+        
+        <h3 class="section-title"> To be seen </h3>
+        {% if movies_after|length < 1 %}
+            <!-- If there are no movies we show a message saying that -->
+            <p class="no-reservations-message"> You currently have no movies reserved</p>
+        {%else%}
+            {%for movie in movies_after%}
+            <!-- We display the information of the reserved movies -->
+            {% endfor %}
+        {%endif%}
 
-                                            </i>
-                                        </b>
-                                        {{user.location}}
-                                    </p>
-                                </div>
-                                <h2> To be seen: </h2>
-                    {% if movies_after|length < 1 %}
-                        <!-- If there are no movies we show a message saying that -->
-                        <p style = "align = center"> You currently have no movies reserved</p>
-                    {%else%}
-                        {%for movie in movies_after%}
-                        <!-- We display the information of the reserved movies -->
+        <!--Movies already seen-->
+        <h3 class="section-title"> Already seen</h3>
+        {% if movies_before|length < 1 %}
+            <p class="no-reservations-message"> You have not seen any movies !</p>
+        {% else %}
+            {% for movie in movies_before %}
+            <!-- We display the information of the already seen movies -->
+            {%endfor%}
+        {%endif%}
 
-                        {% endfor %}
-                    {%endif%}
-
-                    <h2> Already seen: </h2>
-                    {% if movies_before|length < 1 %}
-                        <p style = "align = center"> You have not seen any movies !</p>
-                    {% else %}
-                        {% for movie in movies_before %}
-                        <!-- We display the information of the already seen movies -->
-                        {%endfor%}
-                    {%endif%}
-
-                    <br>
-                    <p> Give us your opinion on the service: </p>
-                        <form>
-                            <textarea id = "feedback" name = "feedback" rows = 10 cols = "50"></textarea>
-                            <br>
-                            <input type = "submit" value = "Submit">
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        <form class="feedback">
+            <h6>Give us your opinion on the service:</h6> 
+            <textarea id = "feedback" name = "feedback" rows = 3 cols = "138"></textarea>
+            <br>
+            <input type = "submit" value = "Submit">
+        </form>
+    </div>
 {%endblock%}
