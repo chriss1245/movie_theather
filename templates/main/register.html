@@ -1,21 +1,23 @@
 {% extends 'src/base.html' %}
 {%block title%} Register {%endblock%}  
 {%block content%} 
-
-
- 
-<link rel="stylesheet" href="{{url_for('static', filename='Register.css')}} ">
-    <center> <h1> Student Register Form </h1> </center>   
-    <form>  
+    <link rel="stylesheet" href="{{url_for('static', filename='Register.css')}} ">
+    <center> <h1> Student Register Form </h1> </center> 
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div class='error'>{{ message }}</div>
+        {% endfor %}
+    {% endwith %}  
+    <form method="post">  
         <div class="container">   
             <label>Name : </label>   
             <input type="text" placeholder="Enter Name" name="name" required>  
             <label>Email : </label>   
-            <input type="text" placeholder="Enter Email" name="Email" required>  
+            <input type="text" placeholder="Enter Email" name="email" required>  
             <label>Password : </label>   
-            <input type="password" placeholder="Enter Password" name="password" required>  
-            <label>Location : </label>   
-            <input type="text" placeholder="Enter Location" name="location" required>  
+            <input type="password" placeholder="Enter Password" name="password" required>
+            <label for="repeat_password">Repeat Password:</label>
+            <input type="password" name="password_repeat" id="repeat_password" required>
             <button type="submit">Register</button>   
              
             <!--<button type="button" class="loginbtn"> Login</button> -->

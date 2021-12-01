@@ -9,9 +9,9 @@
 {
     display: inline-flex;
     margin-bottom: 20px;
-    width: 19.1%;
+    width: 19%;
     margin-inline: 0.3%;
-    height: 500px;
+    height: 400px;
 }
 
 .movie-container-item a, img{

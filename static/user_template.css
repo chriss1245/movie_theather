@@ -48,3 +48,13 @@ section
 {
   width: 100%;
 }
+
+.reservation-box p
+{
+  font-size: 12px;
+}
+
+.reservation-box
+{
+  border-bottom: darkcyan solid 1px;
+}

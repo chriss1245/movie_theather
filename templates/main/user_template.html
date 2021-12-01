@@ -12,7 +12,6 @@
 
         <ul>
             <li>Email: {{user.email}}</li>
-            <li>Location: {{user.location}}</li>
         </ul>
     </div>
 
@@ -30,8 +29,9 @@
                 <div class="reservation-box">
                     <h5>{{reservation.projection.movie.name}}</h5>
                     <p>
-                        Date: {{reservation.projection.date}}
-                        Screen: {{reservation.projection.screen_id}}
+                        Date: {{reservation.projection.date}} <br>
+                        Screen: {{reservation.projection.screen_id}} <br>
+                        Seats: {{reservation.seats}}
                     </p>
                 </div>
             {% endfor %}
@@ -48,7 +48,8 @@
                     <p>
                         <b>{{reservation.projection.movie.name}}</b> <br><br>
                         Date: {{reservation.projection.date}} <br>
-                        Screen: {{reservation.projection.screen_id}}
+                        Screen: {{reservation.projection.screen_id}} <br>
+                        Seats: {{reservation.seats}}
                     </p>
                 </div>
             {%endfor%}

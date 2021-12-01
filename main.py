@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, \
-    redirect, abort
+    redirect, abort, flash
 
 import datetime
 
@@ -9,8 +9,10 @@ bp = Blueprint("main", __name__)
 
 @bp.route("/")
 def home():
-    movies = model.Movie.query.all()
-    return render_template("main/home.html", movies=movies[:5], all_movies=movies)
+    movies = model.Movie.query.order_by(model.Movie.rating.desc()).limit(5).all()
+    movies.append(movies[0])
+    all_movies = model.Movie.query.order_by(model.Movie.id.desc()).all()
+    return render_template("main/home.html", movies=movies, all_movies=all_movies)
 
 #-------------------RESERVATION---------------------------------
 @bp.route("/reservation/<int:movie_id>") # Requires the movie id
@@ -66,19 +68,20 @@ def user_template():
     if not user.admin:
 
         # Reservations
-        reservations_before = (model.Reservation.query
+        reservations = (model.Reservation.query
             .filter_by(user_id=user.id)
-            .filter(model.Reservation.date < datetime.datetime.now())
             .order_by(model.Reservation.date)
             .all()
         )
 
-        reservations_after = (model.Reservation.query
-            .filter_by(user_id=user.id)
-            .filter(model.Reservation.date >= datetime.datetime.now())
-            .order_by(model.Reservation.date)
-            .all()
-        )
+        reservations_before = []
+        reservations_after = []
+        for reservation in reservations:
+            if reservation.projection.date <= datetime.datetime.now():
+                reservations_before.append(reservation)
+            else:
+                reservations_after.append(reservation)
+
         return render_template("main/user_template.html",
             user=user,
             reservations_after=reservations_after,
@@ -123,7 +126,47 @@ def post_user():
 def login():
     return render_template("main/login.html")
 
+@bp.route("/login", methods=["POST"])
+def post_login():
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    user = model.User.query.filter_by(email=email).first()
+
+    """
+    if user and bcrypt.check_password_hash(user.password, password):
+        flask_login.login_user(user)
+        return redirect(url_for('main.index'))
+    else:
+        flash('Wrong email or password. Try again')"""
+    return redirect(url_for('main.user_template'))
+
 #-----------------------SIGNUP--------------------------------------
 @bp.route("/register")
 def register():
     return render_template("main/register.html")
+
+@bp.route("/register", methods=["POST"])
+def post_register():
+    email = request.form.get('email')
+    username = request.form.get('name')
+    password = request.form.get('password')
+    
+    # Equal passwor/singup/singupds
+    if  password != request.form.get('password_repeat'):
+        flash("Passwords differ")
+        return redirect(url_for("main.register"))
+    
+    # Check if the email is already at the database
+    user = model.User.query.filter_by(email = email).first()
+    if user:
+        flash('User already exists') 
+        return redirect(url_for("main.register"))
+
+    #password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+    password_hash=password
+    new_user = model.User(email=email, name=username, password = password_hash, admin=False)
+
+    db.session.add(new_user)
+    db.session.commit()
+    return redirect(url_for('main.user_template'))
