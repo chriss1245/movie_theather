@@ -1,0 +1,47 @@
+{% extends 'src/base.html' %}
+
+{%block title%} User view {%endblock%}  
+
+{%block content%} 
+    <link rel="stylesheet" href="{{url_for('static', filename='admin_template.css')}}">
+    <!-- LEFT COLUMN-->
+    <div class = "user-data">
+        <!-- Default picture-->
+        <img src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" style = "width:100%" alt = "ProfilePic">
+        <h2>{{user.name}}</h2>
+
+        <ul>
+            <li>Email: {{user.email}}</li>
+            <li>Location: {{user.location}}</li>
+        </ul>
+    </div>
+    
+    <!-- RIGHT COLUMN-->
+    <div class="analytics-data">
+
+        <!--Create a movie projection-->
+        <form action="" method="post">
+            Add a new movie projection:
+            <label for="movie">Movie: </label>
+            <select name="movie" id="movie">
+                {%for movie in movies%}
+                    <option value="{{movie.id}}">{{movie.name}}</option>
+                {%endfor%}
+            </select>
+
+            <label for="screen">Screen: </label>
+            <select name="screen" id="screen">
+                {%for screen in screens%}
+                    <option value="{{screen.id}}">{{screen.id}}</option>
+                {%endfor%}
+            </select>
+
+            <label for="date">Date:</label>
+            <input type="datetime" name="date" id="date">
+        </form>
+
+        <div class="plots">
+            <!--Here are going to come the plots-->
+        </div>
+    </div>
+{%endblock%}
