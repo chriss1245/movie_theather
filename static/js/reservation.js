@@ -41,19 +41,12 @@ let request_movie_projections = function()
     let params = "?";
     let xmlhttp = new XMLHttpRequest()
 
-    if (g_extra_weeks > 0)
-    {
-        day = initial_date.getDay();
-        extra_days =  7 - day + g_extra_weeks - 1; // 
-        initial_date.setDate(initial_date.getDate());
-        initial_date.setHours(OPEN_HOUR);
-        initial_date.setMinutes(0);
-    }
     params += "date=" + initial_date.getDate();
-    params += "&month=" + initial_date.getMonth();
+    params += "&month=" + (initial_date.getMonth() + 1);
     params += "&year=" + initial_date.getFullYear();
     params += "&hour=" + initial_date.getHours();
     params += "&minute=" + initial_date.getMinutes();
+    params += "&extra_weeks=" + g_extra_weeks;
     
     // Http request
     xmlhttp.onload = function ()
@@ -85,7 +78,7 @@ let show_reservation = function (cell)
         p.innerHTML = "<b>Hour:</b> " + cell.projection.hour + ":" + cell.projection.min;
     projection_details.append(p);
     p = document.createElement("p");
-    p.innerHTML = "<b>Screen:</b> " + "23"; //cell.projection.screen;
+    p.innerHTML = "<b>Screen:</b> " + cell.projection.screen;
     projection_details.append(p);
 
 }
@@ -96,6 +89,7 @@ let set_projections = function (days)
         Allocates the movie projections on the schedule
     */
     /*
+    Expected response
     days={  0:[{hour:11, min:3, duration:2, duration_min:23, title:"joker", id:2, day:23, month:"October", year:2021}, {hour:12, min:30, duration:2, duration_min:0,title:"joker", id:1}],
             1:[{hour:12, min:23, duration:2, duration_min:12 ,title:"joker", id:2}],
             2:[{hour:12, min:25, duration:2, duration_min:10,title:"joker", id:1}],
@@ -105,11 +99,11 @@ let set_projections = function (days)
             6:[{hour:12, min:0, duration:2, duration_min:12,title:"joker", id:1}]
         }
     */
-
     for (d in days)
     {
         var day = days[d];
         console.log(day)
+
         var offset_row = 0
         var column = document.getElementById(d + '');
 
@@ -149,7 +143,14 @@ let set_projections = function (days)
                 cell.style.backgroundColor = "red";
                 cell.style.height =  projection.duration * 40 + Math.round(projection.duration_min * 40 / 60, 0) + "px";
                 cell.style.backgroundClip= "content-box"
-                cell.innerHTML = "Screen: " + projection.id + "<br>At: " + projection.hour + ":" + projection.min;
+
+                // Makes that minutes apper in format 00 if needed
+                if (projection.min == 0)
+                    var minutes = '00';
+                else
+                    var minutes = projection.min + '';
+
+                cell.innerHTML = "Screen: " + projection.screen + "<br>At: " + projection.hour + ":" + minutes;
                 cell.id="d" + d + "p" + p;
                 cell.day = column.firstChild.innerHTML;
                 cell.projection = projection;
@@ -157,7 +158,7 @@ let set_projections = function (days)
 
                 column.appendChild(cell)
 
-                // Creates a cell with height proportional to the minutes left for completing an hour at the last used cell
+                // Creates a cell with heigqht proportional to the minutes left for completing an hour at the last used cell
                 cell = document.createElement('div');
                 cell.className = "projection"
                 cell.style.height = 40 - (Math.round(projection.duration_min*40/60, 0) + Math.round(projection.min*40/60,0)) % 41 + "px" 
@@ -186,9 +187,10 @@ let set_projections = function (days)
                 cell = document.createElement("div")
                 cell.className = "projection"
                 cell.style.backgroundColor = "blue";
-                cell.style.height =  (row - offset_row  + rows_used)*40 + Math.round((projection.duration_min)*40/60, 0) + "px";
+                console.log(row, offset_row, projection.duration, projection.duration_min)
+                cell.style.height =  (row - offset_row  + rows_used)*40 + Math.round((projection.duration_min)*40/60 , 0) + "px";
                 cell.style.backgroundClip= "content-box"
-                cell.innerHTML = "Screen: " + projection.id + "<br>At: " + projection.hour + ":" + projection.min;
+                cell.innerHTML = "Screen: " + projection.screen + "<br>At: lolito" + projection.hour + ":" + projection.min;
                 cell.day = column.firstChild.innerHTML;
                 cell.projection = projection;
                 cell.setAttribute( "onClick", "javascript: show_reservation(this);" );
