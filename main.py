@@ -60,7 +60,7 @@ def movie(movie_id=1):
 #-----------------------USER--------------------------------------
 @bp.route("/user")
 def user_template():
-    user = model.User.query.filter_by(id=2).first_or_404()
+    user = model.User.query.filter_by(id=3).first_or_404()
 
     # If the user is not admin it loads the customer view else the admin view
     if not user.admin:
@@ -94,7 +94,7 @@ def user_template():
 @bp.route("/user", methods=["POST"])
 def post_user():
     # Logic of web site review and movie projection creation
-    
+
     user = model.User.query.filter_by(id=1).first()
     if not user.admin:
         pass #reviews
@@ -104,6 +104,18 @@ def post_user():
         date_ = request.form.get("date")+" " + request.form.get("time")
         date = datetime.datetime.strptime(date_, '%Y-%m-%d %H:%M')
 
+        existent_projection = (model.Projection.query
+            .filter_by(screen_id=screen_id)
+            .filter(model.Projection.date >= date - datetime.timedelta(hours=-2, minutes=-30))
+            .filter(model.Projection.date <= date + datetime.timedelta(hours=-2, minutes=-30))
+            .first()
+        )
+        if existent_projection:
+            abort(403, "Screen is already used by other movie projection")
+
+        projection = model.Projection(screen_id=screen_id, movie_id=movie_id, date=date)
+        db.session.add(projection)
+        db.session.commit()
     return redirect(url_for("main.user_template"))
 
 #----------------------LOGIN--------------------------------------
