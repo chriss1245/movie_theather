@@ -24,11 +24,17 @@ class Movie(db.Model):
     director = db.Column(db.String(64), nullable=False)
     cast = db.Column(db.String(200), nullable = True)
     projections = db.relationship('Projection', backref='movie', lazy = True)
+    rating=db.Column(db.Integer, nullable = False)
+    ratings=db.Column(db.Integer, nullable = False)
     """
     A movie has many movie projections
     
     """
-	
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    text = db.Column(db.String(500), nullable = False)
+    
 
 
 class Screen(db.Model):
