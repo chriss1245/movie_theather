@@ -60,7 +60,7 @@ def movie(movie_id=1):
 #-----------------------USER--------------------------------------
 @bp.route("/user")
 def user_template():
-    user = model.User.query.filter_by(id=3).first_or_404()
+    user = model.User.query.filter_by(id=2).first_or_404()
 
     # If the user is not admin it loads the customer view else the admin view
     if not user.admin:
@@ -94,7 +94,17 @@ def user_template():
 @bp.route("/user", methods=["POST"])
 def post_user():
     # Logic of web site review and movie projection creation
-    return redirect(url_for("main.user"))
+    
+    user = model.User.query.filter_by(id=1).first()
+    if not user.admin:
+        pass #reviews
+    else:
+        movie_id = int(request.form.get("movie"))
+        screen_id = int(request.form.get("screen"))
+        date_ = request.form.get("date")+" " + request.form.get("time")
+        date = datetime.datetime.strptime(date_, '%Y-%m-%d %H:%M')
+
+    return redirect(url_for("main.user_template"))
 
 #----------------------LOGIN--------------------------------------
 @bp.route("/login")
