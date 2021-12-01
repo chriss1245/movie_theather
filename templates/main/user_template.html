@@ -27,6 +27,9 @@
         {%else%}
             {%for movie in movies_after%}
             <!-- We display the information of the reserved movies -->
+                <div class="reservation">
+                    
+                </div>
             {% endfor %}
         {%endif%}
 
@@ -37,6 +40,7 @@
         {% else %}
             {% for movie in movies_before %}
             <!-- We display the information of the already seen movies -->
+                
             {%endfor%}
         {%endif%}
 

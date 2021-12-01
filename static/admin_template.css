@@ -1,0 +1,51 @@
+Body {  
+    font-family: Calibri, Helvetica, sans-serif;  
+    background-color: white;  
+  }  
+
+  form {   
+    border: 3px solid #f1f1f1;   
+}  
+input[type=text], input[type=password] {   
+    width: 100%;   
+    margin: 8px 0;  
+    padding: 12px 20px;   
+    display: inline-block;   
+    border: 2px solid green;   
+    box-sizing: border-box;   
+}  
+
+
+section
+{
+  display: flex;
+  flex-direction: row;
+  padding-top: 1%;
+}
+
+.user-data
+{
+  width: 30%;
+}
+
+.reservations-data
+{
+  width: 100%;
+  padding-left: 2%;
+}
+
+.feedback
+{
+  padding-top: 20px;
+  border: 0;
+}
+
+.feedback h6
+{
+  margin-bottom: 5px;
+}
+.section-title
+{
+  width: 100%;
+  text-align: center;
+}
