@@ -4,7 +4,6 @@ from flask import Blueprint, render_template, request, redirect, \
 from . import model
 from .utils import projection_to_dict
 import datetime
-from calendar import monthrange
 
 bp = Blueprint('data', __name__)
 
@@ -16,38 +15,35 @@ def get_projections(movie_id=0):
     year = int(request.args.get("year"))
     hour = int(request.args.get("hour"))
     min = int(request.args.get("minute"))
+    extra_weeks = int(request.args.get("extra_weeks"))
     
     
     # Get the available movie projection for the days of the week
     movie_projections = {i:[] for i in range(7)}
-    days_in_month = monthrange(year, month)[-1]
+
     
-    for extra_days, i in enumerate(range(datetime.datetime(year, month, day).weekday(), 7)):
-        
-        # Gives a valid date
-        if day + extra_days > days_in_month:
-            day_ = ((day + extra_days) % (days_in_month + 1)) + 1
+    initial_date = datetime.datetime(year, month, day, 8, 59)
+    if extra_weeks > 0:
+        initial_date = initial_date + datetime.timedelta(weeks=1, 
+                                                        days=-initial_date.weekday())
+    
+    # From the current day of the week to sundays
+    for extra_days, i in enumerate(range(initial_date.weekday(), 7)):
 
-            if month + 1 > 12:
-                year_ = year + 1
-                month_ = 1
-            else:
-                month_ = month + 1
-        else:
-            month_ = month
-            day_ = day + extra_days
-            year_ = year
+        # Lower bound for date
+        current_date = initial_date + datetime.timedelta(days=extra_days)
 
-        current_date = datetime.datetime(year_, month_, day_, hour, min)
-        """Check the filter by"""
-        next_date =  current_date + datetime.timedelta(days=1)
-        
+        # Upper bound for date 
+        next_date =  current_date + datetime.timedelta(days=1, hours=-8, minutes=-58)
+
+        # Gets all the movie's projections planed for a given day
+        # Converts it to a list of dictionaries
+        # Stores in the corresponding day in movie_projections
         movie_projections[i] = projection_to_dict(model.Projection.query
-                                .filter(movie_id==movie_id)
-                                .filter(model.Projection.date >= current_date)
-                                .filter(model.Projection.date <= next_date)
+                                .filter(model.Projection.movie_id==movie_id)
+                                .filter(model.Projection.date > current_date)
+                                .filter(model.Projection.date < next_date)
                                 .order_by(model.Projection.date)
                                 .all())
     
-    print(movie_projections)    
     return make_response(jsonify(movie_projections))
