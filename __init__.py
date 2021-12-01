@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy  import SQLAlchemy
-
+from flask_login import LoginManager, current_user
 
 
 db = SQLAlchemy()
@@ -9,6 +9,15 @@ def create_app(test_config=None):
     app = Flask(__name__)
     app.config["SECRET_KEY"] = b"\x8c\xa5\x04\xb3\x8f\xa1<\xef\x9bY\xca/*\xff\x12\xfb"
 
+    #LOGIN MANAGER
+    login_manager = LoginManager()
+    login_manager.login_view = 'main.login'
+    login_manager.init_app(app)
+    from . import model
+    @login_manager.user_loader
+    def load_user(user_id):
+        return model.User.query.get(int(user_id))
+    
     # SQL ALCHEMY
     """
     app.config["SQLALCHEMY_DATABASE_URI"] =\

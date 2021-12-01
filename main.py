@@ -1,14 +1,17 @@
 from flask import Blueprint, render_template, request, url_for, \
     redirect, abort, flash
 
+import flask_login
 import datetime
 
 from . import model, db
 
 bp = Blueprint("main", __name__)
 
+
 @bp.route("/")
 def home():
+    flask_login.login_user(model.User.query.filter_by(id=1).first())
     movies = model.Movie.query.order_by(model.Movie.rating.desc()).limit(5).all()
     movies.append(movies[0])
     all_movies = model.Movie.query.order_by(model.Movie.id.desc()).all()
@@ -16,13 +19,14 @@ def home():
 
 #-------------------RESERVATION---------------------------------
 @bp.route("/reservation/<int:movie_id>") # Requires the movie id
+@flask_login.login_required
 def reservation(movie_id = 1):
     movie = model.Movie.query.filter_by(id=movie_id).first_or_404()
     return render_template("main/reservation.html", movie=movie)
 
 @bp.route("/reservation/<int:movie_id>", methods=['POST'])
+@flask_login.login_required
 def post_reservation(movie_id= 0):
-
     # Get the projection
     projection_id = int(request.form.get("movie_projection_id"))
     projection = (model.Projection.query
@@ -45,7 +49,7 @@ def post_reservation(movie_id= 0):
     # Proceed with the reservation
     reservation = model.Reservation(
         projection_id=projection.id,
-        user_id=3,
+        user_id=flask_login.current_user.id,
         seats=seats,
         date=datetime.datetime.now()
     )
@@ -61,8 +65,9 @@ def movie(movie_id=1):
 
 #-----------------------USER--------------------------------------
 @bp.route("/user")
+@flask_login.login_required
 def user_template():
-    user = model.User.query.filter_by(id=3).first_or_404()
+    user = flask_login.current_user
 
     # If the user is not admin it loads the customer view else the admin view
     if not user.admin:
@@ -86,19 +91,20 @@ def user_template():
             user=user,
             reservations_after=reservations_after,
             reservations_before=reservations_before)
-    else:
-        movies = model.Movie.query.all()
-        screens = model.Screen.query.all()
-        return render_template("main/admin_template.html",
-            movies=movies,
-            screens=screens,
-            user=user)
+    
+    movies = model.Movie.query.all()
+    screens = model.Screen.query.all()
+    return render_template("main/admin_template.html",
+        movies=movies,
+        screens=screens,
+        user=user)
 
 @bp.route("/user", methods=["POST"])
+@flask_login.login_required
 def post_user():
     # Logic of web site review and movie projection creation
 
-    user = model.User.query.filter_by(id=1).first()
+    user = flask_login.current_user
     if not user.admin:
         pass #reviews
     else:
@@ -139,6 +145,7 @@ def post_login():
         return redirect(url_for('main.index'))
     else:
         flash('Wrong email or password. Try again')"""
+    flask_login.login_user(user)
     return redirect(url_for('main.user_template'))
 
 #-----------------------SIGNUP--------------------------------------
@@ -169,4 +176,11 @@ def post_register():
 
     db.session.add(new_user)
     db.session.commit()
+    flask_login.login_user(new_user)
     return redirect(url_for('main.user_template'))
+
+#-------------------------LOGOUT---------------------------------------
+@bp.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return redirect(url_for('main.home'))
