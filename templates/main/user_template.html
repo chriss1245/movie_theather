@@ -21,26 +21,36 @@
         <!-- Movies to see-->
         
         <h3 class="section-title"> To be seen </h3>
-        {% if movies_after|length < 1 %}
+        {% if reservations_after | length < 1 %}
             <!-- If there are no movies we show a message saying that -->
             <p class="no-reservations-message"> You currently have no movies reserved</p>
         {%else%}
-            {%for movie in movies_after%}
+            {%for reservation in reservations_after%}
             <!-- We display the information of the reserved movies -->
-                <div class="reservation">
-                    
+                <div class="reservation-box">
+                    <h5>{{reservation.projection.movie.name}}</h5>
+                    <p>
+                        Date: {{reservation.projection.date}}
+                        Screen: {{reservation.projection.screen_id}}
+                    </p>
                 </div>
             {% endfor %}
         {%endif%}
 
         <!--Movies already seen-->
         <h3 class="section-title"> Already seen</h3>
-        {% if movies_before|length < 1 %}
+        {% if reservations_before |length < 1 %}
             <p class="no-reservations-message"> You have not seen any movies !</p>
         {% else %}
-            {% for movie in movies_before %}
+            {% for reservation in reservations_before%}
             <!-- We display the information of the already seen movies -->
-                
+                <div class="reservation-box">
+                    <p>
+                        <b>{{reservation.projection.movie.name}}</b> <br><br>
+                        Date: {{reservation.projection.date}} <br>
+                        Screen: {{reservation.projection.screen_id}}
+                    </p>
+                </div>
             {%endfor%}
         {%endif%}
 

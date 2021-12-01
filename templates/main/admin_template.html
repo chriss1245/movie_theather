@@ -21,7 +21,9 @@
 
         <!--Create a movie projection-->
         <form action="" method="post">
-            Add a new movie projection:
+            Create a new movie projection:
+
+            <br><br>
             <label for="movie">Movie: </label>
             <select name="movie" id="movie">
                 {%for movie in movies%}
@@ -29,15 +31,26 @@
                 {%endfor%}
             </select>
 
+            <br><br>
             <label for="screen">Screen: </label>
-            <select name="screen" id="screen">
+            <select name="screen" id="screen" required>
                 {%for screen in screens%}
                     <option value="{{screen.id}}">{{screen.id}}</option>
                 {%endfor%}
             </select>
 
+            <br><br>
             <label for="date">Date:</label>
-            <input type="datetime" name="date" id="date">
+            <input type="date" name="date" id="date" required>
+
+            <br><br>
+            <label for="time">Time:</label>
+            <input type="time" name="time" id="time"
+                min="09:00" max="22:00" required>
+            <span class="validate"></span>
+
+            <br><br>
+            <input type="submit" value="Create">
         </form>
 
         <div class="plots">
