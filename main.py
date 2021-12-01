@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, url_for, \
     redirect, abort
 
-from . import model
+import datetime
+
+from . import model, db
 
 bp = Blueprint("main", __name__)
 
@@ -17,8 +19,31 @@ def reservation(movie_id = 1):
 
 @bp.route("/reservation/<int:movie_id>", methods=['POST'])
 def post_reservation(movie_id= 0):
-    projection_id = request.form.get("movie_projection_id")
-    return redirect(url_for('main.home'))
+
+    # Get the projection
+    projection_id = int(request.form.get("movie_projection_id"))
+    projection = model.Projection.query.filter_by(id=projection_id).first_or_404()
+    
+    # Get the remaining seats in the movie projection
+    remaining_seats = projection.screen.seats
+    for reservation in projection.reservations:
+        remaining_seats -= reservation.seats
+    
+    # Check whether are enough seats before of doing a reservation
+    seats = int(request.form.get("number_seats"))
+    if remaining_seats < seats:
+        abort(403, f"There are not enough seats, try another projection (only: {remaining_seats} seats available)")
+    
+    # Proceed with the reservation
+    reservation = model.Reservation(
+        projection_id=projection.id,
+        user_id=1,
+        seats=seats,
+        date=datetime.datetime.now()
+    )
+    db.session.add(reservation)
+    db.session.commit()
+    return redirect(url_for('main.user_template'))
 
 @bp.route("/movie/<int:movie_id>") # will take the movie id
 def movie(movie_id=1):
