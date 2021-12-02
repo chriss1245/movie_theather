@@ -1,3 +1,6 @@
+import datetime
+
+
 class Movie():
     def __init__(self, id, name, image_path, duration_hours=1, duration_min = 45, director= "", cast="", description = " ", trailer_link = '0'):
         self.id = id
@@ -28,3 +31,10 @@ class User():
         self.password = password
         self.location = location
         self.is_admin = isAdmin
+
+
+
+class Review():
+    def __init__(self, content):
+        self.text = content
+        self.date = datetime.datetime.now()
