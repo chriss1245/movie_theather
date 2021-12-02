@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, url_for, \
 import flask_login
 import datetime
 
-from . import model, db, bcrypt
+from . import model, db, bcrypt, analytics
 
 bp = Blueprint("main", __name__)
 
