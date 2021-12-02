@@ -1,16 +1,14 @@
 from textblob import TextBlob
+from model import Review
 import matplotlib.pyplot as plt
 import base64
 import io
 
 
-# importar clase reviews
-
-
-
 
 
 def web_analytics(reviews):
+    # input is a list of instances of class Review
     n = len(reviews)
     labels = 'Positive', 'Negative', 'Neutral'
     positives, negatives, neutrals = 0,0,0
