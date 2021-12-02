@@ -33,7 +33,13 @@ def web_analytics(reviews):
 
 def movie_analytics(movies):
     # generates a barplot and converts it to base 64
-    ...
+    plt.bar(*zip(*movies.items()))
+    plt.title("Average movie reviews")
+    pic_IObytes = io.BytesIO()
+    plt.savefig(pic_IObytes, format='png')
+    pic_IObytes.seek(0)
+    pic_hash = base64.b64encode(pic_IObytes.read())
+    return pic_hash
 
 """
 def quicksort(array):
