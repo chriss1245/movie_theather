@@ -63,6 +63,26 @@ def movie(movie_id=1):
     movie = model.Movie.query.filter_by(id=movie_id).first_or_404()
     return render_template("main/movie.html", movie=movie)
 
+# Updates the rating of the movie
+@bp.route("/movie/<int:movie_id>", methods=["POST"])
+def post_movie(movie_id):
+
+    # PROTECTION AGAINST INVALID RATINGS
+    new_rating = int(request.form.get("rank"))
+    if new_rating < 0 or new_rating > 5:
+        abort(403, "Not a valid rating")
+
+    movie = model.Movie.query.filter_by(id=movie_id).first_or_404()
+
+    # Update the mean of the ratings
+    movie.rating = (movie.rating * movie.ratings + new_rating ) / (movie.ratings + 1)
+    print(movie.rating)
+    # Update the number of ratings
+    movie.ratings += 1
+    db.session.commit()
+    
+    return redirect(url_for("main.movie", movie_id=movie_id))
+
 #-----------------------USER--------------------------------------
 @bp.route("/user")
 @flask_login.login_required

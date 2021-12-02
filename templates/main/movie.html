@@ -31,7 +31,7 @@
             {{movie.cast}}
 
             <h4>
-                Rating: {{movie.rating}}
+                Rating: {{'%0.1f' % movie.rating|float}}
                
             </h4>
             Votes: {{movie.ratings}}
@@ -48,7 +48,7 @@
 
                 <div class="rate">
                     <label for="1">1</label>
-                    <input type="radio" id="1" value="1" name="rank">
+                    <input type="radio" id="1" value="1" name="rank" required>
                     &nbsp;&nbsp;&nbsp;
                     <label for="2">2</label>
                     <input type="radio" id="2" value="2" name="rank">
@@ -72,9 +72,7 @@
                     <input type="submit" value="Reserve Now">
                 </form>
             </p>
-    
         </p>
-
     </div>
 
 

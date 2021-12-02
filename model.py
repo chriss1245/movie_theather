@@ -25,7 +25,7 @@ class Movie(db.Model):
     director = db.Column(db.String(64), nullable=False)
     cast = db.Column(db.String(200), nullable = True)
     projections = db.relationship('Projection', backref='movie', lazy = True)
-    rating=db.Column(db.Integer, nullable = False)
+    rating=db.Column(db.Float(2), nullable = False)
     ratings=db.Column(db.Integer, nullable = False)
     """
     A movie has many movie projections
