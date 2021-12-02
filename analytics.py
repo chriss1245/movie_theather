@@ -1,6 +1,8 @@
 from textblob import TextBlob
 import matplotlib.pyplot as plt
-from random import randint
+import base64
+import io
+
 
 # importar clase reviews
 
@@ -8,7 +10,7 @@ from random import randint
 
 
 
-def analytics_web(reviews):
+def web_analytics(reviews):
     n = len(reviews)
     labels = 'Positive', 'Negative', 'Neutral'
     positives, negatives, neutrals = 0,0,0
@@ -19,10 +21,19 @@ def analytics_web(reviews):
         else: negatives += 1
     per_neg, per_neutral, per_positives = negatives/n, neutrals/n, positives/n
     plt.pie([per_neg, per_positives, per_neutral], labels = labels, autopct = '%1.1f%%', shadow = True, startangle = 90)
-    plt.title("Reviews")
+    plt.title("Site reviews")
+    pic_IObytes = io.BytesIO()
+    plt.savefig(pic_IObytes, format='png')
+    pic_IObytes.seek(0)
+    pic_hash = base64.b64encode(pic_IObytes.read())
+    return pic_hash
 
-    # needs to be converted into base64
 
+
+
+def movie_analytics(movies):
+    # generates a barplot and converts it to base 64
+    ...
 
 """
 def quicksort(array):
