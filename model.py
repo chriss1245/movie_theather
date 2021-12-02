@@ -35,6 +35,7 @@ class User():
 
 
 class Review():
-    def __init__(self, content):
-        self.text = content
+    def __init__(self, text, user):
+        self.text = text
+        self.user = user
         self.date = datetime.datetime.now()
