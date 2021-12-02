@@ -8,11 +8,16 @@
     <div class = "user-data">
         <!-- Default picture-->
         <img src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" style = "width:100%" alt = "ProfilePic">
-        <h2>{{user.name}}</h2>
-
-        <ul>
-            <li>Email: {{user.email}}</li>
-        </ul>
+        <b>{{user.name}}</b> 
+        <br>
+        Email: {{user.email}}
+        
+        <form class="feedback" method="post">
+            <h6>Give us your opinion on the service:</h6> 
+            <textarea id = "feedback" name = "feedback" rows = 5 cols = "40"></textarea>
+            <br>
+            <input type = "submit" value = "Submit">
+        </form>
     </div>
 
     <!-- RIGHT COLUMN-->
@@ -54,12 +59,5 @@
                 </div>
             {%endfor%}
         {%endif%}
-
-        <form class="feedback">
-            <h6>Give us your opinion on the service:</h6> 
-            <textarea id = "feedback" name = "feedback" rows = 3 cols = "138"></textarea>
-            <br>
-            <input type = "submit" value = "Submit">
-        </form>
     </div>
 {%endblock%}

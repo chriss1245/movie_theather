@@ -5,7 +5,7 @@ def projection_to_dict(movie_projections) -> dict:
     """
     projections = []
 
-    for movie_projection in movie_projections:
+    for movie_projection in movie_projections: 
         projections.append({
             "id":movie_projection.id,
             "screen": movie_projection.screen_id,

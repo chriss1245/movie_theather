@@ -11,7 +11,7 @@ bp = Blueprint("main", __name__)
 
 @bp.route("/")
 def home():
-    flask_login.login_user(model.User.query.filter_by(id=1).first())
+    flask_login.login_user(model.User.query.filter_by(id=3).first())
     movies = model.Movie.query.order_by(model.Movie.rating.desc()).limit(5).all()
     movies.append(movies[0])
     all_movies = model.Movie.query.order_by(model.Movie.id.desc()).all()
@@ -126,7 +126,12 @@ def post_user():
 
     user = flask_login.current_user
     if not user.admin:
-        pass #reviews
+        # Handling reviews
+        text = request.form.get("feedback")
+        new_review = model.Review(text=text)
+        db.session.add(new_review)
+        db.session.commit()
+        
     else:
         movie_id = int(request.form.get("movie"))
         screen_id = int(request.form.get("screen"))
