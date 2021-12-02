@@ -16,7 +16,7 @@ A full web server running in python.
  
 ### Folder structure
 
-<b>movie_theather</b>
+movie_theather
     - __init__.py
     - mian.py: general controller
     - data.py: our rest api for asking data 
@@ -26,18 +26,18 @@ A full web server running in python.
     - flask_init.sh & flask_init.ps1: exports the needed environment variables for running flask, we still     need to execute flask run
     - .gitignore: list with files we do not want to be at the repository
     - requirements.txt: list of all the dependencies (python -m pip install -r requirements.txt: automates the install of these dependencies)
-    <b>documentation</b>
+    documentation
         - all the manuals and stuff to take into account
-    <b>static</b>
+    static
         - css files
-        <b>img</b>
+        img
             - all the images we will need
-        <b>js</b>
+        js
             - js files
-    <b>templates</b>
-        <b>main</b>
+    templates
+        main
             - all the views we are going to show
-        <b>src</b>
+        src
             - html files that can be included or inherited for our main views
 
 
