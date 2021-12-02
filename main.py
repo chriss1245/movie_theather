@@ -114,10 +114,12 @@ def user_template():
     
     movies = model.Movie.query.all()
     screens = model.Screen.query.all()
+    reviews = model.Review.query.all()
+    web_analitics_plot = analytics.web_analytics(reviews)  
     return render_template("main/admin_template.html",
         movies=movies,
         screens=screens,
-        user=user)
+        user=user, analytics_plot=web_analitics_plot.decode('utf-8'))
 
 @bp.route("/user", methods=["POST"])
 @flask_login.login_required
