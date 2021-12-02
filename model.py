@@ -35,6 +35,7 @@ class Movie(db.Model):
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     text = db.Column(db.String(500), nullable = False)
+    date = db.Column(db.DateTime(), nullable=True)
     
 
 
