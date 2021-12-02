@@ -17,6 +17,7 @@ A full web server running in python.
 ### Folder structure
 
 movie_theather
+
     - __init__.py
     - mian.py: general controller
     - data.py: our rest api for asking data 
