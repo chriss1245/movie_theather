@@ -5,45 +5,77 @@
 {%block content%}
     <link rel="stylesheet" href="{{url_for('static', filename='movie.css')}}">
     
-    <iframe width="1400" height="800" class="trailer"
-        name="{{movie.name}}"
-        src="{{movie.trailer_link}}" 
-        title="YouTube video player" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        
-        >
-        
-    </iframe>
+    <div class="trailer">
+        <iframe
+            name="{{movie.name}}"
+            src="{{movie.trailer_link}}" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            >
 
-    <p class="director">
-        <h3>Director</h3>
-        {{movie.director}}   
-    </p>
+        </iframe>
 
-    <p class="description">
-        <h4>Description</h4>
-       {{movie.description}} 
-    </p>
+        <p class="description">
+            <h4>Description</h4>
+        {{movie.description}} 
+        </p>
+    </div>
 
-    <p class="reservation">
-        <a href="{{url_for('main.reservation', movie_id=movie.id)}}"> Reservation </a>
-    </p>
+    <div class="movie-description">
+        <p class="director">
+            <h3>Director</h3>
+            {{movie.director}}
+            
+            <h3>Cast</h3>
+            {{movie.cast}}
 
-    <p class="rank"> 
-        Please give us feedback
-        <input type="radio" id="1" value="1">
-        <label for="1">1</label>
-        <input type="radio" id="2" value="2">
-        <label for="2">2</label>
-        <input type="radio" id="3" value="3">
-        <label for="1">3</label>
-        <input type="radio" id="4" value="4">
-        <label for="2">4</label>
-        <input type="radio" id="5" value="5">
-        <label for="5">5</label>
-    </p>
+            <h4>
+                Rating: {{movie.rating}}
+               
+            </h4>
+            Votes: {{movie.ratings}}
+            
+        </p>
 
+        <p class="rank"> 
+            <form method="post">
+                <b>Rate</b>
+                <br>
+                <i>{{movie.name}}</i>
+                <br>
+                <br>
+
+                <div class="rate">
+                    <label for="1">1</label>
+                    <input type="radio" id="1" value="1" name="rank">
+                    &nbsp;&nbsp;&nbsp;
+                    <label for="2">2</label>
+                    <input type="radio" id="2" value="2" name="rank">
+                    &nbsp;&nbsp;&nbsp;
+                    <label for="1">3</label>
+                    <input type="radio" id="3" value="3" name="rank">
+                    &nbsp;&nbsp;&nbsp;
+                    <label for="2">4</label>
+                    <input type="radio" id="4" value="4" name="rank">
+                    &nbsp;&nbsp;&nbsp;
+                    <label for="5">5</label>
+                    <input type="radio" id="5" value="5" name="rank">
+                
+                &nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Rate">
+                </div>
+            </form>
+
+            <p class="reservation">
+                <form action="{{url_for('main.reservation', movie_id=movie.id)}}" method="get">
+                    <input type="submit" value="Reserve Now">
+                </form>
+            </p>
+    
+        </p>
+
+    </div>
 
 
 
