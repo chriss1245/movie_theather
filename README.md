@@ -19,10 +19,11 @@ A full web server running in python.
 movie_theather
 
     - __init__.py
-    - mian.py: general controller
+    - main.py: general controller
     - data.py: our rest api for asking data 
     - model.py: will contain the database structure we have
-    - analytics.py: File with methods of AI for analytics
+    - analytics.py: methods for NLP sentiment analysis of site reviews and average movie ratings, generation of encoded pie chart and bar plot
+    to be shown in administrator view
     - utils.py: contain some functions needed but not quite realted
     - flask_init.sh & flask_init.ps1: exports the needed environment variables for running flask, we still     need to execute flask run
     - .gitignore: list with files we do not want to be at the repository
