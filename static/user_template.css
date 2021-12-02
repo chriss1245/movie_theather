@@ -47,10 +47,12 @@ section
 .section-title
 {
   width: 100%;
-  text-align: center;
+  text-align: left;
+  padding: 10px;
 }
 
 .no-reservations-message
 {
-  text-align: center;
+  text-align: left;
+  padding: 10px;
 }
