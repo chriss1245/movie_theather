@@ -68,9 +68,7 @@
             </form>
 
             <p class="reservation">
-                <form action="{{url_for('main.reservation', movie_id=movie.id)}}" method="get">
-                    <input type="submit" value="Reserve Now">
-                </form>
+                <a href="{{url_for('main.reservation', movie_id = movie.id)}}"><input type="button" value="Reserve Now"></a>
             </p>
         </p>
     </div>

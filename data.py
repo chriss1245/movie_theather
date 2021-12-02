@@ -10,6 +10,7 @@ bp = Blueprint('data', __name__)
 #-----------------------------Reservation schedule-----------------------------
 @bp.route('/reservation/<int:movie_id>/projections')
 def get_projections(movie_id=0):
+    print("lol")
     day = int(request.args.get("date"))
     month = int(request.args.get("month"))
     year = int(request.args.get("year"))
@@ -45,5 +46,5 @@ def get_projections(movie_id=0):
                                 .filter(model.Projection.date < next_date)
                                 .order_by(model.Projection.date)
                                 .all())
-    
+    print(movie_projections)
     return make_response(jsonify(movie_projections))
