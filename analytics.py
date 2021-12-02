@@ -55,11 +55,3 @@ def quicksort(array):
 """
 
 
-"""
-f = open("reviews.txt","r")
-l = []
-for line in f:
-    l.append(line)
-f.close()
-analytics(l)
-"""
