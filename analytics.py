@@ -13,7 +13,7 @@ def analytics_web(reviews):
     labels = 'Positive', 'Negative', 'Neutral'
     positives, negatives, neutrals = 0,0,0
     for idx,review in enumerate(reviews):
-        val = TextBlob(review).sentiment.polarity
+        val = TextBlob(review.text).sentiment.polarity
         if  val > 0: positives += 1
         elif val == 0: neutrals += 1
         else: negatives += 1
