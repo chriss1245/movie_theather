@@ -47,14 +47,12 @@ section
 .section-title
 {
   width: 100%;
+  text-align: left;
+  padding: 10px;
 }
 
 .reservation-box p
 {
-  font-size: 12px;
-}
-
-.reservation-box
-{
-  border-bottom: darkcyan solid 1px;
+  text-align: left;
+  padding: 10px;
 }
