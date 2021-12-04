@@ -45,9 +45,3 @@ def register():
     return render_template("main/register.html")
 
 
-@bp.route("/setcookie", method = "POST")
-def cookie():
-    if request.method == 'POST':
-        res = make_response(render_template("cookie.html"))
-        res.set_cookie("UserID","", max_age=60*60*24*365*2)
-    return res
