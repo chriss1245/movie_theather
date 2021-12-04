@@ -21,7 +21,7 @@ def web_analytics(reviews):
     plt.pie([per_neg, per_positives, per_neutral], labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
     plt.title("Site reviews")
     pic_iobytes = io.BytesIO()
-    plt.savefig(pic_iobytes, format='png')
+    plt.savefig(pic_iobytes, format='png', transparent=True)
     pic_iobytes.seek(0)
     pic_hash = base64.b64encode(pic_iobytes.read())
     return pic_hash
@@ -32,7 +32,7 @@ def movie_analytics(movies):
     plt.bar(*zip(*movies.items()))
     plt.title("Average movie reviews")
     pic_iobytes = io.BytesIO()
-    plt.savefig(pic_iobytes, format='png')
+    plt.savefig(pic_iobytes, format='png', transparent=True)
     pic_iobytes.seek(0)
     pic_hash = base64.b64encode(pic_iobytes.read())
     return pic_hash

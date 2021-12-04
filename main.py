@@ -1,9 +1,14 @@
 from flask import Blueprint, render_template, request, url_for, \
-    redirect, abort
+    redirect, abort, make_response
+
+from flask_wtf import CSRFProtect
 
 from . import model
 
+
 bp = Blueprint("main", __name__)
+csrf = CSRFProtect(bp)
+
 
 @bp.route("/")
 def home():
@@ -38,3 +43,11 @@ def user_template():
 @bp.route("/register")
 def register():
     return render_template("main/register.html")
+
+
+@bp.route("/setcookie", method = "POST")
+def cookie():
+    if request.method == 'POST':
+        res = make_response(render_template("cookie.html"))
+        res.set_cookie("UserID","", max_age=60*60*24*365*2)
+    return res

@@ -6,7 +6,8 @@
  
 <link rel="stylesheet" href="{{url_for('static', filename='Register.css')}} ">
     <center> <h1> Student Register Form </h1> </center>   
-    <form>  
+    <form method = 'post'>
+        {{ form.csrf_token }}
         <div class="container">   
             <label>Name : </label>   
             <input type="text" placeholder="Enter Name" name="name" required>  

@@ -6,7 +6,8 @@
 
 <link rel="stylesheet" href="{{url_for('static', filename='login.css')}} ">
     <center> <h1> Student Login Form </h1> </center>   
-    <form>  
+    <form method = 'post'>
+        {{ form.csrf_token }}
         <div class="container">   
             <label>Email : </label>   
             <input type="text" placeholder="Enter Email" name="email" required>  
@@ -17,5 +18,5 @@
             <!--<button type="button" class="registerbtn"> Register</button>  -->
             You don't have an account? <a href="{{url_for('main.register')}} "> Register </a>
         </div>   
-    </form>     
+    </form>
 {%endblock%}
