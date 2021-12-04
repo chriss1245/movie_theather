@@ -57,7 +57,7 @@ From customer view:
 From Administrator view:
  - Pie chart in which the amount of neutral, positive and negative reviews is shown, using NLP, passed as a base64 encoded version
 
-Security-wise:
- -Added Jinja directive to prevent cross-site scripting
+From a security stand point:
+ - Added Jinja directive to prevent cross-site scripting
 
    
