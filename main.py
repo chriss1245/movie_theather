@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, \
-    redirect, abort, make_response
+    redirect, abort
 
 from flask_wtf import CSRFProtect
 from flask_talisman import Talisman
@@ -25,15 +25,15 @@ permissions_policy = {
     'microphone':'()'
 }
 
-talisman = Talisman(bp, content_security_policy = csp, feature_policy = feature_policy, permission_policy = permissions_policy)
+talisman = Talisman(bp, content_security_policy=csp, feature_policy=feature_policy, permission_policy =permissions_policy)
 
 @bp.route("/")
 def home():
     movies = [ model.Movie(i, name, 'img/'+str(i)+'.jpg') for i, name, in zip(range(1,12), ['Black panther', 'After', 'Star Wars ', 'Justice league', 'Jaws', 'Joker', 'It', 'Titanic', 'Harry Potter', "Avatar", "Butterfly Effect"])]
     return render_template("main/home.html", movies=movies[:5], all_movies=movies)
 
-@bp.route("/reservation/<int:movie_id>") # Requires the movie id
-def reservation(movie_id = 1):
+@bp.route("/reservation/<int:movie_id>")  # Requires the movie id
+def reservation(movie_id=1):
     movie = model.Movie(1, "Harry potter and the Chamber of Secrets", 'img/1.jpg')
     return render_template("main/reservation.html", movie=movie)
 
@@ -54,12 +54,12 @@ def login():
 # we only want to add files (profile picture) in the user_template
 @bp.route("/customer")
 @talisman(
-    content_security_policy = {
+    content_security_policy={
         'default-src': '\'self\'',
         'img-src': '*',
         'script-src': '\'self\''
     },
-    feature_policy = feature_policy
+    feature_policy=feature_policy
 )
 def user_template():
     user = model.User("lolito", 'lolito@lolito.com', "legoland")
