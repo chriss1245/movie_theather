@@ -43,4 +43,21 @@ movie_theather
             - html files that can be included or inherited for our main views
 
 
+### Additional functionalities implemented
+From the main page:
+ - Search bar
+ - Button to sort movies based on an specific criteria
+ - Navigation Bar
+
+From customer view:
+ - Display of profile picture and user information
+ - Button to cancel reservations 
+ - Ability for users to write site reviews
+
+From Administrator view:
+ - Pie chart in which the amount of neutral, positive and negative reviews is shown, using NLP, passed as a base64 encoded version
+
+Security-wise:
+ 
+
    
