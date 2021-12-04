@@ -55,9 +55,10 @@ From customer view:
  - Ability for users to write site reviews
 
 From Administrator view:
- - Pie chart in which the amount of neutral, positive and negative reviews is shown, using NLP, passed as a base64 encoded version
+ - Pie chart in which the amount of neutral, positive and negative reviews is shown, using NLP, passed as a base64 encoded version of the graph generated in matplotlib
 
 From a security stand point:
  - Added Jinja directive to prevent cross-site scripting
+ - Included flask_talisman to ensure security that fits the needs of the webpage
 
    
