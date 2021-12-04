@@ -3,6 +3,20 @@
 {%block title%} Home {%endblock%}
 
 {%block content%}
+    <link rel="stylesheet" href="{{url_for('static', filename='search-bar.css')}}">
+    <div class="search-bar">
+        <form action="" method="get">
+            <input type="search" name="search_text" id="search_text">
+            <input type="submit" value="Search" id="search_button">
+            <label for="sort_by" id="order_by_label">Order by: </label>
+            <select name="sort_by" id="sort_by">
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="longest">Longest</option>
+                <option value="shortest">Shortest</option>
+            </select>
+        </form>
+    </div>
     {%include 'src/slider.html'%}
     {%include 'src/movies.html'%}
 {%endblock%}

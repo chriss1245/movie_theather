@@ -3,8 +3,8 @@
     display: flex;
     flex-direction: row;
     background-color: white;
-    height: 40px;
-    font-size: 30px;
+    height: 30px;
+    font-size: 20px;
     border-bottom: 2px solid black;
     border-radius: 1px;
 }

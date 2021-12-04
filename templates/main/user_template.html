@@ -32,12 +32,13 @@
             {%for reservation in reservations_after%}
             <!-- We display the information of the reserved movies -->
                 <div class="reservation-box">
-                    <h5>{{reservation.projection.movie.name}}</h5>
-                    <p>
+                    <b>{{reservation.projection.movie.name}} </b><br>
+                    
                         Date: {{reservation.projection.date}} <br>
                         Screen: {{reservation.projection.screen_id}} <br>
-                        Seats: {{reservation.seats}}
-                    </p>
+                        Seats: {{reservation.seats}}<br>
+                        <button class="cancel-button">cancel</button> <br>
+                        <br>
                 </div>
             {% endfor %}
         {%endif%}
@@ -50,12 +51,11 @@
             {% for reservation in reservations_before%}
             <!-- We display the information of the already seen movies -->
                 <div class="reservation-box">
-                    <p>
-                        <b>{{reservation.projection.movie.name}}</b> <br><br>
+                        <b>{{reservation.projection.movie.name}}</b> <br>
                         Date: {{reservation.projection.date}} <br>
                         Screen: {{reservation.projection.screen_id}} <br>
-                        Seats: {{reservation.seats}}
-                    </p>
+                        Seats: {{reservation.seats}} <br>
+                        <br>
                 </div>
             {%endfor%}
         {%endif%}

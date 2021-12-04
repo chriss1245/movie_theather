@@ -56,3 +56,10 @@ section
   text-align: left;
   padding: 10px;
 }
+
+.cancel-button
+{
+  padding: 0;
+  height: 18px;
+  font-size: 8px;
+}
