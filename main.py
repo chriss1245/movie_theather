@@ -2,13 +2,30 @@ from flask import Blueprint, render_template, request, url_for, \
     redirect, abort, make_response
 
 from flask_wtf import CSRFProtect
-
+from flask_talisman import Talisman
 from . import model
 
 
 bp = Blueprint("main", __name__)
+
+# directive for cross site request forgery
 csrf = CSRFProtect(bp)
 
+# content secure policy directives
+csp = {
+    'default-src': '\'self\'',
+}
+
+#disables access to geolocation interface
+feature_policy = {
+    'geolocation': '\'none\''
+}
+
+permissions_policy = {
+    'microphone':'()'
+}
+
+talisman = Talisman(bp, content_security_policy = csp, feature_policy = feature_policy, permission_policy = permissions_policy)
 
 @bp.route("/")
 def home():
@@ -34,7 +51,16 @@ def movie(movie_id=1):
 def login():
     return render_template("main/login.html")
 
+# we only want to add files (profile picture) in the user_template
 @bp.route("/customer")
+@talisman(
+    content_security_policy = {
+        'default-src': '\'self\'',
+        'img-src': '*',
+        'script-src': '\'self\''
+    },
+    feature_policy = feature_policy
+)
 def user_template():
     user = model.User("lolito", 'lolito@lolito.com', "legoland")
     return render_template("main/user_template.html",user = user, movies_after = [], movies_before = [])
@@ -43,5 +69,4 @@ def user_template():
 @bp.route("/register")
 def register():
     return render_template("main/register.html")
-
 
