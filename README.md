@@ -56,8 +56,7 @@ From customer view:
 From Administrator view:
  - Pie chart in which the amount of neutral, positive and negative reviews is shown, using NLP, passed as a base64 encoded version of the graph generated in matplotlib
 
-From a security stand point:
- - Added Jinja directive to prevent cross-site scripting
+From a security stand point:git 
  - Included flask_talisman wrapper to ensure security that fits the needs of the webpage, control security protocols only allows uploads of images with unknown origin, headers kept with default options: https://github.com/wntrblm/flask-talisman/blob/main/README.rst
 
 
