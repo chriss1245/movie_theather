@@ -14,7 +14,7 @@ def create_app(test_config=None):
     from . import main, data
     app.register_blueprint(main.bp)
     app.register_blueprint(data.bp)
-    csrf = SeaSurf(app)
+
     # content secure policy directives
     csp = {
         'default-src': '\'self\'',
@@ -22,9 +22,11 @@ def create_app(test_config=None):
     }
 
     # disables access to geolocation interface
+
     feature_policy = {
         'geolocation': '\'none\''
     }
+
 
     talisman = Talisman(app, content_security_policy=csp, feature_policy=feature_policy)
     return app
