@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, request, url_for, \
     redirect, abort, Flask
 
-from flask_seasurf import SeaSurf
-from flask_talisman import Talisman
+
 from . import model
 
 
@@ -38,9 +37,8 @@ def movie(movie_id=1):
 def login():
     return render_template("main/login.html")
 
-# we only want to add files (profile picture) in the user_template
-@bp.route("/customer")
 
+@bp.route("/customer")
 def user_template():
     user = model.User("lolito", 'lolito@lolito.com', "legoland")
     return render_template("main/user_template.html",user = user, movies_after = [], movies_before = [])
