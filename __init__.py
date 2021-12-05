@@ -19,10 +19,11 @@ def create_app(test_config=None):
         'img-src':'*'
     }
 
-    # disables access to geolocation interface
+    # disables access to geolocation interface, and disables microphone
 
     feature_policy = {
-        'geolocation': '\'none\''
+        'geolocation': '\'none\'',
+        'microphone': '()'
     }
 
     talisman = Talisman(app, content_security_policy=csp, feature_policy=feature_policy)
