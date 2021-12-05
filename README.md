@@ -59,6 +59,6 @@ From Administrator view:
 
 From a security stand point:
  - Added Jinja directive to prevent cross-site scripting
- - Included flask_talisman to ensure security that fits the needs of the webpage
+ - Included flask_talisman to ensure security that fits the needs of the webpage, control security protocols only allows uploads of images with unknown origin, headers kept with default options: https://github.com/wntrblm/flask-talisman/blob/main/README.rst
 
-   
+
