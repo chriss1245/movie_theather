@@ -3,10 +3,12 @@ from flask import Blueprint, render_template, request, url_for, \
 
 import flask_login
 import datetime
+from werkzeug.utils import secure_filename, send_from_directory
 
 import matplotlib.pyplot as plt
 
 from . import model, db, bcrypt, analytics
+
 
 bp = Blueprint("main", __name__)
 
@@ -45,6 +47,7 @@ def search():
             .order_by(model.Movie.duration_hours.desc(), model.Movie.duration_min.desc())
             .all())
     return render_template("main/search.html", all_movies=all_movies)
+
 #-------------------RESERVATION---------------------------------
 @bp.route("/reservation/<int:movie_id>") # Requires the movie id
 @flask_login.login_required
@@ -163,12 +166,15 @@ def post_user():
             db.session.add(new_review)
             db.session.commit()
         elif form_type == "upload_picture":
-            img = request.form.get("img")
+            img = secure_filename(request.form.get("img"))
+            send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
             print(type(img))
             
         elif form_type == "cancel":
             reservation_id = int(request.form.get("reservation_id"))
-            reservation = model.Reservation.query.filter_by(id=reservation_id).delete()         
+            reservation = model.Reservation.query.filter_by(id=reservation_id).delete()
+                 
     else:
         if type == "new_projection":
             movie_id = int(request.form.get("movie"))

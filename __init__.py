@@ -11,6 +11,9 @@ def create_app(test_config=None):
     app = Flask(__name__)
     app.config["SECRET_KEY"] = b"\x8c\xa5\x04\xb3\x8f\xa1<\xef\x9bY\xca/*\xff\x12\xfb"
 
+    #THE FOLDER WHERE IMAGES ARE GOING TO BE STORED
+    app.config['UPLOAD_FOLDER'] = 'src/img/'
+
     #LOGIN MANAGER
     login_manager = LoginManager()
     login_manager.login_view = 'main.login'
