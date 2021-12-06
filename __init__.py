@@ -16,7 +16,9 @@ def create_app(test_config=None):
     # content secure policy directives
     csp = {
         'default-src': '*',
-        'img-src':'*'
+        'img-src':'*',
+        'script-src':'\'self\''
+
     }
 
     # disables access to geolocation interface, and disables microphone
@@ -26,5 +28,5 @@ def create_app(test_config=None):
         'microphone': '()'
     }
 
-    talisman = Talisman(app, content_security_policy=csp, feature_policy=feature_policy)
+    talisman = Talisman(app, content_security_policy=csp, feature_policy=feature_policy, content_security_policy_nonce_in=['script-src'])
     return app
