@@ -7,6 +7,7 @@ class User(flask_login.UserMixin, db.Model):
     email = db.Column(db.String(128), unique=True, nullable=False)
     name = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    image_path = db.Column(db.String(200), nullable=True)
     admin = db.Column(db.Boolean, nullable=False)
     reservations = db.relationship("Reservation", backref="user", lazy=True)
 """

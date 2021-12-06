@@ -17,6 +17,10 @@
             </select>
         </form>
     </div>
-    {%include 'src/slider.html'%}
-    {%include 'src/movies.html'%}
+    
+    {%if all_movies | length == 0%}
+        There are not movies related
+    {%else%}
+        {%include 'src/movies.html'%}
+    {%endif%}
 {%endblock%}

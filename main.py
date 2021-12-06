@@ -4,6 +4,8 @@ from flask import Blueprint, render_template, request, url_for, \
 import flask_login
 import datetime
 
+import matplotlib.pyplot as plt
+
 from . import model, db, bcrypt, analytics
 
 bp = Blueprint("main", __name__)
@@ -17,6 +19,32 @@ def home():
     all_movies = model.Movie.query.order_by(model.Movie.id.desc()).all()
     return render_template("main/home.html", movies=movies, all_movies=all_movies)
 
+@bp.route("/search")
+def search():
+    order_criteria = request.args.get("sort_by")
+    str = request.args.get("search_text")
+    all_movies = [] 
+    if order_criteria ==  "newest":
+        all_movies = (model.Movie.query
+            .filter(model.Movie.name.startswith(str))
+            .order_by(model.Movie.id.desc())
+            .all())
+    elif order_criteria == "oldest":
+        all_movies = (model.Movie.query
+            .filter(model.Movie.name.startswith(str))
+            .order_by(model.Movie.id.desc())
+            .all())
+    elif order_criteria == "shortest":
+        all_movies = (model.Movie.query
+            .filter(model.Movie.name.startswith(str))
+            .order_by(model.Movie.duration_hours, model.Movie.duration_min)
+            .all())
+    elif order_criteria == "longest":
+        all_movies = (model.Movie.query
+            .filter(model.Movie.name.startswith(str))
+            .order_by(model.Movie.duration_hours.desc(), model.Movie.duration_min.desc())
+            .all())
+    return render_template("main/search.html", all_movies=all_movies)
 #-------------------RESERVATION---------------------------------
 @bp.route("/reservation/<int:movie_id>") # Requires the movie id
 @flask_login.login_required
@@ -125,33 +153,43 @@ def user_template():
 @flask_login.login_required
 def post_user():
     # Logic of web site review and movie projection creation
-
     user = flask_login.current_user
+    form_type = request.form.get("type")
     if not user.admin:
-        # Handling reviews
-        text = request.form.get("feedback")
-        new_review = model.Review(text=text)
-        db.session.add(new_review)
-        db.session.commit()
-        
+        if form_type == "feedback":
+            # Handling reviews
+            text = request.form.get("feedback")
+            new_review = model.Review(text=text)
+            db.session.add(new_review)
+            db.session.commit()
+        elif form_type == "upload_picture":
+            img = request.form.get("img")
+            print(type(img))
+            
+        elif form_type == "cancel":
+            reservation_id = int(request.form.get("reservation_id"))
+            reservation = model.Reservation.query.filter_by(id=reservation_id).delete()         
     else:
-        movie_id = int(request.form.get("movie"))
-        screen_id = int(request.form.get("screen"))
-        date_ = request.form.get("date")+" " + request.form.get("time")
-        date = datetime.datetime.strptime(date_, '%Y-%m-%d %H:%M')
+        if type == "new_projection":
+            movie_id = int(request.form.get("movie"))
+            screen_id = int(request.form.get("screen"))
+            date_ = request.form.get("date")+" " + request.form.get("time")
+            date = datetime.datetime.strptime(date_, '%Y-%m-%d %H:%M')
 
-        existent_projection = (model.Projection.query
-            .filter_by(screen_id=screen_id)
-            .filter(model.Projection.date >= date - datetime.timedelta(hours=-2, minutes=-30))
-            .filter(model.Projection.date <= date + datetime.timedelta(hours=-2, minutes=-30))
-            .first()
-        )
-        if existent_projection:
-            abort(403, "Screen is already used by other movie projection")
+            existent_projection = (model.Projection.query
+                .filter_by(screen_id=screen_id)
+                .filter(model.Projection.date >= date - datetime.timedelta(hours=-2, minutes=-30))
+                .filter(model.Projection.date <= date + datetime.timedelta(hours=-2, minutes=-30))
+                .first()
+            )
+            if existent_projection:
+                abort(403, "Screen is already used by other movie projection")
 
-        projection = model.Projection(screen_id=screen_id, movie_id=movie_id, date=date)
-        db.session.add(projection)
-        db.session.commit()
+            projection = model.Projection(screen_id=screen_id, movie_id=movie_id, date=date)
+            db.session.add(projection)
+            db.session.commit()
+        elif type == "upload_picture":
+            pass
     return redirect(url_for("main.user_template"))
 
 #----------------------LOGIN--------------------------------------

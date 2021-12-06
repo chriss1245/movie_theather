@@ -5,9 +5,22 @@
 {%block content%} 
     <link rel="stylesheet" href="{{url_for('static', filename='admin_template.css')}}">
     <!-- LEFT COLUMN-->
+    
     <div class = "user-data">
         <!-- Default picture-->
-        <img src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" style = "width:100%" alt = "ProfilePic">
+        {%if user.image_path%}
+        <img src ="{{user.image_path}}" style = "width:100%" alt = "ProfilePic">
+        {%else%}
+            <img src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" style = "width:100%" alt = "ProfilePic">
+        {%endif%}
+        <!--Form to change the default picture-->
+        <form action="" method="post">
+            Change Profile Picture: <br>
+            <input type="file" name="img" id="img" accept="image/*" required >
+            <input type="submit" value="Change">
+            <input type="hidden" name="type" value="upload_picture">
+        </form>
+        <br>
         <h2>{{user.name}}</h2>
 
         <ul>
@@ -50,6 +63,7 @@
 
             <br><br>
             <input type="submit" value="Create">
+            <input type="hidden" name="type" value="new_projection">
         </form>
 
         <div class="plots">

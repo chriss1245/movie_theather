@@ -6,17 +6,30 @@
     <link rel="stylesheet" href="{{url_for('static', filename='user_template.css')}}">
     <!-- LEFT COLUMN-->
     <div class = "user-data">
-        <!-- Default picture-->
-        <img src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" style = "width:100%" alt = "ProfilePic">
+        <!-- Profile or default picture-->
+        {%if user.image_path%}
+        <img src ="{{user.image_path}}" style = "width:100%" alt = "ProfilePic">
+        {%else%}
+            <img src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" style = "width:100%" alt = "ProfilePic">
+        {%endif%}
+        <!--Form to change the default picture-->
+        <form action="" method="post">
+            Change Profile Picture: <br>
+            <input type="file" name="img" id="img" accept="image/*" required >
+            <input type="submit" value="Change">
+            <input type="hidden" name="type" value="upload_picture">
+        </form>
+        <br>
         <b>{{user.name}}</b> 
         <br>
         Email: {{user.email}}
         
         <form class="feedback" method="post">
             <h6>Give us your opinion on the service:</h6> 
-            <textarea id = "feedback" name = "feedback" rows = 5 cols = "40"></textarea>
+            <textarea id = "feedback" name = "feedback" rows = 5 cols = "40" required></textarea>
             <br>
             <input type = "submit" value = "Submit">
+            <input type="hidden" name="type" value="feedback">
         </form>
     </div>
 
@@ -37,7 +50,12 @@
                         Date: {{reservation.projection.date}} <br>
                         Screen: {{reservation.projection.screen_id}} <br>
                         Seats: {{reservation.seats}}<br>
-                        <button class="cancel-button">cancel</button> <br>
+                        <form action="" method="post">
+                            <input type="submit" value="cancel">
+                            <input type="hidden" name="reservation_id" value="{{reservation.id}}">
+                            <input type="hidden" name="type" value="cancel">
+                        </form>
+                        
                         <br>
                 </div>
             {% endfor %}
