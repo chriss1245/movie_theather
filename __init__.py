@@ -15,7 +15,7 @@ def create_app(test_config=None):
 
     # content secure policy directives
     csp = {
-        'default-src': '\'self\'',
+        'default-src': '*',
         'img-src':'*'
     }
 
