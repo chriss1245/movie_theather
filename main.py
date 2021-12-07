@@ -143,14 +143,17 @@ def user_template():
             reservations_after=reservations_after,
             reservations_before=reservations_before)
     
-    movies = model.Movie.query.all()
+    movies = model.Movie.query.order_by(model.Movie.rating).all()
     screens = model.Screen.query.all()
     reviews = model.Review.query.all()
     web_analitics_plot = analytics.web_analytics(reviews)  
+    movie_analytics_plot = analytics.movie_analytics({movie.name: movie.rating for movie in movies})
     return render_template("main/admin_template.html",
         movies=movies,
         screens=screens,
-        user=user, analytics_plot=web_analitics_plot.decode('utf-8'))
+        user=user,
+        analytics_plot=web_analitics_plot.decode('utf-8'),
+        analytics_movie=movie_analytics_plot.decode('utf-8'))
 
 @bp.route("/user", methods=["POST"])
 @flask_login.login_required
