@@ -1,13 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy  import SQLAlchemy
 from flask_talisman import Talisman
+from flask_seasurf import SeaSurf
 
-
-
+csrf = SeaSurf()
 
 
 def create_app(test_config=None):
     app = Flask(__name__)
+
     app.config["SECRET_KEY"] = b"\x8c\xa5\x04\xb3\x8f\xa1<\xef\x9bY\xca/*\xff\x12\xfb"
     from . import main, data
     app.register_blueprint(main.bp)
@@ -28,5 +29,8 @@ def create_app(test_config=None):
         'microphone': '()'
     }
 
-    talisman = Talisman(app, content_security_policy=csp, feature_policy=feature_policy, content_security_policy_nonce_in=['script-src'])
+    #talisman = Talisman(app, content_security_policy=csp, feature_policy=feature_policy, content_security_policy_nonce_in=['script-src'])
+    
+    # # Seasurf
+    csrf.init_app(app)
     return app
