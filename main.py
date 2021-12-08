@@ -3,7 +3,6 @@ from flask import Blueprint, render_template, request, url_for, \
 from . import model, db, bcrypt, analytics, csrf
 import flask_login, datetime, imghdr, os
 
-
 bp = Blueprint("main", __name__)
 
 #-----------------------------HOME-------------------------------------------------
