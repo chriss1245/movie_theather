@@ -1,20 +1,20 @@
 {% extends 'src/base.html' %}
-{%block title%} Login {%endblock%}  
+
+{%block title%} Login {%endblock%}
+
 {%block content%} 
-
-
-
-<link rel="stylesheet" href="{{url_for('static', filename='login.css')}} ">
+    <link rel="stylesheet" href="{{url_for('static', filename='login.css')}} ">
+    
     <center> <h1> Student Login Form </h1> </center>   
     <form method="post"> 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
         <div class="container">   
             <label>Email : </label>   
-            <input type="text" placeholder="Enter Email" name="email" required>  
+            <input typeew2="text" placeholder="Enter Email" name="email" required>  
             <label>Password : </label>   
             <input type="password" placeholder="Enter Password" name="password" required>  
             <button type="submit">Login</button>   
-            You don't have an account? <a href="{{url_for('main.register')}} "> Register </a>
+            You don't have an account? <a href="{{url_for('auth.register')}} "> Register </a>
         </div>
     </form>     
 {%endblock%}

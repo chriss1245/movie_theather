@@ -13,12 +13,9 @@ def create_app(test_config=None):
     app = Flask(__name__)
     app.config["SECRET_KEY"] = b"\x8c\xa5\x04\xb3\x8f\xa1<\xef\x9bY\xca/*\xff\x12\xfb"
 
-    #THE FOLDER WHERE IMAGES ARE GOING TO BE STORED
-    app.config['UPLOAD_FOLDER'] = 'src/img/'
-
     #LOGIN MANAGER
     login_manager = LoginManager()
-    login_manager.login_view = 'main.login'
+    login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
     from . import model
     @login_manager.user_loader
@@ -37,9 +34,10 @@ def create_app(test_config=None):
     db.init_app(app)
     
     #BLUEPRINTS
-    from . import main, data
+    from . import main, data, auth
     app.register_blueprint(main.bp)
     app.register_blueprint(data.bp)
+    app.register_blueprint(auth.bp)
 
     #SEASURF
     csrf.init_app(app)
