@@ -1,11 +1,22 @@
 from flask import Blueprint, render_template, request, redirect, \
-    url_for, flash, jsonify, make_response
+    url_for, flash, jsonify, make_response, send_from_directory
 
 from . import model
 from .utils import projection_to_dict
-import datetime
+import datetime, flask_login, os
 
 bp = Blueprint('data', __name__)
+
+#-----------------------------PROFILE IMAGES----------------------------------
+@bp.route('/users/src/<img>')
+@flask_login.login_required
+def get_profile_img(img):
+    user = flask_login.current_user
+    if img == user.image_path:
+        return send_from_directory('src', img)
+    else:
+        abort(403, "You can not access to the image requested")
+
 
 #-----------------------------Reservation schedule-----------------------------
 @bp.route('/reservation/<int:movie_id>/projections')

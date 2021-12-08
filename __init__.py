@@ -40,5 +40,8 @@ def create_app(test_config=None):
     from . import main, data
     app.register_blueprint(main.bp)
     app.register_blueprint(data.bp)
+
+    #SEASURF
+    csrf.init_app(app)
     
     return app

@@ -15,6 +15,7 @@
         
         <ul>
             <form action="{{url_for('main.reservation', movie_id=movie.id)}}" method="post" id="reservation_form">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="movie_projection_id" id="movie_projection_id">
                 <b>Seats:</b> <input type="number" name="number_seats" id="number_seats" min="1" max="40" value="1" size="3">
                 <br><br>

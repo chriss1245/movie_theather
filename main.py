@@ -1,31 +1,27 @@
 from flask import Blueprint, render_template, request, url_for, \
     redirect, abort, flash
-
-import flask_login
-import datetime
-from werkzeug.utils import secure_filename, send_from_directory
-
-import matplotlib.pyplot as plt
-
-from . import model, db, bcrypt, analytics
+from . import model, db, bcrypt, analytics, csrf
+import flask_login, datetime, imghdr, os
 
 
 bp = Blueprint("main", __name__)
 
-
+#-----------------------------HOME-------------------------------------------------
 @bp.route("/")
 def home():
-    flask_login.login_user(model.User.query.filter_by(id=3).first())
-    movies = model.Movie.query.order_by(model.Movie.rating.desc()).limit(5).all()
-    movies.append(movies[0])
-    all_movies = model.Movie.query.order_by(model.Movie.id.desc()).all()
+    flask_login.login_user(model.User.query.filter_by(id=3).first()) #TO REMOVE!!!!! AUTMOATIC LOGIN
+    movies = model.Movie.query.order_by(model.Movie.rating.desc()).limit(5).all() # Gets the 5 best rated movies
+    movies.append(movies[0]) # Needed for the slider animation 
+    all_movies = model.Movie.query.order_by(model.Movie.id.desc()).all() # All movies by newest
     return render_template("main/home.html", movies=movies, all_movies=all_movies)
 
+#-----------------------------SEARCH----------------------------------------------
 @bp.route("/search")
 def search():
     order_criteria = request.args.get("sort_by")
     str = request.args.get("search_text")
-    all_movies = [] 
+    all_movies = []
+    # Makes a query depending on the search criteria
     if order_criteria ==  "newest":
         all_movies = (model.Movie.query
             .filter(model.Movie.name.startswith(str))
@@ -57,6 +53,7 @@ def reservation(movie_id = 1):
 
 @bp.route("/reservation/<int:movie_id>", methods=['POST'])
 @flask_login.login_required
+@csrf.exempt # avoids flask seasurf protection
 def post_reservation(movie_id= 0):
     # Get the projection
     projection_id = int(request.form.get("movie_projection_id"))
@@ -122,7 +119,6 @@ def user_template():
 
     # If the user is not admin it loads the customer view else the admin view
     if not user.admin:
-
         # Reservations
         reservations = (model.Reservation.query
             .filter_by(user_id=user.id)
@@ -130,8 +126,8 @@ def user_template():
             .all()
         )
 
-        reservations_before = []
-        reservations_after = []
+        reservations_before = [] # Seen
+        reservations_after = [] # To See
         for reservation in reservations:
             if reservation.projection.date <= datetime.datetime.now():
                 reservations_before.append(reservation)
@@ -142,7 +138,9 @@ def user_template():
             user=user,
             reservations_after=reservations_after,
             reservations_before=reservations_before)
-    
+
+    # If user is admin
+    # Get the movies, the sceens, the reviews, and analytics plots
     movies = model.Movie.query.order_by(model.Movie.rating).all()
     screens = model.Screen.query.all()
     reviews = model.Review.query.all()
@@ -161,23 +159,40 @@ def post_user():
     # Logic of web site review and movie projection creation
     user = flask_login.current_user
     form_type = request.form.get("type")
-    if not user.admin:
+
+    # Both users can upload a profile picture
+    if form_type == "upload_picture":
+        file = request.files['img']
+        if imghdr.what(file): #Checks the image is recognized
+            path = secure_filename(file.filename) # filters weird paths
+            if user.image_path: # if there is another image, remove it
+                try:
+                    os.remove(os.path.join('src', user.image_path))
+                except:
+                    pass
+            user.image_path = path
+            db.session.commit()
+            path = os.path.join('src', path)
+            file.save(path)
+
+        else:
+            abort(403, "Forbidden file")
+    
+    # Normal users can not add movie projections
+    if not user.admin: 
         if form_type == "feedback":
-            # Handling reviews
+            # Reviews
             text = request.form.get("feedback")
             new_review = model.Review(text=text)
             db.session.add(new_review)
             db.session.commit()
-        elif form_type == "upload_picture":
-            img = secure_filename(request.form.get("img"))
-            send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
-            print(type(img))
-            
         elif form_type == "cancel":
+            # Cancelations of reservations
             reservation_id = int(request.form.get("reservation_id"))
             reservation = model.Reservation.query.filter_by(id=reservation_id).delete()
-                 
+            db.session.commit()
+
+    # Admin can not cancel reservations or give feedback        
     else:
         if type == "new_projection":
             movie_id = int(request.form.get("movie"))
@@ -185,6 +200,7 @@ def post_user():
             date_ = request.form.get("date")+" " + request.form.get("time")
             date = datetime.datetime.strptime(date_, '%Y-%m-%d %H:%M')
 
+            # Get projections on screen 2 hours and 30 minutes after or before 
             existent_projection = (model.Projection.query
                 .filter_by(screen_id=screen_id)
                 .filter(model.Projection.date >= date - datetime.timedelta(hours=-2, minutes=-30))
@@ -194,11 +210,11 @@ def post_user():
             if existent_projection:
                 abort(403, "Screen is already used by other movie projection")
 
+            # Create projection
             projection = model.Projection(screen_id=screen_id, movie_id=movie_id, date=date)
             db.session.add(projection)
             db.session.commit()
-        elif type == "upload_picture":
-            pass
+
     return redirect(url_for("main.user_template"))
 
 #----------------------LOGIN--------------------------------------

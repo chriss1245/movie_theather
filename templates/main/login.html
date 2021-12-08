@@ -6,7 +6,8 @@
 
 <link rel="stylesheet" href="{{url_for('static', filename='login.css')}} ">
     <center> <h1> Student Login Form </h1> </center>   
-    <form method="post">  
+    <form method="post"> 
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
         <div class="container">   
             <label>Email : </label>   
             <input type="text" placeholder="Enter Email" name="email" required>  

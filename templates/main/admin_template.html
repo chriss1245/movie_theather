@@ -9,12 +9,13 @@
     <div class = "user-data">
         <!-- Default picture-->
         {%if user.image_path%}
-        <img src ="{{user.image_path}}" style = "width:100%" alt = "ProfilePic">
+            <img src ="{{url_for('data.get_profile_img', img=user.image_path)}}" style = "width:100%" alt = "ProfilePic">
         {%else%}
             <img src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" style = "width:100%" alt = "ProfilePic">
         {%endif%}
         <!--Form to change the default picture-->
         <form action="" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             Change Profile Picture: <br>
             <input type="file" name="img" id="img" accept="image/*" required >
             <input type="submit" value="Set">
@@ -33,6 +34,7 @@
 
         <!--Create a movie projection-->
         <form action="{{url_for('main.user_template')}}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             Create a new movie projection:
 
             <br><br>
