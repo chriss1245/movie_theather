@@ -29,7 +29,7 @@ def create_app(test_config=None):
         'microphone': '()'
     }
 
-    #talisman = Talisman(app, content_security_policy=csp, feature_policy=feature_policy, content_security_policy_nonce_in=['script-src'])
+    talisman = Talisman(app, content_security_policy=csp, feature_policy=feature_policy, content_security_policy_nonce_in=['script-src'])
     
     # # Seasurf
     csrf.init_app(app)

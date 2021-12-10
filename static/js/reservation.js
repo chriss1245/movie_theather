@@ -61,8 +61,9 @@ request_movie_projections(); // fetch the data from the server
 
 
 // Called when click in a movie projection cell. Displays information about the movie projection
-let show_reservation = function (cell)
+let show_reservation = function (ev)
 {   
+    cell = ev.target
     reservation_form.button.disabled = false;
     reservation_form.projection_id.value = cell.projection.id;
 
@@ -154,8 +155,8 @@ let set_projections = function (days)
                 cell.id="d" + d + "p" + p;
                 cell.day = column.firstChild.innerHTML;
                 cell.projection = projection;
-                cell.setAttribute( "onClick", "javascript: show_reservation(this);" );
-
+                cell.onclick = function(ev){show_reservation(ev)}
+               
                 column.appendChild(cell)
 
                 // Creates a cell with heigqht proportional to the minutes left for completing an hour at the last used cell
@@ -193,7 +194,7 @@ let set_projections = function (days)
                 cell.innerHTML = "Screen: " + projection.screen + "<br>At: lolito" + projection.hour + ":" + projection.min;
                 cell.day = column.firstChild.innerHTML;
                 cell.projection = projection;
-                cell.setAttribute( "onClick", "javascript: show_reservation(this);" );
+                cell.onclick = function(ev){show_reservation(ev)}
                 column.appendChild(cell)
 
                 // cell for completing the row
