@@ -2,7 +2,9 @@ from flask import Flask
 from flask_sqlalchemy  import SQLAlchemy
 from flask_talisman import Talisman
 from flask_seasurf import SeaSurf
+from flask_mail import Mail
 
+mail = Mail()
 csrf = SeaSurf()
 
 
@@ -30,7 +32,10 @@ def create_app(test_config=None):
     }
 
     talisman = Talisman(app, content_security_policy=csp, feature_policy=feature_policy, content_security_policy_nonce_in=['script-src'])
-    
+    # Flask mail
+    mail.init_app(app)
+    app.conf["MAIL_USERNAME"] = "CinemaCarlosIII@gmail.com"
+    app.conf["MAIL_PASSWORD"] = "ProyectoWebApps"
     # # Seasurf
     csrf.init_app(app)
     return app
