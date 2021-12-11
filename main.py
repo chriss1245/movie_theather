@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, url_for, \
 
 
 from . import model
-
+from .utils import cancellation_emails
 
 bp = Blueprint("main", __name__)
 
@@ -11,7 +11,16 @@ bp = Blueprint("main", __name__)
 # directive for cross site request forgery
 
 
+@bp.route("/email")
+def email():
+    movie = model.Movie(1, "black panther", "lol")
+    user = model.User("carlitos", "mvca1507@gmail.com", "lol")
+    screen = model.Screen(2);
+    projection = model.MovieProjection(3, 2, 1, movie, screen)
+    reservation = model.Reservation(user, projection)
 
+    cancellation_emails([reservation])
+    return("<h1>Done!</h1>")
 
 @bp.route("/")
 def home():
