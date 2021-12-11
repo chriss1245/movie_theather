@@ -60,4 +60,8 @@ From a security stand point:
  - Included flask_talisman wrapper to ensure security that fits the needs of the webpage, control security protocols only allows uploads of images with unknown origin, allows embedded scripts to be executed only from self, headers kept with default options: https://github.com/wntrblm/flask-talisman/blob/main/README.rst
  - Included flask_seasurf library to protect against cross-site request forgery.
 
+Reservation-wise:
+ - Email with reservation details as soon as it is made
+ - Cancellation emails
+
 
