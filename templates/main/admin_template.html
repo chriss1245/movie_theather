@@ -33,6 +33,16 @@
     <div class="analytics-data">
 
         <!--Create a movie projection-->
+        
+
+        <div class="plots">
+            <h3>Analytics</h3>
+            <img src="data:image/png;base64,{{analytics_plot}}" height="350px", width="400px">
+            <!--Here are going to come the plots-->
+            <img src="data:image/png;base64,{{analytics_movie}}" height="350px", width="500px">
+        </div>
+
+        <h3>New Movie Projection</h3>
         <form action="{{url_for('main.user_template')}}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             Create a new movie projection:
@@ -68,10 +78,30 @@
             <input type="hidden" name="type" value="new_projection">
         </form>
 
-        <div class="plots">
-            <img src="data:image/png;base64,{{analytics_plot}}" height="350px", width="400px">
-            <!--Here are going to come the plots-->
-            <img src="data:image/png;base64,{{analytics_movie}}" height="350px", width="500px">
-        </div>
+        <h3>Projections</h3>
+        <!--List of movie projections-->
+        {% if projections | length < 1 %}
+            <!-- If there are no movies we show a message saying that -->
+            <p class="no-reservations-message"> There are not projections programed</p>
+        {%else%}
+            {%for projection in projections%}
+            <!-- We display the information of the reserved movies -->
+                <div class="reservation-box">
+                    <b>{{projection.movie.name}} </b><br>
+                    
+                        Date: {{projection.date}} <br>
+                        Screen: {{projection.screen_id}} <br>
+                        Reservations: {{projection.reservations | length}}<br>
+                        <form action="" method="post">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                            <input type="submit" value="cancel">
+                            <input type="hidden" name="projection_id" value="{{projection.id}}">
+                            <input type="hidden" name="type" value="cancel">
+                        </form>
+                        
+                        <br>
+                </div>
+            {% endfor %}
+        {%endif%}
     </div>
 {%endblock%}

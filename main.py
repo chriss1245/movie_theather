@@ -132,7 +132,6 @@ def user_template():
                 reservations_before.append(reservation)
             else:
                 reservations_after.append(reservation)
-
         return render_template("main/user_template.html",
             user=user,
             reservations_after=reservations_after,
@@ -145,12 +144,19 @@ def user_template():
     reviews = model.Review.query.all()
     web_analitics_plot = analytics.web_analytics(reviews)  
     movie_analytics_plot = analytics.movie_analytics({movie.name: movie.rating for movie in movies})
+
+    # Programmed projecitons
+    projections = (model.Projection.query
+        .filter(model.Projection.date > datetime.datetime.now())
+        .all())
+        
     return render_template("main/admin_template.html",
         movies=movies,
         screens=screens,
         user=user,
         analytics_plot=web_analitics_plot.decode('utf-8'),
-        analytics_movie=movie_analytics_plot.decode('utf-8'))
+        analytics_movie=movie_analytics_plot.decode('utf-8'),
+        projections=projections)
 
 @bp.route("/user", methods=["POST"])
 @flask_login.login_required
@@ -191,9 +197,9 @@ def post_user():
             reservation = model.Reservation.query.filter_by(id=reservation_id).delete()
             db.session.commit()
 
-    # Admin can not cancel reservations or give feedback        
+    # Admin can not cancel reservations or give feedback     
     else:
-        if type == "new_projection":
+        if form_type == "new_projection":
             movie_id = int(request.form.get("movie"))
             screen_id = int(request.form.get("screen"))
             date_ = request.form.get("date")+" " + request.form.get("time")
@@ -212,6 +218,10 @@ def post_user():
             # Create projection
             projection = model.Projection(screen_id=screen_id, movie_id=movie_id, date=date)
             db.session.add(projection)
+            db.session.commit()
+        elif form_type == "cancel":
+            projection_id = int(request.form.get("projection_id"))
+            model.Projection.query.filter_by(id=projection_id).delete()
             db.session.commit()
 
     return redirect(url_for("main.user_template"))
