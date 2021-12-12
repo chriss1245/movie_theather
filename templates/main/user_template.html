@@ -8,9 +8,9 @@
     <div class = "user-data">
         <!-- Profile or default picture-->
         {%if user.image_path%}
-            <img src ="{{url_for('data.get_profile_img', img=user.image_path)}}" style = "width:100%" alt = "ProfilePic">
+            <img class="profile-image" src ="{{url_for('data.get_profile_img', img=user.image_path)}}" alt = "ProfilePic">
         {%else%}
-            <img src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" style = "width:100%" alt = "ProfilePic">
+            <img class="profile-image" src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" alt = "ProfilePic">
         {%endif%}
         <!--Form to change the default picture-->
         <form action="" method="post" enctype="multipart/form-data">

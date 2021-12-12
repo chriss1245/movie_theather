@@ -23,6 +23,10 @@ section
   padding-top: 1%;
 }
 
+.profile-image
+{
+  width: 100%;
+}
 .user-data
 {
   width: 30%;
