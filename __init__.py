@@ -28,7 +28,7 @@ def create_app(test_config=None):
         "mysql+mysqldb://22_appweb_20:ch2663s7@mysql.lab.it.uc3m.es/22_appweb_20b"
     """
     app.config['SQLALCHEMY_DATABASE_URI']=\
-        "mysql://chris:yolo@localhost/theather"
+        "mysql://chris:yolo@localhost/lol"
     
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = 'False'
     db.init_app(app)
