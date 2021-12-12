@@ -1,6 +1,6 @@
 import datetime
 from flask_mail import Message
-from . import mail
+# from . import mail
 
 
 import smtplib
