@@ -2,6 +2,14 @@ import datetime
 from flask_mail import Message
 from . import mail
 
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+
+
+
 def projection_to_dict(movie_projection, screen, movie) -> dict:
     """
     """
@@ -22,6 +30,55 @@ def projection_to_dict(movie_projection, screen, movie) -> dict:
     return projection_dict
 
 def reservation_email(reservation):
+    # receives object of type reservation
+    movie_name = reservation.projection.name
+    movie_date = reservation.projection.date
+    subject = "Reservation processed correctly"
+    msg_body = "Hello " + reservation.user.name + "\nYour reservation on " + " was processed correctly" + "\nDetails" + "\n\tMovie name: " + movie_name + "\n\tMovie date: " + str(movie_date)
+    sender_address = 'CinemaCarlosiii@gmail.com'
+    sender_pass = "ProyectoWebApps"
+    # Setup the MIME
+    message = MIMEMultipart()
+    message['From'] = sender_address
+    message['To'] = reservation.user.email
+    message['Subject'] = subject  # The subject line
+    # The body and the attachments for the mail
+    message.attach(MIMEText(msg_body, 'plain'))
+    # Create SMTP session for sending the mail
+    session = smtplib.SMTP('smtp.gmail.com', 587)  # use gmail with port
+    session.starttls()  # enable security
+    session.login(sender_address, sender_pass)  # login with mail_id and password
+    text = message.as_string()
+    session.sendmail(sender_address, reservation.user.email, text)
+    session.quit()
+
+def cancellation_emails(reservations):
+    movie_name = reservations[0].projection.movie.name
+    movie_projection_date = str(reservations[0].projection.date)
+    info = [(reservation.user.email, reservation.user.name, str(reservation.seats), str(reservation.date)) for reservation in reservations]
+    sender_address = 'CinemaCarlosiii@gmail.com'
+    sender_pass = "ProyectoWebApps"
+    # Setup the MIME
+    message = MIMEMultipart()
+    # Create SMTP session for sending the mail
+    session = smtplib.SMTP('smtp.gmail.com', 587)  # use gmail with port
+    session.starttls()  # enable security
+    session.login(sender_address, sender_pass)  # login with mail_id and password
+    for email, name, seats, date in info:
+        subject = "Reservation made in " + str(date) + "has been cancelled"
+        msg_body = "Hello " + name + "\nSadly a projection in which you had made a reservation has been cancelled.\nDetails\n\tMovie name: " + movie_name + "\n\tMovie date: " + movie_projection_date + "\n\tSeats: " + str(seats)
+        message['From'] = sender_address
+        message['To'] = email
+        message['Subject'] = subject  # The subject line
+        # The body and the attachments for the mail
+        message.attach(MIMEText(msg_body, 'plain'))
+        text = message.as_string()
+        session.sendmail(sender_address, email, text)
+    session.quit()
+
+"""
+
+def reservation_email(reservation):
     movie_name = reservation.projection.movie.name
     movie_date = reservation.projection.date
     subject = "Reservation processed correctly"
@@ -36,7 +93,7 @@ def cancellation_emails(reservations):
     info = [(reservation.user.email, reservation.user.name, str(reservation.seats), str(reservation.date)) for reservation in reservations]
     for email, name, seats, date in info:
         subject = "Reservation made in " + str(date) + "has been cancelled"
-        msg_body = "Hello "+ name + "\nSadly a projection in which you had made a reservation has been cancelled.\nDetails\n\tMovie name: " + movie_name + "\n\tMovie date: " + movie_projection_date + "\n\tSeats: " + str(seats)
+        msg_body = "Hello " + name + "\nSadly a projection in which you had made a reservation has been cancelled.\nDetails\n\tMovie name: " + movie_name + "\n\tMovie date: " + movie_projection_date + "\n\tSeats: " + str(seats)
         message = Message( recipients=[email], body=msg_body, subject=subject)
         mail.send(message)
-
+"""
