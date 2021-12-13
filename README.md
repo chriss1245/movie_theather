@@ -59,8 +59,7 @@ From Administrator view:
 
 From a security stand point:
  - Included flask_talisman wrapper to ensure security that fits the needs of the webpage, control security protocols only allows upload of images from any origin, we also disallow the usage of the microphone and geolocation among other things. We kept the HTTP  headers kept with default options. Reference: https://github.com/wntrblm/flask-talisman/blob/main/README.rst
- - Included flask_seasurf library to protect against cross-site request forgery. Reference: https://github.com/maxcountryman/flask-seasurf
-
+ - Included flask_seasurf library to protect against cross-site request forgery. Reference:https://flask-seasurf.readthedocs.io/en/latest/
 Reservation-wise:
  - Email with reservation details as soon as it is made
  - When a projection is cancelled, all the users with reservations on it are notified automatically through cancellation emails.
