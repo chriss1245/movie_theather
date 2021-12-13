@@ -63,10 +63,12 @@ def seats_available(projections):
     ax.barh(projections.keys(), taken)
     ax.set_title("Available and taken per projection")
     ax.get_yaxis().set_visible(False)
-    # ax.set_xticklabels(movies.keys(),rotation=90)
     pic_IObytes = io.BytesIO()
     fig.savefig(pic_IObytes, format='png')
     pic_IObytes.seek(0)
     pic_hash = base64.b64encode(pic_IObytes.read())
     return pic_hash
+
+
+
 
