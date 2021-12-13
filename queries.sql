@@ -13,10 +13,7 @@ INSERT INTO movie (name, image_path, trailer_link, description, duration_hours, 
 INSERT INTO movie (name, image_path, trailer_link, description, duration_hours, duration_min, director, cast, rating, ratings) VALUES ('Butterfly effect', 'img/11.jpg', 'https://www.youtube.com/embed/B8_dgqfPXFg', 'The Butterfly Effect is a 2004 American science fiction thriller film[1] written and directed by Eric Bress and J. Mackye Gruber, starring Ashton Kutcher and Amy Smart.', 2, 0, 'Eric Bress, J.Macky Gruber', 'Ashton Kutcher, Amy Smart, Eric Stoltz, William Lee Scott, Elden Henson, Logan Lerman, Ethan Suplee, Melora Walters', 2, 2);
 
 /* Users */
-INSERT INTO user (id, email, name, password, admin) VALUES (1, 'yolo@yolo.com', 'Yolo Y.', 'lol', TRUE);
-INSERT INTO user (id, email, name, password, admin) VALUES (2, 'marconarganesf@gmail.com', 'Marco.N.', 'Webapp1', TRUE);
-INSERT INTO user (id, email, name, password, admin) VALUES (3, 'pogo@pogo.com', 'Pogo.P', 'pogo', FALSE);
-
+/*Have to be added manually by the login session*/
 
 /* Screens */
 INSERT INTO screen (id, seats) VALUES (1, 25);

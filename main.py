@@ -2,13 +2,13 @@ from flask import Blueprint, render_template, request, url_for, \
     redirect, abort, flash
 from . import model, db, bcrypt, analytics, csrf
 import flask_login, datetime, imghdr, os
-
+from .utils import cancellation_emails, reservation_email
+from werkzeug.utils import secure_filename, send_from_directory
 bp = Blueprint("main", __name__)
 
 #-----------------------------HOME-------------------------------------------------
 @bp.route("/")
 def home():
-    flask_login.login_user(model.User.query.filter_by(id=3).first()) #TO REMOVE!!!!! AUTMOATIC LOGIN
     movies = model.Movie.query.order_by(model.Movie.rating.desc()).limit(5).all() # Gets the 5 best rated movies
     movies.append(movies[0]) # Needed for the slider animation 
     all_movies = model.Movie.query.order_by(model.Movie.id.desc()).all() # All movies by newest
@@ -82,6 +82,7 @@ def post_reservation(movie_id= 0):
     )
     db.session.add(reservation)
     db.session.commit()
+    reservation_email(reservation)
     return redirect(url_for('main.user_template'))
 
 #-----------------------MOVIE----------------------------------
@@ -194,6 +195,8 @@ def post_user():
         elif form_type == "cancel":
             # Cancelations of reservations
             reservation_id = int(request.form.get("reservation_id"))
+            reservation = model.Reservation.query.filter_by(id=reservation_id).first_or_404()
+            cancellation_emails([reservation])
             reservation = model.Reservation.query.filter_by(id=reservation_id).delete()
             db.session.commit()
 
@@ -221,6 +224,8 @@ def post_user():
             db.session.commit()
         elif form_type == "cancel":
             projection_id = int(request.form.get("projection_id"))
+            projection = model.Projection.query.filter_by(id=projection_id).first_or_404()
+            cancellation_emails(projection.reservations)
             model.Projection.query.filter_by(id=projection_id).delete()
             db.session.commit()
 
