@@ -37,7 +37,9 @@ def reservation_email(reservation):
     movie_name = reservation.projection.movie.name
     movie_date = reservation.projection.date
     subject = "Reservation processed correctly"
+    footer = "Thank you for performing a reservation with us.\nKindly\nCinema Carlos III"
     msg_body = "Hello " + reservation.user.name + "\nYour reservation on " + " was processed correctly" + "\nDetails" + "\n\tMovie name: " + movie_name + "\n\tMovie date: " + str(movie_date)
+    msg_body += footer
     sender_address = 'CinemaCarlosiii@gmail.com'
     sender_pass = "ProyectoWebApps"
     # Setup the MIME
