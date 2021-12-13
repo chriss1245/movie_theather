@@ -195,6 +195,8 @@ def post_user():
         elif form_type == "cancel":
             # Cancelations of reservations
             reservation_id = int(request.form.get("reservation_id"))
+            reseravtion = model.Reservation.query.filter_by(id=reservation_id).first_or_404()
+            cancellation_emails([reservation])
             reservation = model.Reservation.query.filter_by(id=reservation_id).delete()
             db.session.commit()
 
