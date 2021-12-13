@@ -125,7 +125,7 @@ def post_projection(projection_id=1):
         model.Projection.query.filter_by(id=projection_id).delete()
         db.session.commit()
     
-    return redirect(url_for("main.projection"), projection_id=projection_id)
+    return redirect(url_for("main.projection", projection_id=projection_id))
         
         
 #-----------------------MOVIE----------------------------------
