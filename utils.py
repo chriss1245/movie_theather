@@ -57,7 +57,7 @@ def reservation_email(reservation):
 
 
 
-# this function allows custom subject and body
+# this function allows and body
 def individual_cancellation(reservation, msg_body):
     subject = "Your reservation has been cancelled"
     # receives object of type reservation
