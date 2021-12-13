@@ -59,8 +59,8 @@ def seats_available(projections):
         aux = projections[key]
         taken.append(aux[1])
         projections[key] = aux[0]
-    ax.barh(projections.keys(), projections.items())
-    ax.barh(projections.keys(), taken)
+    ax.barh(projections.keys(), projections.items(), label="Available seats")
+    ax.barh(projections.keys(), taken, label="Already taken")
     ax.set_title("Available and taken per projection")
     ax.get_yaxis().set_visible(False)
     pic_IObytes = io.BytesIO()
