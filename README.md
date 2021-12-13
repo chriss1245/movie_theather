@@ -63,6 +63,6 @@ From a security stand point:
 
 Reservation-wise:
  - Email with reservation details as soon as it is made
- - Cancellation emails
+ - When a projection is cancelled, all the users with reservations on it are notified automatically through cancellation emails.
 
 
