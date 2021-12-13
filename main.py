@@ -91,8 +91,16 @@ def post_reservation(movie_id= 0):
 def projection(projection_id=1):
     user = flask_login.current_user
     if user.admin:
-        projection = model.Projection.query.filter_by(projection_id=projection_id).first_or_404()
-        return render_template("main/projection.html", projection=projection, user=user)
+        projection = model.Projection.query.filter_by(id=projection_id).first_or_404()
+
+        free_seats = projection.screen.seats
+        reserved_seats = 0
+        for reservation in projection.reservations:
+            free_seats -= reservation.seats
+            reserved_seats += reservation.seats
+        
+        img = analytics.seats_available({'Projection: ' + str(projection.id): (free_seats, reserved_seats)})
+        return render_template("main/projection.html", projection=projection, user=user,  analytics_plot=img.decode('utf-8'))
     abort(403, "You do not have the correct permissions")
 
 #-----------------------MOVIE----------------------------------
@@ -160,13 +168,25 @@ def user_template():
     projections = (model.Projection.query
         .filter(model.Projection.date > datetime.datetime.now())
         .all())
-        
+    
+    data = {}
+    for projection in projections:
+        free_seats = projection.screen.seats
+        reserved_seats = 0
+        for reservation in projection.reservations:
+            free_seats -= reservation.seats
+            reserved_seats += reservation.seats
+            data[str(projection.movie.name) + ", room " + str(projection.screen.id) +", " + str(projection.date)[:-9]] = (free_seats, reserved_seats)
+    print(data)
+    img = analytics.seats_available(data, figsize=(6,int(len(data)*0.9)))
+    
     return render_template("main/admin_template.html",
         movies=movies,
         screens=screens,
         user=user,
         analytics_plot=web_analitics_plot.decode('utf-8'),
         analytics_movie=movie_analytics_plot.decode('utf-8'),
+        projections_plot=img.decode('utf-8'),
         projections=projections)
 
 @bp.route("/user", methods=["POST"])

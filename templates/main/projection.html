@@ -3,15 +3,15 @@
 {%block title%} User view {%endblock%}  
 
 {%block content%} 
-    <link rel="stylesheet" href="{{url_for('static', filename='admin_template.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='projection.css')}}">
     <!-- LEFT COLUMN-->
     
     <div class = "user-data">
         <!-- Default picture-->
         {%if user.image_path%}
-            <img class="profile-img" src ="{{url_for('data.get_profile_img', img=user.image_path)}}" alt = "ProfilePic">
+            <img class="profile-image" src ="{{url_for('data.get_profile_img', img=user.image_path)}}" alt = "ProfilePic">
         {%else%}
-            <img class="profile-img" src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" alt = "ProfilePic">
+            <img class="profile-image" src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" alt = "ProfilePic">
         {%endif%}
         <!--Form to change the default picture-->
         <form action="" method="post">
@@ -34,33 +34,41 @@
 
         <!--Create a movie projection-->
         
-
-        <div class="plots">
-            <h3>Analytics</h3>
-            <img class="analytics-website" src="data:image/png;base64,{{analytics_plot}}">
-            <!--Here are going to come the plots-->
-            <img class="analytics-movie" src="data:image/png;base64,{{analytics_movie}}">
+        <div class="projection-header">
+            <div class="projection-data">
+                <h2>{{projection.movie.name}}</h2>
+                <h4> Date: {{projection.date}}</h4>
+                <h4> Screen {{projection.screen.id}}</h4>
+                <form class="cancel-projection" action="" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                    <input type="submit" value="Cancel Projection">
+                    <input type="hidden" name="projection_id" value="{{projection.id}}">
+                    <input type="hidden" name="type" value="cancel_projection">
+                </form>
+            </div>
+            
+            <img class="projection-graph" src="data:image/png;base64,{{analytics_plot}}">
+            
         </div>
 
-        <h3>Projections</h3>
+        <h2>Reservations</h2>
         <!--List of movie projections-->
-        {% if projections | length < 1 %}
+        {% if projection.reservations | length < 1 %}
             <!-- If there are no movies we show a message saying that -->
             <p class="no-reservations-message"> There are not projections programed</p>
         {%else%}
-            {%for projection in projections%}
+            {%for reservation in projection.reservations%}
             <!-- We display the information of the reserved movies -->
                 <div class="reservation-box">
-                    <b>{{projection.movie.name}} </b><br>
+                    <b>{{reservation.user.name}} </b><br>
                     
-                        Date: {{projection.date}} <br>
-                        Screen: {{projection.screen_id}} <br>
-                        Reservations: {{projection.reservations | length}}<br>
+                        Date: {{reservation.date}} <br>
+                        Seats: {{reservation.seats}}<br>
                         <form action="" method="post">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                            <input type="submit" value="cancel">
-                            <input type="hidden" name="projection_id" value="{{projection.id}}">
-                            <input type="hidden" name="type" value="cancel">
+                            <input type="submit" value="Cancel Reservation">
+                            <input type="hidden" name="reservation_id" value="{{reservation.id}}">
+                            <input type="hidden" name="type" value="cancel_reservation">
                         </form>
                         
                         <br>

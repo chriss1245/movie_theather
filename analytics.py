@@ -49,19 +49,27 @@ def movie_analytics(movies):
     return pic_hash
 
 
-def seats_available(projections):
+def seats_available(projections, figsize=(13,3), title=""):
     # dictionary of tuples
     # we generate a stacked bar plot of seats taken vs seats available
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=figsize)
+
+
     # free, taken
     taken = []
+    available = []
     for key in projections.keys():
         aux = projections[key]
         taken.append(aux[1])
+        available.append(aux[0])
         projections[key] = aux[0]
-    ax.barh(projections.keys(), projections.items(), label="Available seats")
-    ax.barh(projections.keys(), taken, label="Already taken")
-    ax.set_title("Available and taken per projection")
+
+    ax.barh(list(projections.keys()), available, label="Available seats")
+    ax.barh(list(projections.keys()), taken, label="Already taken")
+    for bar, movie in zip(ax.patches, projections.keys()):
+        ax.text(0.1, bar.get_y()+bar.get_height()/2, movie, color = 'white', ha = 'left', va = 'center') 
+    fig.legend(fontsize=18)
+    ax.set_title(title, fontsize=18)
     ax.get_yaxis().set_visible(False)
     pic_IObytes = io.BytesIO()
     fig.savefig(pic_IObytes, format='png')

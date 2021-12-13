@@ -23,16 +23,12 @@ section
   padding-top: 1%;
 }
 
-.profile-image
-{
-  width: 50%;
-}
 .user-data
 {
   width: 30%;
 }
 
-.reservations-data
+.analytics-data
 {
   width: 100%;
   padding-left: 2%;
@@ -51,24 +47,44 @@ section
 .section-title
 {
   width: 100%;
-  text-align: left;
-  padding: 10px;
+  text-align: center;
 }
 
+.cancel-projection
+{
+    height: 30px;
+    margin-bottom: 30px;
+}
+
+.cancel-projection input
+{
+    height: 30px;
+}
+
+.projection-header
+{
+    display: flex;
+}
 .projection-data
 {
-  width: 10%;
+  width: 45%;
+}
+.projection-graph
+{
+    width: 50%;
+    height: 150px;
 }
 
-.reservation-box p
+.profile-image
 {
-  text-align: left;
-  padding: 10px;
+  width: 100%;
+}
+.analytics-website
+{
+  height: 300px;
 }
 
-.cancel-button
+.analytics-movie
 {
-  padding: 0;
-  height: 18px;
-  font-size: 8px;
+  height: 350px;
 }

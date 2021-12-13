@@ -9,12 +9,12 @@
     <div class = "user-data">
         <!-- Default picture-->
         {%if user.image_path%}
-            <img class="profile-img" src ="{{url_for('data.get_profile_img', img=user.image_path)}}" alt = "ProfilePic">
+            <img class="profile-image" src ="{{url_for('data.get_profile_img', img=user.image_path)}}" alt = "ProfilePic">
         {%else%}
-            <img class="profile-img" src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" alt = "ProfilePic">
+            <img class="profile-image" src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" alt = "ProfilePic">
         {%endif%}
         <!--Form to change the default picture-->
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             Change Profile Picture: <br>
             <input type="file" name="img" id="img" accept="image/*" required >
@@ -27,6 +27,8 @@
         <ul>
             <li>Email: {{user.email}}</li>
         </ul>
+
+        <img class="projections-plot" src="data:image/png;base64,{{projections_plot}}">
     </div>
     
     <!-- RIGHT COLUMN-->
@@ -86,7 +88,7 @@
         {%else%}
             {%for projection in projections%}
             <!-- We display the information of the reserved movies -->
-                <div class="reservation-box">
+                <a href="{{url_for('main.projection', projection_id=projection.id)}}" class="reservation-box">
                     <b>{{projection.movie.name}} </b><br>
                     
                         Date: {{projection.date}} <br>
@@ -100,7 +102,7 @@
                         </form>
                         
                         <br>
-                </div>
+                </a>
             {% endfor %}
         {%endif%}
     </div>
