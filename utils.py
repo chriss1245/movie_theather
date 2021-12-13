@@ -55,6 +55,33 @@ def reservation_email(reservation):
     session.sendmail(sender_address, reservation.user.email, text)
     session.quit()
 
+
+def individual_cancellation(reservation, msg_body, subject = "Your reservation has been cancelled"):
+    # receives object of type reservation
+    movie_name = reservation.projection.movie.name
+    movie_date = reservation.projection.date
+    subject = "Reservation processed correctly"
+    details = "\nDetails" + "\n\tMovie name: " + movie_name + "\n\tMovie date: " + str(
+        movie_date)
+    sender_address = 'CinemaCarlosiii@gmail.com'
+    sender_pass = "ProyectoWebApps"
+    # Setup the MIME
+    msg_body += details
+    message = MIMEMultipart()
+    message['From'] = sender_address
+    message['To'] = reservation.user.email
+    message['Subject'] = subject  # The subject line
+    # The body and the attachments for the mail
+    message.attach(MIMEText(msg_body, 'plain'))
+    # Create SMTP session for sending the mail
+    session = smtplib.SMTP('smtp.gmail.com', 587)  # use gmail with port
+    session.starttls()  # enable security
+    session.login(sender_address, sender_pass)  # login with mail_id and password
+    text = message.as_string()
+    session.sendmail(sender_address, reservation.user.email, text)
+    session.quit()
+
+
 def cancellation_emails(reservations):
     movie_name = reservations[0].projection.movie.name
     movie_projection_date = str(reservations[0].projection.date)
