@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, url_for, render_template, request
-from . import model
+from . import model, bcrypt, db
 import flask_login
 
 bp = Blueprint('auth', __name__)
@@ -16,12 +16,12 @@ def post_login():
 
     user = model.User.query.filter_by(email=email).first()
 
-    """
     if user and bcrypt.check_password_hash(user.password, password):
         flask_login.login_user(user)
         return redirect(url_for('main.index'))
     else:
-        flash('Wrong email or password. Try again')"""
+        flash('Wrong email or password. Try again')
+
     flask_login.login_user(user)
     return redirect(url_for('main.user_template'))
 
@@ -47,8 +47,7 @@ def post_register():
         flash('User already exists') 
         return redirect(url_for("auth.register"))
 
-    #password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
-    password_hash=password
+    password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
     new_user = model.User(email=email, name=username, password = password_hash, admin=False)
 
     db.session.add(new_user)

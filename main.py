@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, url_for, \
 from . import model, db, bcrypt, analytics, csrf
 import flask_login, datetime, imghdr, os
 from .utils import cancellation_emails, reservation_email
-
+from werkzeug.utils import secure_filename, send_from_directory
 bp = Blueprint("main", __name__)
 
 #-----------------------------HOME-------------------------------------------------
@@ -80,9 +80,9 @@ def post_reservation(movie_id= 0):
         seats=seats,
         date=datetime.datetime.now()
     )
-    reservation_email(reservation)
     db.session.add(reservation)
     db.session.commit()
+    reservation_email(reservation)
     return redirect(url_for('main.user_template'))
 
 #-----------------------MOVIE----------------------------------
@@ -195,7 +195,7 @@ def post_user():
         elif form_type == "cancel":
             # Cancelations of reservations
             reservation_id = int(request.form.get("reservation_id"))
-            reseravtion = model.Reservation.query.filter_by(id=reservation_id).first_or_404()
+            reservation = model.Reservation.query.filter_by(id=reservation_id).first_or_404()
             cancellation_emails([reservation])
             reservation = model.Reservation.query.filter_by(id=reservation_id).delete()
             db.session.commit()

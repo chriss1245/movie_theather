@@ -103,8 +103,7 @@ let set_projections = function (days)
     for (d in days)
     {
         var day = days[d];
-        console.log(day)
-
+        
         var offset_row = 0
         var column = document.getElementById(d + '');
 
@@ -137,7 +136,7 @@ let set_projections = function (days)
                 
                 // Computes how many 40px rows is going to use the movie projection
                 var rows_used = projection.duration + Math.ceil((projection.duration_min+projection.min)/60, 0)
-                console.log(projection.duration_min)
+
                 // Adds the movie projection
                 cell = document.createElement('div');
                 cell.className = "projection"
@@ -156,11 +155,6 @@ let set_projections = function (days)
                 cell.day = column.firstChild.innerHTML;
                 cell.projection = projection;
                 cell.onclick = function(ev){show_reservation(ev)}
-<<<<<<< HEAD
-
-=======
-               
->>>>>>> master
                 column.appendChild(cell)
 
                 // Creates a cell with heigqht proportional to the minutes left for completing an hour at the last used cell
@@ -192,7 +186,7 @@ let set_projections = function (days)
                 cell = document.createElement("div")
                 cell.className = "projection"
                 cell.style.backgroundColor = "blue";
-                console.log(row, offset_row, projection.duration, projection.duration_min)
+            
                 cell.style.height =  (row - offset_row  + rows_used)*40 + Math.round((projection.duration_min)*40/60 , 0) + "px";
                 cell.style.backgroundClip= "content-box"
                 cell.innerHTML = "Screen: " + projection.screen + "<br>At: lolito" + projection.hour + ":" + projection.min;

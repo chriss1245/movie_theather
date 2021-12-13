@@ -34,7 +34,7 @@ def projection_to_dict(movie_projections) -> dict:
 
 def reservation_email(reservation):
     # receives object of type reservation
-    movie_name = reservation.projection.name
+    movie_name = reservation.projection.movie.name
     movie_date = reservation.projection.date
     subject = "Reservation processed correctly"
     msg_body = "Hello " + reservation.user.name + "\nYour reservation on " + " was processed correctly" + "\nDetails" + "\n\tMovie name: " + movie_name + "\n\tMovie date: " + str(movie_date)
