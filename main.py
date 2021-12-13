@@ -117,6 +117,7 @@ def post_projection(projection_id=1):
         individual_cancellation(reservation, request.form.get("msg"))
         model.Reservation.query.filter_by(id=reservation_id).delete()
         db.session.commit()
+        return redirect(url_for("main.projection", projection_id=projection_id))
 
     elif form_type == 'cancel_projection':
         projection_id = int(request.form.get("projection_id"))
@@ -124,8 +125,9 @@ def post_projection(projection_id=1):
         cancellation_emails(projection.reservations)
         model.Projection.query.filter_by(id=projection_id).delete()
         db.session.commit()
+        return redirect(url_for("main.user_template", user_id=flask_login.current_user.id))
     
-    return redirect(url_for("main.projection", projection_id=projection_id))
+    
         
         
 #-----------------------MOVIE----------------------------------

@@ -88,6 +88,8 @@ def individual_cancellation(reservation, msg_body):
 
 
 def cancellation_emails(reservations):
+    if len(reservations) == 0:
+        return
     movie_name = reservations[0].projection.movie.name
     movie_projection_date = str(reservations[0].projection.date)
     info = [(reservation.user.email, reservation.user.name, str(reservation.seats), str(reservation.date)) for reservation in reservations]
@@ -100,17 +102,22 @@ def cancellation_emails(reservations):
     session = smtplib.SMTP('smtp.gmail.com', 587)  # use gmail with port
     session.starttls()  # enable security
     session.login(sender_address, sender_pass)  # login with mail_id and password
+    
     for email, name, seats, date in info:
-        subject = "Reservation made in " + str(date) + "has been cancelled"
-        msg_body = "Hello " + name + "\nSadly a projection in which you had made a reservation has been cancelled.\nDetails\n\tMovie name: " + movie_name + "\n\tMovie date: " + movie_projection_date + "\n\tSeats: " + str(seats)
-        msg_body += footer
-        message['From'] = sender_address
-        message['To'] = email
-        message['Subject'] = subject  # The subject line
-        # The body and the attachments for the mail
-        message.attach(MIMEText(msg_body, 'plain'))
-        text = message.as_string()
-        session.sendmail(sender_address, email, text)
+        try:
+            subject = "Reservation made in " + str(date) + "has been cancelled"
+            msg_body = "Hello " + name + "\nSadly a projection in which you had made a reservation has been cancelled.\nDetails\n\tMovie name: " + movie_name + "\n\tMovie date: " + movie_projection_date + "\n\tSeats: " + str(seats)
+            msg_body += footer
+            message['From'] = sender_address
+            message['To'] = email
+            message['Subject'] = subject  # The subject line
+            # The body and the attachments for the mail
+            message.attach(MIMEText(msg_body, 'plain'))
+            text = message.as_string()
+            session.sendmail(sender_address, email, text)
+        except:
+            ...
+
     session.quit()
 
 """
