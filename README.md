@@ -49,19 +49,19 @@ From the main page:
  - Navigation Bar
 
 From customer view:
- - Display of profile picture and user information
- - Button to cancel reservations 
- - Ability for users to write site reviews
+ - Display of profile picture and user information.
+ - Button to cancel reservations. 
+ - Ability for users to write site reviews.
 
 From Administrator view:
  - Pie chart in which the amount of neutral, positive and negative reviews is shown, using NLP, passed as a base64 encoded version of the graph generated in matplotlib
+ - Bar plot of the average ratings of each movie, given by the users, sorted from best to worst.
 
 From a security stand point:
- - Included flask_talisman wrapper to ensure security that fits the needs of the webpage, control security protocols only allows uploads of images with unknown origin, allows embedded scripts to be executed only from self, headers kept with default options: https://github.com/wntrblm/flask-talisman/blob/main/README.rst
- - Included flask_seasurf library to protect against cross-site request forgery.
-
+ - Included flask_talisman wrapper to ensure security that fits the needs of the webpage, control security protocols only allows upload of images from any origin, we also disallow the usage of the microphone and geolocation among other things. We kept the HTTP  headers kept with default options. Reference: https://github.com/wntrblm/flask-talisman/blob/main/README.rst
+ - Included flask_seasurf library to protect against cross-site request forgery. Reference:https://flask-seasurf.readthedocs.io/en/latest/
 Reservation-wise:
  - Email with reservation details as soon as it is made
- - Cancellation emails
+ - When a projection is cancelled, all the users with reservations on it are notified automatically through cancellation emails.
 
 
