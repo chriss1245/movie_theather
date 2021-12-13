@@ -71,6 +71,7 @@ def individual_cancellation(reservation, msg_body):
     sender_address = 'CinemaCarlosiii@gmail.com'
     sender_pass = "ProyectoWebApps"
     # Setup the MIME
+    msg_body = "Hello\n" + msg_body
     msg_body += (details + footer)
     message = MIMEMultipart()
     message['From'] = sender_address
