@@ -56,6 +56,8 @@ def reservation_email(reservation):
     session.quit()
 
 
+
+# this function allows custom subject and body
 def individual_cancellation(reservation, msg_body, subject = "Your reservation has been cancelled"):
     # receives object of type reservation
     movie_name = reservation.projection.movie.name
