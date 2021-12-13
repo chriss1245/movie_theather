@@ -64,8 +64,8 @@ def seats_available(projections, figsize=(13,3), title=""):
         available.append(aux[0])
         projections[key] = aux[0]
 
-    ax.barh(list(projections.keys()), available, label="Available seats")
-    ax.barh(list(projections.keys()), taken, label="Already taken")
+    ax.barh(list(projections.keys()), available, label="Available seats", color="g")
+    ax.barh(list(projections.keys()), taken, label="Already taken", color="r")
     for bar, movie in zip(ax.patches, projections.keys()):
         ax.text(0.1, bar.get_y()+bar.get_height()/2, movie, color = 'white', ha = 'left', va = 'center') 
     fig.legend(fontsize=18)
