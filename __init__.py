@@ -12,6 +12,7 @@ talisman = Talisman()
 
 def create_app(test_config=None):
     app = Flask(__name__)
+    app.config["SECRET_KEY"] = b"\x8c\xa5\x04\xb3\x8f\xa1<\xef\x9bY\xca/*\xff\x12\xfb"
 
     #LOGIN MANAGER
     login_manager = LoginManager()
@@ -45,9 +46,8 @@ def create_app(test_config=None):
     #TALISMAN
     csp = {
         'default-src': '*',
-        'img-src':'*',
-        'script-src':'\'self\''
-
+        'img-src':['*', 'data:'],
+        'script-src':'\'self\'',
     }
 
     # disables access to geolocation interface, and disables microphone
