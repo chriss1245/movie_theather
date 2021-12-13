@@ -103,6 +103,21 @@ def projection(projection_id=1):
         return render_template("main/projection.html", projection=projection, user=user,  analytics_plot=img.decode('utf-8'))
     abort(403, "You do not have the correct permissions")
 
+@bp.route("/projection/<int:projection_id>", methods=['POST'])
+@bp.flask_login.login_required
+def post_projection(projection_id=1):
+    user = flask_login.current_user
+    if not user.admin:
+        abort(403, "You can not remove")
+
+    form_type = request.form.get("type")
+    if form_type == 'cancel_reservation':
+        reservation_id = int(request.form.get("reservation_id"))
+        reservation = model.Reservation.query.filter_by(id=reservation_id).first_or_404()
+        
+    elif form_type == 'cancel_projection'
+        
+
 #-----------------------MOVIE----------------------------------
 @bp.route("/movie/<int:movie_id>") # will take the movie id
 def movie(movie_id=1):

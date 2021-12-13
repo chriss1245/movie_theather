@@ -66,6 +66,7 @@
                         Seats: {{reservation.seats}}<br>
                         <form action="" method="post">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                            <textarea placeholder="Cancellation Body" id = "feedback" name = "feedback" rows = 2 cols = 50 required></textarea><br>
                             <input type="submit" value="Cancel Reservation">
                             <input type="hidden" name="reservation_id" value="{{reservation.id}}">
                             <input type="hidden" name="type" value="cancel_reservation">
