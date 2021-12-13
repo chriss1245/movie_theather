@@ -62,7 +62,6 @@ def individual_cancellation(reservation, msg_body, subject = "Your reservation h
     # receives object of type reservation
     movie_name = reservation.projection.movie.name
     movie_date = reservation.projection.date
-    subject = "Reservation processed correctly"
     details = "\nDetails" + "\n\tMovie name: " + movie_name + "\n\tMovie date: " + str(
         movie_date)
     sender_address = 'CinemaCarlosiii@gmail.com'
