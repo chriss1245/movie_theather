@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, url_for, \
     redirect, abort, flash
 from . import model, db, bcrypt, analytics, csrf
 import flask_login, datetime, imghdr, os
-from .utils import cancellation_emails, reservation_email
+from .utils import cancellation_emails, reservation_email, individual_cancellation
 from werkzeug.utils import secure_filename, send_from_directory
 bp = Blueprint("main", __name__)
 
@@ -104,7 +104,7 @@ def projection(projection_id=1):
     abort(403, "You do not have the correct permissions")
 
 @bp.route("/projection/<int:projection_id>", methods=['POST'])
-@bp.flask_login.login_required
+@flask_login.login_required
 def post_projection(projection_id=1):
     user = flask_login.current_user
     if not user.admin:
@@ -114,10 +114,20 @@ def post_projection(projection_id=1):
     if form_type == 'cancel_reservation':
         reservation_id = int(request.form.get("reservation_id"))
         reservation = model.Reservation.query.filter_by(id=reservation_id).first_or_404()
-        
-    elif form_type == 'cancel_projection'
-        
+        individual_cancellation(reservation, request.form.get("msg"))
+        model.Reservation.query.filter_by(id=reservation_id).delete()
+        db.session.commit()
 
+    elif form_type == 'cancel_projection':
+        projection_id = int(request.form.get("projection_id"))
+        projection = model.Projection.query.filter_by(id=projection_id).first_or_404()
+        cancellation_emails(projection.reservations)
+        model.Projection.query.filter_by(id=projection_id).delete()
+        db.session.commit()
+    
+    return redirect(url_for("main.projection"), projection_id=projection_id)
+        
+        
 #-----------------------MOVIE----------------------------------
 @bp.route("/movie/<int:movie_id>") # will take the movie id
 def movie(movie_id=1):
