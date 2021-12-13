@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, url_for, \
-<<<<<<< HEAD
     redirect, abort, flash
 from . import model, db, bcrypt, analytics, csrf
 import flask_login, datetime, imghdr, os
@@ -7,31 +6,6 @@ import flask_login, datetime, imghdr, os
 bp = Blueprint("main", __name__)
 
 #-----------------------------HOME-------------------------------------------------
-=======
-    redirect, abort, Flask
-
-
-from . import model
-from .utils import cancellation_emails
-
-bp = Blueprint("main", __name__)
-
-
-# directive for cross site request forgery
-
-
-@bp.route("/email")
-def email():
-    movie = model.Movie(1, "black panther", "lol")
-    user = model.User("carlitos", "mvca1507@gmail.com", "lol")
-    screen = model.Screen(2);
-    projection = model.MovieProjection(3, 2, 1, movie, screen)
-    reservation = model.Reservation(user, projection)
-
-    cancellation_emails([reservation])
-    return("<h1>Done!</h1>")
-
->>>>>>> master
 @bp.route("/")
 def home():
     flask_login.login_user(model.User.query.filter_by(id=3).first()) #TO REMOVE!!!!! AUTMOATIC LOGIN
@@ -40,7 +14,6 @@ def home():
     all_movies = model.Movie.query.order_by(model.Movie.id.desc()).all() # All movies by newest
     return render_template("main/home.html", movies=movies, all_movies=all_movies)
 
-<<<<<<< HEAD
 #-----------------------------SEARCH----------------------------------------------
 @bp.route("/search")
 def search():
@@ -75,11 +48,6 @@ def search():
 @flask_login.login_required
 def reservation(movie_id = 1):
     movie = model.Movie.query.filter_by(id=movie_id).first_or_404()
-=======
-@bp.route("/reservation/<int:movie_id>")  # Requires the movie id
-def reservation(movie_id=1):
-    movie = model.Movie(1, "Harry potter and the Chamber of Secrets", 'img/1.jpg')
->>>>>>> master
     return render_template("main/reservation.html", movie=movie)
 
 @bp.route("/reservation/<int:movie_id>", methods=['POST'])
@@ -126,7 +94,6 @@ def movie(movie_id=1):
 @bp.route("/movie/<int:movie_id>", methods=["POST"])
 def post_movie(movie_id):
 
-<<<<<<< HEAD
     # PROTECTION AGAINST INVALID RATINGS
     new_rating = int(request.form.get("rank"))
     if new_rating < 0 or new_rating > 5:
@@ -146,10 +113,6 @@ def post_movie(movie_id):
 #-----------------------USER--------------------------------------
 @bp.route("/user")
 @flask_login.login_required
-=======
-
-@bp.route("/customer")
->>>>>>> master
 def user_template():
     user = flask_login.current_user
 
@@ -162,7 +125,6 @@ def user_template():
             .all()
         )
 
-<<<<<<< HEAD
         reservations_before = [] # Seen
         reservations_after = [] # To See
         for reservation in reservations:
@@ -263,9 +225,3 @@ def post_user():
             db.session.commit()
 
     return redirect(url_for("main.user_template"))
-=======
-@bp.route("/register")
-def register():
-    return render_template("main/register.html")
-
->>>>>>> master
