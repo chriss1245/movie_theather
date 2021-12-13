@@ -58,6 +58,7 @@ From Administrator view:
  - Bar plot of the average ratings of each movie, given by the users, sorted from best to worst.
  - Bar plots representing the amount of taken and available seats per existing projection.
  - Projection views for all existing projections with an individual graph to represent the taken and available seats.
+ - Inside projection views, we allow for cancellation of particular customer reservation and a textarea input to send as a cancellation email.
 
 From a security stand point:
  - Included flask_talisman extension to ensure security that fits the needs of the webpage, control security protocols only allows upload of images from any origin, we also disallow the usage of the microphone and geolocation among other things. We kept the HTTP  headers kept with default options. Reference: https://github.com/wntrblm/flask-talisman/blob/main/README.rst
