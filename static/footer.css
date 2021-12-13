@@ -1,0 +1,46 @@
+footer
+{
+    margin-top: 20px;
+    display: inline-flex;
+    flex-direction: row;
+    width: 100% ;
+    border-top: 1px solid gray;
+}
+.column
+{
+    float: left;
+    padding: 60px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 210px;
+}
+
+.second
+{
+    text-align: right;
+    padding-left: 40px;
+    width: 45%;
+}
+
+.footer-image
+{
+    text-align: right;
+    padding-left: 40px;
+    width: 100%;
+    height: 170px
+}
+
+.first
+{
+    width: 50%;
+}
+
+a 
+{
+    color:black;
+}
+
+a:hover
+{
+    color:blue;
+}
