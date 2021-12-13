@@ -65,10 +65,11 @@ def individual_cancellation(reservation, msg_body):
     movie_date = reservation.projection.date
     details = "\nDetails" + "\n\tMovie name: " + movie_name + "\n\tMovie date: " + str(
         movie_date)
+    footer = "Thank you for performing a reservation with us.\nKindly\nCinema Carlos III"
     sender_address = 'CinemaCarlosiii@gmail.com'
     sender_pass = "ProyectoWebApps"
     # Setup the MIME
-    msg_body += details
+    msg_body += (details + footer)
     message = MIMEMultipart()
     message['From'] = sender_address
     message['To'] = reservation.user.email
@@ -90,6 +91,7 @@ def cancellation_emails(reservations):
     info = [(reservation.user.email, reservation.user.name, str(reservation.seats), str(reservation.date)) for reservation in reservations]
     sender_address = 'CinemaCarlosiii@gmail.com'
     sender_pass = "ProyectoWebApps"
+    footer = "Thank you for performing a reservation with us.\nKindly\nCinema Carlos III"
     # Setup the MIME
     message = MIMEMultipart()
     # Create SMTP session for sending the mail
@@ -99,6 +101,7 @@ def cancellation_emails(reservations):
     for email, name, seats, date in info:
         subject = "Reservation made in " + str(date) + "has been cancelled"
         msg_body = "Hello " + name + "\nSadly a projection in which you had made a reservation has been cancelled.\nDetails\n\tMovie name: " + movie_name + "\n\tMovie date: " + movie_projection_date + "\n\tSeats: " + str(seats)
+        msg_body += footer
         message['From'] = sender_address
         message['To'] = email
         message['Subject'] = subject  # The subject line
