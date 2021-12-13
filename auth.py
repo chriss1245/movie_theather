@@ -1,4 +1,5 @@
-from flask import Blueprint, redirect, url_for, render_template, request
+from flask import Blueprint, redirect, url_for, render_template, request, \
+    flash
 from . import model, bcrypt, db
 import flask_login
 
@@ -18,13 +19,9 @@ def post_login():
 
     if user and bcrypt.check_password_hash(user.password, password):
         flask_login.login_user(user)
-        return redirect(url_for('main.index'))
-    else:
-        flash('Wrong email or password. Try again')
-
-    flask_login.login_user(user)
-    return redirect(url_for('main.user_template'))
-
+        return redirect(url_for('main.home'))
+    flash('Wrong email or password. Try again')
+    return redirect(url_for('auth.login'))
 #-----------------------SIGNUP--------------------------------------
 @bp.route("/register")
 def register():
