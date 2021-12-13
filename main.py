@@ -85,6 +85,16 @@ def post_reservation(movie_id= 0):
     reservation_email(reservation)
     return redirect(url_for('main.user_template'))
 
+#----------------------PROJECTION------------------------------
+@bp.route("/projection/<int:projection_id>")
+@flask_login.login_required
+def projection(projection_id=1):
+    user = flask_login.current_user
+    if user.admin:
+        projection = model.Projection.query.filter_by(projection_id=projection_id).first_or_404()
+        return render_template("main/projection.html", projection=projection, user=user)
+    abort(403, "You do not have the correct permissions")
+
 #-----------------------MOVIE----------------------------------
 @bp.route("/movie/<int:movie_id>") # will take the movie id
 def movie(movie_id=1):

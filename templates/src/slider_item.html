@@ -2,7 +2,7 @@
     <a href="{{url_for('main.movie', movie_id = movie.id)}}">
         <img src="{{url_for('static', filename=movie.image_path)}}">
         <div class='slider-item-data'>
-            <p>{{movie.name}} , <i>Rating: {{'%0.1f' % movie.rating|float}}</i></p>
+            <p>{{movie.name}}</p>
         </div>
     </a>
 </div>

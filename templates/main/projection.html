@@ -1,0 +1,71 @@
+{% extends 'src/base.html' %}
+
+{%block title%} User view {%endblock%}  
+
+{%block content%} 
+    <link rel="stylesheet" href="{{url_for('static', filename='admin_template.css')}}">
+    <!-- LEFT COLUMN-->
+    
+    <div class = "user-data">
+        <!-- Default picture-->
+        {%if user.image_path%}
+            <img class="profile-img" src ="{{url_for('data.get_profile_img', img=user.image_path)}}" alt = "ProfilePic">
+        {%else%}
+            <img class="profile-img" src ="https://i.pinimg.com/236x/93/c6/36/93c63658c33616e774681d4b3e0b5755.jpg" alt = "ProfilePic">
+        {%endif%}
+        <!--Form to change the default picture-->
+        <form action="" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            Change Profile Picture: <br>
+            <input type="file" name="img" id="img" accept="image/*" required >
+            <input type="submit" value="Set">
+            <input type="hidden" name="type" value="upload_picture">
+        </form>
+        <br>
+        <h2>{{user.name}}</h2>
+
+        <ul>
+            <li>Email: {{user.email}}</li>
+        </ul>
+    </div>
+    
+    <!-- RIGHT COLUMN-->
+    <div class="analytics-data">
+
+        <!--Create a movie projection-->
+        
+
+        <div class="plots">
+            <h3>Analytics</h3>
+            <img class="analytics-website" src="data:image/png;base64,{{analytics_plot}}">
+            <!--Here are going to come the plots-->
+            <img class="analytics-movie" src="data:image/png;base64,{{analytics_movie}}">
+        </div>
+
+        <h3>Projections</h3>
+        <!--List of movie projections-->
+        {% if projections | length < 1 %}
+            <!-- If there are no movies we show a message saying that -->
+            <p class="no-reservations-message"> There are not projections programed</p>
+        {%else%}
+            {%for projection in projections%}
+            <!-- We display the information of the reserved movies -->
+                <div class="reservation-box">
+                    <b>{{projection.movie.name}} </b><br>
+                    
+                        Date: {{projection.date}} <br>
+                        Screen: {{projection.screen_id}} <br>
+                        Reservations: {{projection.reservations | length}}<br>
+                        <form action="" method="post">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                            <input type="submit" value="cancel">
+                            <input type="hidden" name="projection_id" value="{{projection.id}}">
+                            <input type="hidden" name="type" value="cancel">
+                        </form>
+                        
+                        <br>
+                </div>
+            {% endfor %}
+        {%endif%}
+    </div>
+{%endblock%}
