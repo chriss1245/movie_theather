@@ -156,7 +156,11 @@ let set_projections = function (days)
                 cell.day = column.firstChild.innerHTML;
                 cell.projection = projection;
                 cell.onclick = function(ev){show_reservation(ev)}
+<<<<<<< HEAD
 
+=======
+               
+>>>>>>> master
                 column.appendChild(cell)
 
                 // Creates a cell with heigqht proportional to the minutes left for completing an hour at the last used cell

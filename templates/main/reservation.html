@@ -9,7 +9,7 @@
         <ul id="reservation_details">
             <p>
                 Selct a movie projection
-            <p>
+            </p>
             
         </ul>
         
@@ -20,6 +20,7 @@
                 <b>Seats:</b> <input type="number" name="number_seats" id="number_seats" min="1" max="40" value="1" size="3">
                 <br><br>
                 <input id="reserve_button" type="submit" value="Reserve Now" disabled>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             </form>
         </ul>
     </div>
