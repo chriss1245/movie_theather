@@ -43,7 +43,7 @@ movie_theather
 
 
 ### Additional functionalities implemented
-The additional functionalities were implemented throughout various points of the web server, for each of the sections we performed the following:
+The additional functionalities were implemented throughout various parts of the web server, for each of the sections we performed the following:
 From the main page:
  - Search bar
  - Button to sort movies based on an specific criteria
