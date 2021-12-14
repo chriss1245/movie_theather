@@ -67,5 +67,5 @@ class Reservation(db.Model ):
     seats = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime(), nullable=False)
     """
-    A reservation has one user and one mobie projection
+    A reservation has one user and one movie projection
     """
