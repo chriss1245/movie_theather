@@ -61,7 +61,7 @@ From Administrator view:
  
 Projection view
  - Accessed only by administrators, we display all the reservations made on a given projection, with data to identify the users, from which we see a button to cancel the whole projection, in the same manner as from the administrator view, and a button to cancel reservations of a particular user, sending a custom body for the cancellation email.
- - We display a stacked bar char in which we see the amount of taken and available seats for the given projection.
+ - We display a stacked bar chart in which we see the amount of taken and available seats for the given projection.
 
 From a security stand point:
  - Included flask_talisman extension to ensure security that fits the needs of the webpage, control security protocols only allows upload of images from any origin, we also disallow the usage of the microphone and geolocation among other things. We kept the HTTP  headers kept with default options. Reference: https://github.com/wntrblm/flask-talisman/blob/main/README.rst
