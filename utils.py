@@ -97,15 +97,17 @@ def cancellation_emails(reservations):
     info = [(reservation.user.email, reservation.user.name, str(reservation.seats), str(reservation.date)) for reservation in reservations]
     sender_address = 'CinemaCarlosiii@gmail.com'
     sender_pass = "ProyectoWebApps"
-    footer = "Thank you for performing a reservation with us.\nKindly\nCinema Carlos III"
-    # Setup the MIME
-    message = MIMEMultipart()
-    # Create SMTP session for sending the mail
-    session = smtplib.SMTP('smtp.gmail.com', 587)  # use gmail with port
-    session.starttls()  # enable security
-    session.login(sender_address, sender_pass)  # login with mail_id and password
+    footer = "\nThank you for performing a reservation with us.\nKindly\nCinema Carlos III"
+   
+    
     
     for email, name, seats, date in info:
+        # Setup the MIME
+        message = MIMEMultipart()
+        # Create SMTP session for sending the mail
+        session = smtplib.SMTP('smtp.gmail.com', 587)  # use gmail with port
+        session.starttls()  # enable security
+        session.login(sender_address, sender_pass)   # login with mail_id and password
         try:
             subject = "Reservation made in " + str(date) + "has been cancelled"
             msg_body = "Hello " + name + "\nSadly a projection in which you had made a reservation has been cancelled.\nDetails\n\tMovie name: " + movie_name + "\n\tMovie date: " + movie_projection_date + "\n\tSeats: " + str(seats)
@@ -119,4 +121,6 @@ def cancellation_emails(reservations):
             session.sendmail(sender_address, email, text)
         except:
             ...
-    session.quit()
+        finally:
+            session.quit()
+    

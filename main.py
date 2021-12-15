@@ -152,7 +152,6 @@ def post_movie(movie_id):
 
     # Update the mean of the ratings
     movie.rating = (movie.rating * movie.ratings + new_rating ) / (movie.ratings + 1)
-    print(movie.rating)
     # Update the number of ratings
     movie.ratings += 1
     db.session.commit()
@@ -207,7 +206,7 @@ def user_template():
             free_seats -= reservation.seats
             reserved_seats += reservation.seats
             data[str(projection.movie.name) + ", room " + str(projection.screen.id) +", " + str(projection.date)[:-9]] = (free_seats, reserved_seats)
-    print(data)
+
     img = analytics.seats_available(data, figsize=(6,int(len(data)*0.9)))
     
     return render_template("main/admin_template.html",
