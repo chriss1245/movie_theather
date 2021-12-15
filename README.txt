@@ -3,6 +3,10 @@ PARTICIPANTS
     - Jorge Parreño Hernández - 100429982
     - Marco Narganes Fraile - 100428692
 
+USER if teacher wants to try it:
+    -User: yolo@yolo.com 
+    -Password: yolo
+
 ADITIONAL FUNCTIONALITIES IMPLEMENTED
 
 The additional functionalities were implemented throughout various parts of the web server, for each of the sections we performed the following:
