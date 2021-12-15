@@ -92,8 +92,8 @@ def non_zero(func):
         if len(args[0]) == 0:
             return
         else:
-            res = func(*args, **kwargs)
-        return res
+            func(*args, **kwargs)
+
     return wrapper
 
 
