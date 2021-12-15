@@ -71,7 +71,3 @@ def seats_available(projections, figsize=(13,3), title=""):
     pic_IObytes.seek(0)
     pic_hash = base64.b64encode(pic_IObytes.read())
     return pic_hash
-
-
-
-
