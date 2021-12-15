@@ -3,11 +3,6 @@
 {%block content%} 
     <link rel="stylesheet" href="{{url_for('static', filename='Register.css')}} ">
     <center> <h1> Student Register Form </h1> </center> 
-    {% with messages = get_flashed_messages() %}
-        {% for message in messages %}
-            <div class='error'>{{ message }}</div>
-        {% endfor %}
-    {% endwith %}  
     <form method="post"> 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
         <div class="container">   
