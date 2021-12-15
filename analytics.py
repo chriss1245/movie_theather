@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import base64
 import io
 
-
-
 def web_analytics(reviews):
     n = len(reviews)
     labels = 'Positive', 'Negative', 'Neutral'
@@ -27,9 +25,6 @@ def web_analytics(reviews):
     pic_IObytes.seek(0)
     pic_hash = base64.b64encode(pic_IObytes.read())
     return pic_hash
-
-
-
 
 def movie_analytics(movies):
     # generates a barplot and converts it to base 64
