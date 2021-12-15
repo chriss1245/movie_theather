@@ -28,7 +28,7 @@
         <form class="feedback" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             <h6>Give us your opinion on the service:</h6> 
-            <textarea id = "feedback" name = "feedback" rows = 5 cols = "40" required></textarea>
+            <textarea id = "feedback" name = "feedback" rows = 5 cols = "40" placeholder = "Your feedback is much appreciated" required></textarea>
             <br>
             <input type = "submit" value = "Submit">
             <input type="hidden" name="type" value="feedback">
