@@ -96,7 +96,7 @@ def non_zero(func):
 
     return wrapper
 
-#@non_zero
+@non_zero
 def cancellation_emails(reservations):
     if len(reservations) == 0:
         return
