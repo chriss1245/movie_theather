@@ -1,7 +1,7 @@
 Participants
-    - Christopher André Manzano Vimos -
+    - Christopher André Manzano Vimos - 100429927
     - Jorge Parreño Hernández - 100429982
-    - Marco Narganes Fraile -
+    - Marco Narganes Fraile - 100428692
 
 
 Additional functionalities implemented
