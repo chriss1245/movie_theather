@@ -87,6 +87,15 @@ def individual_cancellation(reservation, msg_body):
     session.sendmail(sender_address, reservation.user.email, text)
     session.quit()
 
+def non_zero(func):
+    def wrapper(*args, **kwargs):
+        if len(args[0]) == 0:
+            return
+        else:
+            res = func(*args, **kwargs)
+        return res
+    return wrapper
+
 
 def cancellation_emails(reservations):
     if len(reservations) == 0:
