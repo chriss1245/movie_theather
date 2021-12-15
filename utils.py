@@ -1,14 +1,7 @@
-import datetime
 from flask_mail import Message
-# from . import mail
-
-
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-
-
 
 def projection_to_dict(movie_projections) -> dict:
     """
@@ -98,8 +91,7 @@ def non_zero(func):
 
 @non_zero
 def cancellation_emails(reservations):
-    if len(reservations) == 0:
-        return
+    
     movie_name = reservations[0].projection.movie.name
     movie_projection_date = str(reservations[0].projection.date)
     info = [(reservation.user.email, reservation.user.name, str(reservation.seats), str(reservation.date)) for reservation in reservations]
@@ -127,27 +119,4 @@ def cancellation_emails(reservations):
             session.sendmail(sender_address, email, text)
         except:
             ...
-
     session.quit()
-
-"""
-
-def reservation_email(reservation):
-    movie_name = reservation.projection.movie.name
-    movie_date = reservation.projection.date
-    subject = "Reservation processed correctly"
-    msg_body = "Hello " + reservation.user.name + "\nYour reservation on " + " was processed correctly" + "\nDetails" + "\n\tMovie name: " + movie_name + "\n\tMovie date: " + str(movie_date)
-    message = Message(recipients=[reservation.user.email], body=msg_body, subject=subject)
-    mail.send(message)
-
-def cancellation_emails(reservations):
-    # receives a list of reservation objects
-    movie_name = reservations[0].projection.movie.name
-    movie_projection_date = str(reservations[0].projection.date)
-    info = [(reservation.user.email, reservation.user.name, str(reservation.seats), str(reservation.date)) for reservation in reservations]
-    for email, name, seats, date in info:
-        subject = "Reservation made in " + str(date) + "has been cancelled"
-        msg_body = "Hello " + name + "\nSadly a projection in which you had made a reservation has been cancelled.\nDetails\n\tMovie name: " + movie_name + "\n\tMovie date: " + movie_projection_date + "\n\tSeats: " + str(seats)
-        message = Message( recipients=[email], body=msg_body, subject=subject)
-        mail.send(message)
-"""
