@@ -1,3 +1,4 @@
+from threading import current_thread
 from flask import Blueprint, render_template, request, url_for, \
     redirect, abort, flash
 from . import model, db, bcrypt, analytics, csrf
@@ -52,8 +53,10 @@ def reservation(movie_id = 1):
 
 @bp.route("/reservation/<int:movie_id>", methods=['POST'])
 @flask_login.login_required
-@csrf.exempt # avoids flask seasurf protection
 def post_reservation(movie_id= 0):
+    if flask_login.current_user.admin:
+        abort(403, "This account does not have permissions to reserve")
+
     # Get the projection
     projection_id = int(request.form.get("movie_projection_id"))
     projection = (model.Projection.query

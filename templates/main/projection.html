@@ -55,7 +55,7 @@
         <!--List of movie projections-->
         {% if projection.reservations | length < 1 %}
             <!-- If there are no movies we show a message saying that -->
-            <p class="no-reservations-message"> There are not projections programed</p>
+            <p class="no-reservations-message"> There are no reservations in this projection</p>
         {%else%}
             {%for reservation in projection.reservations%}
             <!-- We display the information of the reserved movies -->
