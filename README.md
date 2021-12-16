@@ -56,36 +56,36 @@ movie_theather
 - Cards with the movies and their data
 
 #### User page
-* Profile picture (
-* customer 
-* administrator
-### Additional functionalities implemented
-The additional functionalities were implemented throughout various parts of the web server, for each of the sections we performed the following:
-From the main page:
- - Search bar
- - Button to sort movies based on an specific criteria
- - Navigation Bar
+* Profile picture (can be changed)
+* ##### Customer
+   * View of all the reservations done for already seen and not seen projections
+   * The future projections can be cancelled
+   * Can give feedback of the website
+   * <img height=300 src=https://user-images.githubusercontent.com/58918297/146429223-a34254ea-62cd-46cb-a89e-d492530472cb.png>
+* ##### Administrator
+   * Plots of analytics: (reviews piechart, movie ranking barplot & projections' crew status barplot)  
+   * View of all the projections that are programmed
+   * Chance to cancel projections (if there are reservations done. The user associated to those reservations will recieve an email)
+     <div>
+      <img width=400 height=300 src="https://user-images.githubusercontent.com/58918297/146430767-bb4fbdb5-e0b7-43e3-a579-6d5ca4374f66.png">
+      <img width=400 height=300 src="https://user-images.githubusercontent.com/58918297/146430775-6987cf2b-b173-4bca-a3e3-b1b3e822e70c.png">
+      <img width=400  src="https://user-images.githubusercontent.com/58918297/146430822-6cad17c6-253b-4794-bad4-44fae59d3028.png">
+     </div>
+   * Projection view (enables view and cancel individual reservations)
+   * <img width=400 height=300 src="https://user-images.githubusercontent.com/58918297/146432729-5fa6f5ca-71f3-4e3c-a188-f6eccbb982dd.png">
+* #### Movie
+  *  Trailer of the movie
+  *  Rating
+  *  Enables rating the movie
+  *  ![movie](https://user-images.githubusercontent.com/58918297/146433072-1206807e-e545-4abe-9839-e2df7d4af8b6.png)
+* #### Reservation
+  * Shows all the projections in the given week (can move among weeks)
+  * ![reservation](https://user-images.githubusercontent.com/58918297/146433234-fc8c4db6-6d79-4927-9dd9-1d39792fe99c.gif)
+  * The user will recieve a confirmation email
+  * ![email_reservation](https://user-images.githubusercontent.com/58918297/146433646-4289aebf-1895-4bbc-b46c-9f28937c6931.png)
 
-From customer view:
- - Display of profile picture and user information.
- - Button to cancel reservations. 
- - Ability for users to write site reviews.
-
-From Administrator view:
- - Pie chart in which the amount of neutral, positive and negative reviews is shown, using NLP, passed as a base64 encoded version of the graph generated in matplotlib
- - Bar plot of the average ratings of each movie, given by the users, sorted from best to worst.
- - Bar plots representing the amount of taken and available seats per existing projection, in which at least one seat is not available for reservation.
  
-Projection view
- - Accessed only by administrators, we display all the reservations made on a given projection, with data to identify the users, from which we see a button to cancel the whole projection, in the same manner as from the administrator view, and a button to cancel reservations of a particular user, sending a custom body for the cancellation email.
- - We display a stacked bar chart in which we see the amount of taken and available seats for the given projection.
-
-From a security stand point:
- - Included flask_talisman extension to ensure security that fits the needs of the webpage, control security protocols only allows upload of images from any origin, we also disallow the usage of the microphone and geolocation among other things. We kept the HTTP  headers kept with default options. Reference: https://github.com/wntrblm/flask-talisman/blob/main/README.rst
- - Included flask_seasurf library to protect against cross-site request forgery. Reference:https://flask-seasurf.readthedocs.io/en/latest/
+* #### Security:
+  * Included flask_talisman extension to ensure security that fits the needs of the webpage, control security protocols only allows upload of images from any origin, we also disallow the usage of the microphone and geolocation among other things. We kept the HTTP  headers kept with default options. Reference:  https://github.com/wntrblm/flask-talisman/blob/main/README.rst
+  *  Included flask_seasurf library to protect against cross-site request forgery. Reference: https://flask-seasurf.readthedocs.io/en/latest/
  
-Reservation-wise:
- - Email with reservation details as soon as it is made.
- - When a projection is cancelled, all the users with reservations on it are notified automatically through cancellation emails.
-
-
