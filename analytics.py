@@ -17,7 +17,7 @@ def web_analytics(reviews):
     per_neg, per_neutral, per_positives = negatives/n, neutrals/n, positives/n
     # generate the plot
     fig, ax = plt.subplots()
-    ax.pie([per_neg, per_positives, per_neutral], labels = labels, autopct = '%1.1f%%', shadow = True, startangle = 90)
+    ax.pie([per_positives, per_neg, per_neutral], labels = labels, autopct = '%1.1f%%', shadow = True, startangle = 90)
     ax.set_title("Site reviews")
     # encoding of the plot in base64
     pic_IObytes = io.BytesIO()
